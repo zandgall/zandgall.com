@@ -1,0 +1,13 @@
+*.zip
+*.jar
+tanks/
+assets/videos/
+welcome home/
+uploads/
+snipemedia/
+socket.io/
+MINIFIG/
+multiplayer/
+assets/audio/
+Downloads/
+font-awesome/

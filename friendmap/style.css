@@ -1,0 +1,17 @@
+img {
+    position:fixed;
+    width: 40px;
+    height: 40px;
+    border:solid 1px black;
+    border-radius:100%;
+    z-index: 2;
+}
+h3 {
+    font-family: sans-serif;
+    color: white;
+}
+
+h1 {
+    font-family: sans-serif;
+    color: white;
+}
