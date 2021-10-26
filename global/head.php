@@ -61,7 +61,7 @@
 <a class="option" href="#" style="top: 250px; z-index: 10;" onclick="killlayers()"><h3 class="basictext" style="margin: auto">Toggle Layers</h3></a>
 <a class="option" href="#" style="top: 280px; z-index: 10" onclick="killstars()"><h3 class="basictext" style="margin: auto">Toggle Stars</h3></a>
 
-<script>
+<script type="application/javascript">
     function f(x) {
         return parseFloat(x);
     }
@@ -111,9 +111,14 @@
         }
     }
 
-    function pxtonum(str) {
-        return str.substr(0, str.length-2);
+    function p(str) {
+        if(str.endsWith("px"))
+            return str.substr(0, str.length-2);
+        else return str;
     }
+
+    let menu = $(".bmenu");
+    let blindex = 0, bhindex = 0, boffset = [];
 
     function parallaxheightupdate() {
         if(document.body.clientWidth>=850)
@@ -125,28 +130,51 @@
         if($("#universal")[0].scrollHeight > 4644)
             $(".parallaxgradient").css("height", $("#universal")[0].scrollHeight);
         $(".nightoverlay").css("height", $("#universal")[0].scrollHeight*4);
+        if(menu.length == 0)
+            load();
+        for(let i = 0; i < boffset.length; i++) {
 
+            if(boffset[i].on) {
+                boffset[i].current = boffset[i].current*0.8 + boffset[i].max*0.2;
+            } else {
+                boffset[i].current = boffset[i].current*0.8;
+            }
+
+            if(i==0)
+            boffset[i].total= boffset[i].current;
+            else boffset[i].total = boffset[i].current + boffset[i-1].total;
+        }
         if(menuout) {
-            var menuitems = $(".bmenu");
-            for(let i = 0; i < menuitems.length; i++) {
-                if($($(".bmenu")[i]).attr("class").includes("bline")) {
-                    let bwidth = pxtonum($($(".bmenu")[i]).css("--bwidth"));
-                    $($(".bmenu")[i]).css("left", (775 - bwidth) * 0.2 + pxtonum($($(".bmenu")[i]).css("left")) * 0.8);
-                    $($(".bmenu")[i]).css("width", bwidth * 0.2 + pxtonum($($(".bmenu")[i]).css("width")) * 0.8);
+            for(let i = 0; i < menu.length; i++) {
+                if($(menu[i]).attr("class").includes("bline")) {
+                    let bwidth = p($(menu[i]).css("--bwidth"));
+                    $(menu[i]).css("left", (775 - bwidth) * 0.2 + p($(menu[i]).css("left")) * 0.8);
+                    $(menu[i]).css("width", bwidth * 0.2 + p($(menu[i]).css("width")) * 0.8);
+                    $(menu[i]).css("top", (i-blindex+1-$(menu[i]).css("--bindex"))*55 + 10 + ($(menu[i]).css("--bindex")==0 ? 0 : boffset[$(menu[i]).css("--bindex")-1].total));
+                } else if($(menu[i]).attr("class").includes("bholder")) {
+                    $(menu[i]).css("top", (i-bhindex+2)*55 + 10 + ((i-bhindex)==0 ? 0 : boffset[i-bhindex-1].total));
+                    $(menu[i]).css("height", boffset[i-bhindex].current);
+                    $(menu[i]).css("left", 575 * 0.2 + p($(menu[i]).css("left")) * 0.8);
                 } else {
-                    $($(".bmenu")[i]).css("margin-right", pxtonum($($(".bmenu")[i]).css("margin-right")) * 0.8+5);
+                    $(menu[i]).css("margin-right", p($(menu[i]).css("margin-right")) * 0.8+5);
+                    $(menu[i]).css("margin-top", (i+1)*55 + 10 + (i==0 ? 0 : boffset[i-1].total));
                 }
             }
             // $(".bmenu").css("margin-right") = $(".bmenu").css("margin-right") * 0.8;
         } else {
-            var menuitems = $(".bmenu");
-            for(let i = 0; i < menuitems.length; i++) {
-                if($($(".bmenu")[i]).attr("class").includes("bline")) {
-                    let bwidth = pxtonum($($(".bmenu")[i]).css("--bwidth"));
-                    $($(".bmenu")[i]).css("left", 775 * 0.2 + pxtonum($($(".bmenu")[i]).css("left")) * 0.8);
-                    $($(".bmenu")[i]).css("width", pxtonum($($(".bmenu")[i]).css("width")) * 0.8);
+            for(let i = 0; i < menu.length; i++) {
+                if($(menu[i]).attr("class").includes("bline")) {
+                    let bwidth = p($(menu[i]).css("--bwidth"));
+                    $(menu[i]).css("left", 775 * 0.2 + p($(menu[i]).css("left")) * 0.8);
+                    $(menu[i]).css("width", p($(menu[i]).css("width")) * 0.8);
+                    $(menu[i]).css("top", (i-blindex+1-$(menu[i]).css("--bindex"))*55 + 10 + ($(menu[i]).css("--bindex")==0 ? 0 : boffset[$(menu[i]).css("--bindex")-1].total));
+                } else if($(menu[i]).attr("class").includes("bholder")) {
+                    $(menu[i]).css("top", (i-bhindex+2)*55 + 10 + ((i-bhindex)==0 ? 0 : boffset[i-bhindex-1].total));
+                    $(menu[i]).css("height", boffset[i-bhindex].current);
+                    $(menu[i]).css("left", 875 * 0.2 + p($(menu[i]).css("left")) * 0.8);
                 } else {
-                    $($(".bmenu")[i]).css("margin-right", pxtonum($($(".bmenu")[i]).css("margin-right")) * 0.8-200*0.2);
+                    $(menu[i]).css("margin-right", p($(menu[i]).css("margin-right")) * 0.8-200*0.2);
+                    $(menu[i]).css("margin-top", (i+1)*55 + 10 + (i==0 ? 0 : boffset[i-1].total));
                 }
             }
             // $(".bmenu").css("margin-right") = $(".bmenu").css("margin-right") * 0.8 + -200*0.2;
@@ -214,15 +242,36 @@
     }
 
     window.setInterval(parallaxheightupdate, 64);
+    function load() {
+        // Handle menu setting
+        for(let i = 0; i < /*Set menus*/ 10; i++)
+            boffset.push({max: 10, current: 0, total:0, on: false});
+        menu = $(".bmenu");
+        for(let i = 0; i < menu.length; i++) {
+            if($(menu[i]).attr("class").includes("bline")) {
+                if(blindex==0)
+                    blindex = i;
+            } else if($(menu[i]).attr("class").includes("bholder")) {
+                if(bhindex==0)
+                    bhindex = i;
+            }
+            else {
+                boffset[i].max = $(menu[i]).css("--bsize");
+            }
+        }
+    }
+
+    function menuSelected(i) {
+        // i is the index of the menu. Home = 0, Projects = 1, Resources = 2, etc.
+        boffset[i].on = !boffset[i].on;
+        if(boffset[i].on) {
+            $($(".linkpages")[i]).children().css("color", "#344065");
+        } else {
+            $($(".linkpages")[i]).children().css("color", "#6880cb");
+        }
+    }
 
     function openmenu() {
-        // if($(".bmenu").first().css("visibility") == "visible") {
-        //     // $(".bmenu").css("visibility", "hidden");
-        //     $(".bline").css("data-in", 1);
-        // } else {
-        //     // $(".bmenu").css("visibility", "visible");
-        //     $(".bline").css("data-in", 0);
-        // }
         menuout = !menuout;
     }
 </script>
@@ -281,16 +330,34 @@
     </div>
 </div> -->
 
-<div style="position: relative; margin: auto; width: 800px; height:200px; float:right">
+<div style="position: relative; margin: auto; width: 800px; height:200px; float: right">
     <a href="#" onclick="openmenu()"><div id="hamburger" style="width:50px; height:50px; position: absolute; top:25px; left: 725px">
         <div id="top bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; border-radius: 20px"></div>
         <div id="meat" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; margin-top: 10px; border-radius: 20px"></div>
         <div id="bottom bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; margin-top: 10px; border-radius: 20px"></div>
     </div></a>
-    <div class="bmenu" style="margin-top:60px; margin-right: 25px">
-        <a class = "linkpages" href="index"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Home</h5></a>
+    <div class="bmenu" style="margin-top:65px; --bsize: 100; margin-right: -200px; margin-left: -200;">
+        <a class = "linkpages" href="#" onclick="menuSelected(0)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Home</h5></a>
     </div>
-    <div class="bmenu bline" style="position: absolute; left: 675px; top:65px; --bwidth:100px; data-in: 0; width: 100px; height: 10px"></div>
-    <div class="bmenu bline" style="position: absolute; left: 675px; top: 110; --bwidth:100px; data-in: 0; width: 100px; height: 10px"></div>
+    <div class="bmenu" style="margin-top:120px; --bsize: 200; margin-right: -200px; margin-left: -200">
+        <a class = "linkpages" href="#" onclick="menuSelected(1)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Projects</h5></a>
+    </div>
+    <div class="bmenu" style="margin-top:175px; --bsize: 100; margin-right: -200px; margin-left: -200">
+        <a class = "linkpages" href="#" onclick="menuSelected(2)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Resources</h5></a>
+    </div>
+    <div class="bmenu bline" style="position: absolute; --bindex:0; --bwidth:100; height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:0; --bwidth:100;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:1; --bwidth:140;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:1; --bwidth:140;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:2; --bwidth:185;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:2; --bwidth:185;  height: 10"></div>
+    <div class="bmenu bholder" style="position: absolute; left:575px; width:200px; height:0px; float:right; overflow:hidden;">
+        <a class="linkpages" href="index" style="float:right; margin-top: 0px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">Homepage</h5></a>
+        <a class="linkpages" href="about" style="float:right; margin-top: 40px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">About</h5></a>
+    </div>
+    <div class="bmenu bholder" style="position: absolute; left:575px; width:200px; height:0px; float:right; overflow:hidden;">
+        <a class="linkpages" href="arvopia" style="float:right; margin-top:0px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">Arvopia</h5></a>
+        <a class="linkpages" href="funstuff" style="float:right; margin-top: 40px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">Fun stuff</h5></a>
+    </div>
 </div>
  <!-- <div style="position: relative; margin: auto; width: 100%; height:200;"></div> -->
