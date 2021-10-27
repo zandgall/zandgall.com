@@ -248,7 +248,7 @@ function proj() {
         var w = parseFloat(projs[i].style.width);
         var h = parseFloat(projs[i].style.height);
 
-        if($(projs[i]).data("defwidth")==undefined) {
+        if ($(projs[i]).data("defwidth") == undefined) {
             $(projs[i]).data("defwidth", w);
             $(projs[i]).data("defheight", h);
         }
@@ -258,7 +258,7 @@ function proj() {
         var t = projs[i].style.marginTop == "" ? 0 : parseFloat(projs[i].style.marginTop);
         var b = projs[i].style.marginBottom == "" ? 0 : parseFloat(projs[i].style.marginBottom);
         var c = img.style.borderColor == "" ? "rgba(75,175,220,0.1)" : img.style.borderColor;
-        var bo = parseFloat(c.replace(/^rgba?\(|\s+|\)$/g, '').split(',')[3]); 
+        var bo = parseFloat(c.replace(/^rgba?\(|\s+|\)$/g, '').split(',')[3]);
         var ra = img.style.borderRadius == "" ? 1 : parseFloat(img.style.borderRadius);
         var o = parseFloat(over.style.opacity);
         var split = projs[i].querySelector(".splitter");
@@ -271,10 +271,10 @@ function proj() {
             projs[i].parentElement.setAttribute("disabled", false);
         }
 
-        if ((lmouseX > r.left - ((l / 100.0) * 800) && lmouseX <= r.left + (((w+l) / 100.0) * 800) && lmouseY > r.top - t + scrollY && lmouseY <= r.bottom + b + scrollY) || $(projs[i].parentElement).is(':focus')) {
+        if ((lmouseX > r.left - ((l / 100.0) * 800) && lmouseX <= r.left + (((w + l) / 100.0) * 800) && lmouseY > r.top - t + scrollY && lmouseY <= r.bottom + b + scrollY) || $(projs[i].parentElement).is(':focus')) {
             over.style.opacity = o + desire(0, o);
-            h += desire(parseFloat($(projs[i]).data("defheight"))*1.2, h);
-            w += desire(parseFloat($(projs[i]).data("defwidth"))*1.2, w);
+            h += desire(parseFloat($(projs[i]).data("defheight")) * 1.2, h);
+            w += desire(parseFloat($(projs[i]).data("defwidth")) * 1.2, w);
             projs[i].style.width = (w) + "%";
             projs[i].style.height = h;
             projs[i].style.marginTop = (parseFloat($(projs[i]).data("defheight")) - h) / 2;
@@ -341,25 +341,25 @@ function proj() {
 
 function desirestyle(object, data, value) {
     var s = parseFloat($(object).css(data));
-    $(object).css(data, s+desire(value, s));
+    $(object).css(data, s + desire(value, s));
 }
 
 function desiresstyle(object, data, value, speed) {
     var s = parseFloat($(object).css(data));
-    $(object).css(data, s+desires(value, s, speed));
+    $(object).css(data, s + desires(value, s, speed));
 }
 
 function link() {
     var links = $(".link");
 
-    for(var i = 0; i < links.length; i++) {
+    for (var i = 0; i < links.length; i++) {
         var width = $(links[i]).width();
         var height = $(links[i]).height();
         var x = $(links[i]).offset().left;
         var y = $(links[i]).offset().top;
         var hovered = lmouseX > x && lmouseX < x + width && lmouseY > y && lmouseY < y + height + 20;
 
-        if(hovered||$(links[i]).is(":focus")||$(links[i]).find(".linkpages").is(":focus")) {
+        if (hovered || $(links[i]).is(":focus") || $(links[i]).find(".linkpages").is(":focus")) {
             desirestyle($(links[i]).find(".linkbottom"), "margin-top", 0);
             desirestyle($(links[i]).find(".linktop"), "margin-bottom", 0);
             desirestyle($(links[i]).find(".linktop"), "margin-top", 0);
@@ -528,65 +528,9 @@ function ldraw() {
 }
 
 function cssNight() {
-    if (night) {
-        $(".section").css("background", "linear-gradient(rgb(56, 56, 78), rgb(44, 46, 64))");
-        $(".section").css("border", "2px solid rgba(3, 9, 52, 0.5)");
-        $("p").css("color", "#e8eaf5");
-        $("h1").css("color", "rgb(234, 232, 248)");
-        $("h2").css("color", "#e3e3e6");
-        $("h3").css("color", "#e3e3e6");
-        $("h4").css("color", "#e3e3e6");
-        $("a").css("color", "#f239f2");
-        $(".title").css("color", "#e3e3e6");
-        $("img").css("opacity", "0.7");
-        $("img.paracloud").css("opacity", "0.3");
-        $(".parallaximg").css("opacity", "1");
-        $(".parallaxgradient").css("background", "linear-gradient(rgba(80, 60, 100, 0), rgba(60, 30, 90, 0.7), rgba(30, 5, 60, 0.7))");
-        $(".outlinetext").css("text-shadow", "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000,1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000");
-        $(".outlinetext").css("color", "rgb(234, 232, 248)");
-        $(".option").find("*").css("color", "inherit");
-
-        $("body").css("background", "linear-gradient(rgb(22,22,50), rgb(15, 8, 33))");
-        $("#cut").css("background", "url('assets/background/spacebg.png')");
-        if(localStorage["zandgall.stars"]=="false")
-            $("#cut").css("background", "transparent");
-        $(".nightoverlay").css("opacity", "1");
-
-        $(".linktop").css("background-color", 'rgb(149, 177, 222)');
-        $(".linkbottom").css("background-color", 'rgb(149, 177, 222)');
-        $(".link").find("*").css("color", 'rgb(149, 177, 222)');
-        $(":focus").css("color", 'rgb(190, 220, 255)');
-        $(".option").css("color", 'rgb(149, 177, 222)');
-        $(":hover").css("color", 'rgb(190, 220, 255)');
-    } else {
-        $(".section").css("background", "linear-gradient(rgb(147, 198, 237), rgb(132, 184, 211))");
-        $(".section").css("border", "2px solid rgba(59, 99, 163, 0.5)");
-        $("p").css("color", "#37383c");
-        $("h1").css("color", "#201f2a");
-        $("h2").css("color", "#201f2a");
-        $("h3").css("color", "#201f2a");
-        $("h4").css("color", "#201f2a");
-        $("a").css("color", "#0000ff");
-        $(".title").css("color", "#00d8ff");
-        $("img").css("opacity", "1");
-        $("img.paracloud").css("opacity", "0.5");
-        $(".parallaxgradient").css("background", "linear-gradient(rgba(100, 141, 255, 0), rgba(100, 141, 255, 0.3), rgba(80, 102, 200, 0.7))");
-        $(".outlinetext").css("text-shadow", "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000,1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000");
-        $(".outlinetext").css("color", "rgb(244, 242, 255)");
-        $(".option").find("*").css("color", "inherit");
-
-        $("body").css("background", "linear-gradient(rgb(100,200,255), rgb(94, 133, 239))");
+    if (night && localStorage["zandgall.stars"] == "false")
         $("#cut").css("background", "transparent");
-        $(".nightoverlay").css("opacity", "0");
-
-        $(".linktop").css("background-color", "rgb(36, 84, 162)");
-        $(".linkbottom").css("background-color", "rgb(36, 84, 162)");
-        // $(".link").find("*").css("color", 'rgb(36, 84, 162)');
-        $(".link").css("color", '#6880cb');
-        $(":focus").css("color", 'rgb(200, 210, 140)');
-        $(".option").css("color", 'rgb(36, 84, 162)');
-        $(":hover").css("color", 'rgb(200, 210, 140)');
-    }
+    else $("#cut").css("background", "url('assets/background/spacebg.png')");
 }
 
 function layerInit() {
@@ -615,9 +559,6 @@ function layerInit() {
     cloudImgs[2].src = "assets/background/Cloud3.png";
     cloudImgs[3] = new Image();
     cloudImgs[3].src = "assets/background/Cloud4.png";
-
-    night = (localStorage["zandgall_dayNight"] || "day") == "night";
-    if(night) $(".sunmoon").attr("src", "assets/background/Moon.png");
     cssNight();
 }
 
@@ -726,13 +667,13 @@ function set(no1, no2, no3, nr1, nr2, nr3) {
     r3 = nr3;
 }
 
-$("document").ready(function () {
+$("document").ready(function() {
     console.log("Supposedly initiating");
     layerInit();
     cssNight();
 });
 
-$("a").on("click", function (event) {
+$("a").on("click", function(event) {
     if ($(this).is("[disabled]")) {
         event.preventDefault();
     }

@@ -38,9 +38,9 @@
         <img class = 'paracloud pacl1' src = 'assets/background/Cloud3.png' style="height: 108" alt="cloud">
         <img class = 'paracloud pacl1' src = 'assets/background/Cloud4.png' style="height: 108" alt="cloud">
     </div>
-    <div class = "parallax__layer parallax__layer--base" style="top: 3564px; height: inherit; width:230vw; left: -100vw; background-image: url('assets/background/BGImg36.png'); background-repeat:repeat;">
+    <div class = "parallax__layer parallax__layer--base" style="top: 2564px; height: inherit; width:230vw; left: -100vw; background-image: url('assets/background/BGImg36.png'); background-repeat:repeat;">
         <div class = "parallaxgradient"></div>
-        <img class = "parallaximg" src = "assets/background/bg0.png" alt="even more hills" style="image-rendering: pixelated; object-fit: cover; height: 2088; margin-top:-2088px; filter:none">
+        <img class = "parallaximg" src = "assets/background/bg0.png" alt="even more hills" style="image-rendering: pixelated; object-fit: cover; height: 1044; margin-top:-1044px; filter:none">
         <!-- <img class = "parallaximg" alt="lots o' dirt" width=7140 height=7424 style="border:0; background-image: url('assets/background/BGImg36.png'); background-repeat: repeat; image-rendering: pixelated; object-fit: cover; filter: none; visibility:none"> -->
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud1.png' style="height: 72" alt="cloud">
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud2.png' style="height: 72" alt="cloud">
@@ -73,26 +73,24 @@
 
     function killclouds() {
         if(cloudToggled) {
-            cloudToggled = false;
             $(".paracloud").css("visibility", "hidden");
             localStorage["zandgall.cloud"] = "false";
         } else {
-            cloudToggled = true;
             $(".paracloud").css("visibility", "visible");
             localStorage["zandgall.cloud"] = "true";
         }
+        cloudToggled = !cloudToggled; 
     }
 
     function killlayers() {
         if(layerToggled) {
-            layerToggled = false;
             $(".parallax__layer").css("visibility", "hidden");
             localStorage["zandgall.layer"] = "false";
         } else {
-            layerToggled = true;
             $(".parallax__layer").css("visibility", "visible");
             localStorage["zandgall.layer"] = "true";
         }
+        layerToggled = !layerToggled;
     }
 
     function killstars() {
@@ -103,12 +101,15 @@
         night = !night;
         if(night) {
             $(".sunmoon").attr("src", "assets/background/Moon.png");
-            $(".sunmoon").attr("alt", "Moon")
+            $(".sunmoon").attr("alt", "( o)")
+            $("*").addClass("night");
         }
         else {
             $(".sunmoon").attr("src", "assets/background/Sun.png");
-            $(".sunmoon").attr("alt", "Sun");
+            $(".sunmoon").attr("alt", "☼");
+            $("*").removeClass("night");
         }
+        document.documentElement.style.setProperty("--night", night ? 1 : 0);
     }
 
     function p(str) {
@@ -258,6 +259,10 @@
             else {
                 boffset[i].max = $(menu[i]).css("--bsize");
             }
+        }
+
+        if ((localStorage["zandgall_dayNight"] || "day") == "night") {
+            togglenight();
         }
     }
 

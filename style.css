@@ -1,19 +1,20 @@
-/* <style> */
-@keyframes fleft {
-    flow-from {left: 0}
-    flow-into {left: 200}
+/*<style>*/
+
+:root {
+    --night: "false";
 }
 
 a[disabled] {
     pointer-events: none;
 }
-        
-table, tt, th, td {
-    border: 1px solid black;
-}
 
 img {
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.7));
+    opacity: 1;
+}
+
+img.night {
+    opacity: 0.7;
 }
 
 .projimg[hovered="false"] {
@@ -24,15 +25,10 @@ img {
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.7));
 }
 
-@keyframes blinekey {
-    0% {width: 0; left: 775}
-    100% {width: --bwidth; left: 675}
-}
-
 .bline {
     height: 10px;
     border: solid 0px;
-    background-color:#6880cb;
+    background-color: #6880cb;
     border-radius: 20px;
 }
 
@@ -42,152 +38,167 @@ img {
     animation-timing-function: ease-out;
 }
 
-        .title {
-            font-family: 'Signika', serif;
-            font-size: 48;
-            color: aqua;
-            text-shadow: 
-            -1.5px -1.5px 0 #000,
-            1.5px -1.5px 0 #000,
-            -1.5px 1.5px 0 #000,
-            1.5px 1.5px 0 #000,
-            0px -1.5px 0 #000,
-            0px 1.5px 0 #000,
-            -1.5px 0px 0 #000,
-            1.5px 0px 0 #000;
-        }
-        
-        .splitter {
-            width: 600;
-            height: 2;
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-            background: rgb(20,10,50);
-        }
+.title {
+    font-family: 'Signika', serif;
+    font-size: 48;
+    color: #00d8ff;
+    text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000;
+}
 
-        .linktop {
-            width: 600;
-            height: 3;
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-            background: rgb(20,10,50);
-            border-radius: 1.5px;
-            width: inherit;
-        }
+.title.night {
+    color: #e3e3e6
+}
 
-        .linkbottom {
-            width: 600;
-            height: 3;
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-            background: rgb(20,10,50);
-            border-radius: 3px;
-            width: inherit;
-        }
-        
-        .section {
-            background: linear-gradient(rgb(124, 182, 229), rgb(40, 87, 232));
-            border-radius: 15px;
-            border: 5px solid rgb(42, 57, 232);
-            box-shadow: 0 0 8px 0px #22222c;
-        }
-        
-        .bg {
-            position: fixed;
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+.splitter {
+    width: 600;
+    height: 2;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(20, 10, 50);
+}
 
-        .basictext {
-            position:relative;
-            font-family: sans-serif;
-            font-weight: bold;
-            text-align: center;
-        }
+.linktop {
+    width: 600;
+    height: 3;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(36, 84, 162);
+    border-radius: 1.5px;
+    width: inherit;
+}
 
-        .linkpages {
-            text-decoration: none;
-            position:relative;
-            font-family: sans-serif;
-            font-weight: bold;
-            font-size: 18;
-            text-align: center;
-            margin: auto;
-            display: flex;
-        }
+.linktop.night {
+    background-color: rgb(149, 177, 222);
+}
 
-        .link {
-            margin: auto; 
-            height: auto; 
-            position: relative; 
-            top: 10;
-            z-index: 2;
-        }
+.linkbottom {
+    width: 600;
+    height: 3;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(36, 84, 162);
+    border-radius: 3px;
+    width: inherit;
+}
 
-        .linkpages:hover {
-            color: rgb(190, 200, 232);
-        }
-        
-        .outlinetext {
-            color:rgb(234, 232, 248);
-            text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000,1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000
-        }
+.linkbottom.night {
+    background-color: rgb(149, 177, 222);
+}
 
-        .outlinedtext {
-            text-shadow: 
-            -1.5px -1.5px 0 #000,
-            1.5px -1.5px 0 #000,
-            -1.5px 1.5px 0 #000,
-            1.5px 1.5px 0 #000,
-            0px -1.5px 0 #000,
-            0px 1.5px 0 #000,
-            -1.5px 0px 0 #000,
-            1.5px 0px 0 #000;
-        }
+.section {
+    background: linear-gradient(rgb(124, 182, 229), rgb(114, 142, 224));
+    border-radius: 15px;
+    border: 2px solid rgba(59, 99, 163, 0.5);
+    box-shadow: 0 0 8px 0px #22222c;
+}
 
-        .projsubtitle {
-            color:rgb(234, 232, 248);
-            text-shadow: 
-            -2.5px -2.5px 0 #000,
-            2.5px -2.5px 0 #000,
-            -2.5px 2.5px 0 #000,
-            2.5px 2.5px 0 #000,
-            0px -2.5px 0 #000,
-            0px 2.5px 0 #000,
-            -2.5px 0px 0 #000,
-            2.5px 0px 0 #000; 
-            /* text-shadow: 0px 0px -4px black; */
-        }
+.section.night {
+    background: linear-gradient(rgb(56, 56, 78), rgb(44, 46, 64));
+    border-radius: 15px;
+    border: 2px solid rgba(3, 9, 52, 0.5);
+    box-shadow: 0 0 8px 0px #22222c;
+}
 
-        html, body {
-            margin: 0px;
-            border: 0;
-            display: block;  /* No floating content on sides */
-            height: auto;
-            width: 100%;
-            background: linear-gradient(rgb(100,200,255), rgb(94, 133, 239));
-            background-repeat: no-repeat;
-        }
-        
-        @keyframes frombottom {
-            from   {top:100px;}
-            to {top:0px;}
-        }
-        @keyframes fb {
-            from   {}
-            to {}
-        }
-        
-        @keyframes fbimg {
-            from   {opacity:1}
-            to {opacity:1}
-        }
-    
+.bg {
+    position: fixed;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.basictext {
+    position: relative;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.linkpages {
+    text-decoration: none;
+    position: relative;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18;
+    text-align: center;
+    margin: auto;
+    display: flex;
+}
+
+.link {
+    margin: auto;
+    height: auto;
+    position: relative;
+    top: 10;
+    z-index: 2;
+    color: #6880cb
+}
+
+.link.night {
+    color: rgb(149, 177, 222)
+}
+
+.outlinetext {
+    color: rgb(244, 242, 255);
+    text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000
+}
+
+.outlinetext {
+    color: rgb(234, 232, 248)
+}
+
+.outlinedtext {
+    text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000;
+}
+
+.projsubtitle {
+    color: rgb(234, 232, 248);
+    text-shadow: -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 2.5px 2.5px 0 #000, 0px -2.5px 0 #000, 0px 2.5px 0 #000, -2.5px 0px 0 #000, 2.5px 0px 0 #000;
+    /* text-shadow: 0px 0px -4px black; */
+}
+
+html,
+body {
+    margin: 0px;
+    border: 0;
+    display: block;
+    /* No floating content on sides */
+    height: auto;
+    width: 100%;
+    background: linear-gradient(rgb(47, 180, 255), rgb(164, 229, 255));
+    background-repeat: no-repeat;
+}
+
+body.night {
+    background: linear-gradient(rgb(22, 22, 50), rgb(15, 8, 33));
+}
+
+@keyframes frombottom {
+    from {
+        top: 100px;
+    }
+    to {
+        top: 0px;
+    }
+}
+
+@keyframes fb {
+    from {}
+    to {}
+}
+
+@keyframes fbimg {
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 1
+    }
+}
+
 .nightoverlay {
     /* position: absolute; */
     border: 0;
@@ -196,8 +207,12 @@ img {
     margin: 0;
     overflow: overlay;
     z-index: 6;
-
     background: radial-gradient(circle at 160px 300px, rgba(10, 5, 34, 0.0) 0%, rgba(21, 19, 34, 0.7) 15%);
+    opacity: 0
+}
+
+.nightoverlay.night {
+    opacity: 1
 }
 
 .bgimg {
@@ -210,10 +225,82 @@ img {
     height: 100px;
     position: fixed;
 }
+
 .option {
-    position: absolute; 
-    left: 10px; 
-    z-index: 7; 
-    text-decoration: none
+    position: absolute;
+    left: 10px;
+    z-index: 7;
+    text-decoration: none;
+    color: rgb(36, 84, 162);
 }
+
+.option.night {
+    color: rgb(149, 177, 222)
+}
+
+p {
+    color: #e8eaf5;
+}
+
+p.night {
+    color: #37383c;
+}
+
+h1 {
+    color: #201f2a;
+}
+
+h1.night {
+    color: rgb(234, 232, 248);
+}
+
+h2 {
+    color: #201f2a;
+}
+
+h2.night {
+    color: #e3e3e6;
+}
+
+h3 {
+    color: #201f2a;
+}
+
+h3.night {
+    color: #e3e3e6;
+}
+
+h4 {
+    color: #201f2a;
+}
+
+h4.night {
+    color: #e3e3e6
+}
+
+a {
+    color: #0000ff
+}
+
+a.night {
+    color: #f239f2
+}
+
+:hover {
+    color: rgb(200, 210, 140)
+}
+
+:focus {
+    color: rgb(200, 210, 140)
+}
+
+.night:focus {
+    color: rgb(190, 220, 255)
+}
+
+.night:hover {
+    color: rgb(190, 220, 255)
+}
+
+
 /* </style> */
