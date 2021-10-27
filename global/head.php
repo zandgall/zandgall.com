@@ -57,9 +57,9 @@
     <div class = "parallax__layer parallax__layer--deep nightoverlay" style="left: -100vw; top: -100vh; z-index: 6;"></div>
 </div>
 
-<a class="option" href="#" style="top: 220px; z-index: 10; " onclick="killclouds()"><h3 class="basictext" style="margin: auto">Toggle Clouds</h3></a>
+<!-- <a class="option" href="#" style="top: 220px; z-index: 10; " onclick="killclouds()"><h3 class="basictext" style="margin: auto">Toggle Clouds</h3></a>
 <a class="option" href="#" style="top: 250px; z-index: 10;" onclick="killlayers()"><h3 class="basictext" style="margin: auto">Toggle Layers</h3></a>
-<a class="option" href="#" style="top: 280px; z-index: 10" onclick="killstars()"><h3 class="basictext" style="margin: auto">Toggle Stars</h3></a>
+<a class="option" href="#" style="top: 280px; z-index: 10" onclick="killstars()"><h3 class="basictext" style="margin: auto">Toggle Stars</h3></a> -->
 
 <script type="application/javascript">
     function f(x) {
@@ -155,7 +155,7 @@
                 } else if($(menu[i]).attr("class").includes("bholder")) {
                     $(menu[i]).css("top", (i-bhindex+2)*55 + 10 + ((i-bhindex)==0 ? 0 : boffset[i-bhindex-1].total));
                     $(menu[i]).css("height", boffset[i-bhindex].current);
-                    $(menu[i]).css("left", 575 * 0.2 + p($(menu[i]).css("left")) * 0.8);
+                    $(menu[i]).css("left", 475 * 0.2 + p($(menu[i]).css("left")) * 0.8);
                 } else {
                     $(menu[i]).css("margin-right", p($(menu[i]).css("margin-right")) * 0.8+5);
                     $(menu[i]).css("margin-top", (i+1)*55 + 10 + (i==0 ? 0 : boffset[i-1].total));
@@ -255,6 +255,10 @@
             } else if($(menu[i]).attr("class").includes("bholder")) {
                 if(bhindex==0)
                     bhindex = i;
+                for(let j = 0; j < $(menu[i]).children().length; j++) {
+                    $($(menu[i]).children()[j]).css("margin-top", j*40);
+                }
+                boffset[i-bhindex].max = $(menu[i]).children().length*40 + 10;
             }
             else {
                 boffset[i].max = $(menu[i]).css("--bsize");
@@ -341,14 +345,17 @@
         <div id="meat" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; margin-top: 10px; border-radius: 20px"></div>
         <div id="bottom bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; margin-top: 10px; border-radius: 20px"></div>
     </div></a>
-    <div class="bmenu" style="margin-top:65px; --bsize: 100; margin-right: -200px; margin-left: -200;">
+    <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200;">
         <a class = "linkpages" href="#" onclick="menuSelected(0)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Home</h5></a>
     </div>
-    <div class="bmenu" style="margin-top:120px; --bsize: 200; margin-right: -200px; margin-left: -200">
+    <div class="bmenu" style="--bsize: 410; margin-right: -200px; margin-left: -200">
         <a class = "linkpages" href="#" onclick="menuSelected(1)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Projects</h5></a>
     </div>
-    <div class="bmenu" style="margin-top:175px; --bsize: 100; margin-right: -200px; margin-left: -200">
+    <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200">
         <a class = "linkpages" href="#" onclick="menuSelected(2)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Resources</h5></a>
+    </div>
+    <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200">
+        <a class = "linkpages" href="#" onclick="menuSelected(3)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Misc</h5></a>
     </div>
     <div class="bmenu bline" style="position: absolute; --bindex:0; --bwidth:100; height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:0; --bwidth:100;  height: 10"></div>
@@ -356,13 +363,38 @@
     <div class="bmenu bline" style="position: absolute; --bindex:1; --bwidth:140;  height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:2; --bwidth:185;  height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:2; --bwidth:185;  height: 10"></div>
-    <div class="bmenu bholder" style="position: absolute; left:575px; width:200px; height:0px; float:right; overflow:hidden;">
-        <a class="linkpages" href="index" style="float:right; margin-top: 0px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">Homepage</h5></a>
-        <a class="linkpages" href="about" style="float:right; margin-top: 40px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">About</h5></a>
+    <div class="bmenu bline" style="position: absolute; --bindex:3; --bwidth:100;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:3; --bwidth:100;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:4; --bwidth:100;  height: 10"></div>
+    <div class="bmenu bholder">
+        <a class="linkpages" href="index"><h3 class="basictext link linkpages">Homepage</h3></a>
+        <a class="linkpages" href="about"><h3 class="basictext link linkpages">About</h3></a>
     </div>
-    <div class="bmenu bholder" style="position: absolute; left:575px; width:200px; height:0px; float:right; overflow:hidden;">
-        <a class="linkpages" href="arvopia" style="float:right; margin-top:0px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">Arvopia</h5></a>
-        <a class="linkpages" href="funstuff" style="float:right; margin-top: 40px; margin-left: -200px"><h5 class="basictext link" style="font-size: 2em; color: #6880cb; text-align: right">Fun stuff</h5></a>
+    <div class="bmenu bholder">
+        <a class="linkpages" href="arvopia"><h3 class="basictext link linkpages">Arvopia</h3></a>
+        <a class="linkpages" href="bubblecannons"><h3 class="basictext link linkpages">BubbleCannons</h3></a>
+        <a class="linkpages" href="solarglyphs"><h3 class="basictext link linkpages">SolarGlyphs</h3></a>
+        <a class="linkpages" href="marbo"><h3 class="basictext link linkpages">Marbo</h3></a>
+        <a class="linkpages" href="lants"><h3 class="basictext link linkpages">Lants</h3></a>
+        <a class="linkpages" href="schute"><h3 class="basictext link linkpages">Schute!</h3></a>
+        <a class="linkpages" href="fallingmine"><h3 class="basictext link linkpages">Falling Mine</h3></a>
+        <a class="linkpages" href="mapcreator"><h3 class="basictext link linkpages">Map creator</h3></a>
+        <a class="linkpages" href="normalbuddy"><h3 class="basictext link linkpages">Normal Buddy</h3></a>
+        <a class="linkpages" href="miscarvopiatools"><h3 class="basictext link linkpages">Misc Arvopia Tools</h3></a>
+    </div>
+    <div class="bmenu bholder">
+        <a class="linkpages" href="funstuff"><h3 class="basictext link linkpages">Fun stuff</h3></a>
+        <a class="linkpages" href="otherdownload"><h3 class="basictext link linkpages">Project Downloads</h3></a>
+        <a class="linkpages" href="arvopiadownload"><h3 class="basictext link linkpages">Arvopia Downloads</h3></a>
+        <a class="linkpages" href="music"><h3 class="basictext link linkpages">Music</h3></a>
+        <!-- <a class="linkpages" href="resume"><h3 class="basictext link linkpages">Resume</h3></a> -->
+    </div>
+    <div class="bmenu bholder">
+        <a class="linkpages" href="#" onclick="killclouds()"><h3 class="basictext link linkpages">Toggle Clouds</h3></a>
+        <a class="linkpages" href="#" onclick="killlayers()"><h3 class="basictext link linkpages">Toggle Layers</h3></a>
+        <a class="linkpages" href="#" onclick="killstars()"><h3 class="basictext link linkpages">Toggle Stars</h3></a>
+        <a class="linkpages" href="arvopialevelcreator"><h3 class="basictext link linkpages">Arvopia Level Creator</h3></a>
+        <a class="linkpages" href="arvopialevelcreatordownload"><h3 class="basictext link linkpages">ALC Download</h3></a>
     </div>
 </div>
  <!-- <div style="position: relative; margin: auto; width: 100%; height:200;"></div> -->
