@@ -12,7 +12,7 @@
 <div class = "parallax__group" style="margin: 0; position: absolute; width: inherit;">
     <div class = "parallax__layer parallax__layer--deep" style="top: -1080px; left:-100vw; width:inherit; height: inherit">
         <div class = "parallaxgradient"></div>
-        <img class = "parallaximg" src = "assets/background/bg2.png" alt="hills" style="top:240px; position:absolute; image-rendering: pixelated; object-fit: cover; height: 4644; object-position: -100vw 0">
+        <img class = "parallaximg parallax__layer--deep" src = "assets/background/bg2.png" alt="hills" style="top:240px; position:absolute; image-rendering: pixelated; object-fit: cover; height: 4644; object-position: -100vw 0">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud1.png' style="height: 144" alt="cloud">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud2.png' style="height: 144" alt="cloud">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud3.png' style="height: 144" alt="cloud">
@@ -28,7 +28,7 @@
     </div>
     <div class = "parallax__layer parallax__layer--back" style="top: 0vh; width:inherit; height:inherit; left: -100vw">
         <div class = "parallaxgradient"></div>
-        <img class = "parallaximg" src = "assets/background/bg1.png" alt="more hills" style="image-rendering: pixelated; object-fit: cover; height: 3483">
+        <img class = "parallaximg parallax__layer--back" src = "assets/background/bg1.png" alt="more hills" style="image-rendering: pixelated; object-fit: cover; height: 3483">
         <img class = 'paracloud pacl1' src = 'assets/background/Cloud1.png' style="height: 108" alt="cloud">
         <img class = 'paracloud pacl1' src = 'assets/background/Cloud2.png' style="height: 108" alt="cloud">
         <img class = 'paracloud pacl1' src = 'assets/background/Cloud3.png' style="height: 108" alt="cloud">
@@ -40,7 +40,7 @@
     </div>
     <div class = "parallax__layer parallax__layer--base" style="top: 2564px; height: inherit; width:230vw; left: -100vw; background-image: url('assets/background/BGImg36.png'); background-repeat:repeat;">
         <div class = "parallaxgradient"></div>
-        <img class = "parallaximg" src = "assets/background/bg0.png" alt="even more hills" style="image-rendering: pixelated; object-fit: cover; height: 1044; margin-top:-1044px; filter:none">
+        <img class = "parallaximg parallax__layer--base" src = "assets/background/bg0.png" alt="even more hills" style="image-rendering: pixelated; object-fit: cover; height: 1044; margin-top:-1044px; filter:none">
         <!-- <img class = "parallaximg" alt="lots o' dirt" width=7140 height=7424 style="border:0; background-image: url('assets/background/BGImg36.png'); background-repeat: repeat; image-rendering: pixelated; object-fit: cover; filter: none; visibility:none"> -->
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud1.png' style="height: 72" alt="cloud">
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud2.png' style="height: 72" alt="cloud">
@@ -131,6 +131,49 @@
         if($("#universal")[0].scrollHeight > 4644)
             $(".parallaxgradient").css("height", $("#universal")[0].scrollHeight);
         $(".nightoverlay").css("height", $("#universal")[0].scrollHeight*4);
+
+        // var s = $(".sunmoon");        
+        // if(lmouseX>32&&lmouseX<72&&lmouseY>80-$("#universal").scrollTop()/4&&lmouseY<120-$("#universal").scrollTop()/4){  // If mouse over sun/moon
+        //     $("html,body").css("cursor", "pointer");
+        // } else {
+        //     $("html,body").css("cursor", "");
+        // }
+
+        // if(lmouseX<300) {
+        //     var x = $(".option").offset().left;
+        //     $(".option").css("left", x + desire(10, x));
+        // } else {
+        //     var x = $(".option").offset().left;
+        //     $(".option").css("left", x + desire(-200, x));
+        // }
+
+        if(!cloudToggled)
+            return;
+        var clouds = $(".paracloud");
+        for(var i = 0; i < clouds.length; i++) {
+            var rat = 1;
+            if($(clouds[i]).is(".pacl0"))
+                rat = 3;
+            if($(clouds[i]).is(".pacl1"))
+                rat = 2;
+                // $(clouds[i]).css("left", f($(clouds[i]).css("left"))+f($(clouds[i]).data("data-speed")));
+            var trans = $(clouds[i]).css("transform") || $(clouds[i]).css("-webkit-transform") || $(clouds[i]).css("-moz-transform") || $(clouds[i]).css("-mz-transform") || $(clouds[i]).css("-o-transform");
+            var mat = (trans.replace(/[^0-9\-.,]/g, '').split(','));
+            var x = f(mat[12] || mat[4] || 0) + f($(clouds[i]).data("data-speed"));
+            $(clouds[i]).css("transform", "translateX("+ x + "px)");
+            $(clouds[i]).css("-webkit-transform", "translateX("+ x + "px)");
+            $(clouds[i]).css("-moz-transform", "translateX("+ x + "px)");
+            $(clouds[i]).css("-mz-transform", "translateX("+ x + "px)");
+            $(clouds[i]).css("-o-transform", "translateX("+ x + "px)");
+            if(x>f($("body").width())*rat - f($(clouds[i]).parent().css("left"))){
+                $(clouds[i]).css("transform", "translateX(-400px)");
+                $(clouds[i]).css("top", Math.random()*1000*rat);
+            }
+        }
+        lmouseClicked = false;
+    }
+
+    function menuupdate() {
         if(menu.length == 0)
             load();
         for(let i = 0; i < boffset.length; i++) {
@@ -180,46 +223,6 @@
             }
             // $(".bmenu").css("margin-right") = $(".bmenu").css("margin-right") * 0.8 + -200*0.2;
         }
-
-        // var s = $(".sunmoon");        
-        // if(lmouseX>32&&lmouseX<72&&lmouseY>80-$("#universal").scrollTop()/4&&lmouseY<120-$("#universal").scrollTop()/4){  // If mouse over sun/moon
-        //     $("html,body").css("cursor", "pointer");
-        // } else {
-        //     $("html,body").css("cursor", "");
-        // }
-
-        if(lmouseX<300) {
-            var x = $(".option").offset().left;
-            $(".option").css("left", x + desire(10, x));
-        } else {
-            var x = $(".option").offset().left;
-            $(".option").css("left", x + desire(-200, x));
-        }
-
-        if(!cloudToggled)
-            return;
-        var clouds = $(".paracloud");
-        for(var i = 0; i < clouds.length; i++) {
-            var rat = 1;
-            if($(clouds[i]).is(".pacl0"))
-                rat = 3;
-            if($(clouds[i]).is(".pacl1"))
-                rat = 2;
-                // $(clouds[i]).css("left", f($(clouds[i]).css("left"))+f($(clouds[i]).data("data-speed")));
-            var trans = $(clouds[i]).css("transform") || $(clouds[i]).css("-webkit-transform") || $(clouds[i]).css("-moz-transform") || $(clouds[i]).css("-mz-transform") || $(clouds[i]).css("-o-transform");
-            var mat = (trans.replace(/[^0-9\-.,]/g, '').split(','));
-            var x = f(mat[12] || mat[4] || 0) + f($(clouds[i]).data("data-speed"));
-            $(clouds[i]).css("transform", "translateX("+ x + "px)");
-            $(clouds[i]).css("-webkit-transform", "translateX("+ x + "px)");
-            $(clouds[i]).css("-moz-transform", "translateX("+ x + "px)");
-            $(clouds[i]).css("-mz-transform", "translateX("+ x + "px)");
-            $(clouds[i]).css("-o-transform", "translateX("+ x + "px)");
-            if(x>f($("body").width())*rat - f($(clouds[i]).parent().css("left"))){
-                $(clouds[i]).css("transform", "translateX(-400px)");
-                $(clouds[i]).css("top", Math.random()*1000*rat);
-            }
-        }
-        lmouseClicked = false;
     }
 
     var clouds = $(".paracloud");
@@ -243,6 +246,7 @@
     }
 
     window.setInterval(parallaxheightupdate, 64);
+    window.setInterval(menuupdate, 13);
     function load() {
         // Handle menu setting
         for(let i = 0; i < /*Set menus*/ 10; i++)
@@ -274,9 +278,9 @@
         // i is the index of the menu. Home = 0, Projects = 1, Resources = 2, etc.
         boffset[i].on = !boffset[i].on;
         if(boffset[i].on) {
-            $($(".linkpages")[i]).children().css("color", "#344065");
+            $($(".linkpages")[i]).children().addClass("selected");
         } else {
-            $($(".linkpages")[i]).children().css("color", "#6880cb");
+            $($(".linkpages")[i]).children().removeClass("selected");
         }
     }
 
@@ -287,14 +291,14 @@
 
 <header class="title" style="text-align: center; position:relative;">Zandgall.com</header>
 
-<div class = "splitter"></div>
+<!-- <div class = "splitter"></div> -->
 
 <?php
     echo "<h1 style='font-family: monospace;margin: 0;text-align: center;position: relative;'>" . $title . "</h1>";
     echo "<h1 style='font-family: monospace;margin: 0;text-align: center;font-style: italic;font-size: 14;position: relative;'>" . $subtitle . "</h1>";
 ?>
 
-<div class = "splitter"></div>
+<!-- <div class = "splitter"></div> -->
 <!-- <div style="position: relative; margin: auto; width: 100%; height:200;"></div> -->
 <!-- <div class="__links__"style="position: absolute; top: 110; margin:0; width: 850px; height: 10; display: flex; z-index: 2">
     <div class = "link" style="width: 100" tabindex = "0">
@@ -339,23 +343,23 @@
     </div>
 </div> -->
 
-<div style="position: relative; margin: auto; width: 800px; height:200px; float: right">
-    <a href="#" onclick="openmenu()"><div id="hamburger" style="width:50px; height:50px; position: absolute; top:25px; left: 725px">
-        <div id="top bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; border-radius: 20px"></div>
-        <div id="meat" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; margin-top: 10px; border-radius: 20px"></div>
-        <div id="bottom bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#6880cb; margin-top: 10px; border-radius: 20px"></div>
+<div style="position: relative;margin: auto; margin-top:-110px; width: 800px; height:200px; float: right">
+    <a href="#" class="burger" onclick="openmenu()"><div id="hamburger" style="width:50px; height:50px; position: absolute; top:25px; left: 725px">
+        <div id="top bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#8db6f3; border-radius: 20px"></div>
+        <div id="meat" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#8db6f3; margin-top: 10px; border-radius: 20px"></div>
+        <div id="bottom bun" width=inherit style="height: 10px; position: relative; border: solid 0px; background-color:#8db6f3; margin-top: 10px; border-radius: 20px"></div>
     </div></a>
     <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200;">
-        <a class = "linkpages" href="#" onclick="menuSelected(0)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Home</h5></a>
+        <a class = "linkpages" href="#" onclick="menuSelected(0)"><h3 class="basictext btopic">Home</h3></a>
     </div>
     <div class="bmenu" style="--bsize: 410; margin-right: -200px; margin-left: -200">
-        <a class = "linkpages" href="#" onclick="menuSelected(1)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Projects</h5></a>
+        <a class = "linkpages" href="#" onclick="menuSelected(1)"><h3 class="basictext link btopic">Projects</h3></a>
     </div>
     <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200">
-        <a class = "linkpages" href="#" onclick="menuSelected(2)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Resources</h5></a>
+        <a class = "linkpages" href="#" onclick="menuSelected(2)"><h3 class="basictext link btopic">Resources</h3></a>
     </div>
     <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200">
-        <a class = "linkpages" href="#" onclick="menuSelected(3)"><h5 class="basictext link" style="font-size: 2em; color:#6880cb">Misc</h5></a>
+        <a class = "linkpages" href="#" onclick="menuSelected(3)"><h3 class="basictext link btopic">Misc</h3></a>
     </div>
     <div class="bmenu bline" style="position: absolute; --bindex:0; --bwidth:100; height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:0; --bwidth:100;  height: 10"></div>
@@ -363,7 +367,7 @@
     <div class="bmenu bline" style="position: absolute; --bindex:1; --bwidth:140;  height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:2; --bwidth:185;  height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:2; --bwidth:185;  height: 10"></div>
-    <div class="bmenu bline" style="position: absolute; --bindex:3; --bwidth:100;  height: 10"></div>
+    <div class="bmenu bline" style="position: absolute; --bindex:3; --bwidth:100;  height: 10; z-index:10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:3; --bwidth:100;  height: 10"></div>
     <div class="bmenu bline" style="position: absolute; --bindex:4; --bwidth:100;  height: 10"></div>
     <div class="bmenu bholder">
@@ -397,4 +401,4 @@
         <a class="linkpages" href="arvopialevelcreatordownload"><h3 class="basictext link linkpages">ALC Download</h3></a>
     </div>
 </div>
- <!-- <div style="position: relative; margin: auto; width: 100%; height:200;"></div> -->
+ <div style="position: relative; margin: auto; width: 100%; height:100;"></div>

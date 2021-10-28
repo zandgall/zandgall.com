@@ -28,14 +28,100 @@ img.night {
 .bline {
     height: 10px;
     border: solid 0px;
-    background-color: #6880cb;
+    background-color: #8db6f3;
     border-radius: 20px;
+}
+
+.link {
+    margin: auto;
+    height: auto;
+    position: relative;
+    top: 10;
+    z-index: 2;
+    color: rgb(149, 177, 222);
+    filter: drop-shadow(0px 0px 4px #596a99);
+}
+
+.link.night {
+    color: rgb(149, 177, 222);
+    filter: drop-shadow(0px 0px 4px #343985);
+}
+
+.link:hover {
+    color: rgb(190, 220, 255)
+}
+
+.btopic {
+    position: relative;
+    margin: auto;
+    height: auto;
+    top: 10;
+    z-index: 8;
+    font-size: 2em;
+    filter: drop-shadow(0px 0px 4px #596a99);
+    color: #8db6f3
+}
+
+.btopic.selected {
+    color: #909bc0
+}
+
+.btopic.night {
+    filter: drop-shadow(0px 0px 4px #343985);
+    color: rgb(149, 177, 222)
+}
+
+.btopic.night.selected {
+    color: #6577ad
+}
+
+.btopic:hover {
+    color: rgb(190, 220, 255)
 }
 
 .bmenu {
     /* visibility: hidden; */
+    position: absolute;
+    right: 0px;
+    left: 600px;
     float: right;
     animation-timing-function: ease-out;
+    z-index: 11;
+    filter: drop-shadow(0px 0px 4px #596a99);
+}
+
+.burger {
+    position: relative;
+    z-index: 11;
+    filter: drop-shadow(0px 0px 4px #596a99)
+}
+
+.bmenu.night {
+    filter: drop-shadow(0px 0px 4px #343985);
+}
+
+a.linkpages {
+    float: right;
+    margin-left: -400px;
+    color: #6880cb;
+    text-align: right;
+    z-index: 11;
+}
+
+h3.linkpages {
+    z-index: 11;
+    float: right;
+    text-align: right;
+    font-size: 1.5em;
+}
+
+.bholder {
+    position: absolute;
+    left: 575px;
+    width: 300px;
+    height: 0px;
+    float: right;
+    overflow: hidden;
 }
 
 .title {
@@ -126,19 +212,6 @@ img.night {
     text-align: center;
     margin: auto;
     display: flex;
-}
-
-.link {
-    margin: auto;
-    height: auto;
-    position: relative;
-    top: 10;
-    z-index: 2;
-    color: #6880cb
-}
-
-.link.night {
-    color: rgb(149, 177, 222)
 }
 
 .outlinetext {
@@ -300,28 +373,6 @@ a.night {
 
 .night:hover {
     color: rgb(190, 220, 255)
-}
-
-a.linkpages {
-    float: right;
-    margin-left: -400px;
-    color: #6880cb;
-    text-align: right;
-}
-
-h3.linkpages {
-    float: right;
-    text-align: right;
-    font-size: 1.5em;
-}
-
-.bholder {
-    position: absolute;
-    left: 575px;
-    width: 300px;
-    height: 0px;
-    float: right;
-    overflow: hidden;
 }
 
 
