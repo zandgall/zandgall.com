@@ -11,7 +11,7 @@
     
     <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
     
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="scroll.css">
-    <link rel="stylesheet" href="global/parallax.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../scroll.css">
+    <link rel="stylesheet" href="../global/parallax.css">
 </head>
