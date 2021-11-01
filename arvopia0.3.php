@@ -1,32 +1,14 @@
 <html lang="en">
-    <head>
-    
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="layers.js"></script>
-    <title>Zandgall - Arvopia 0.3</title>
-    <meta name="description" content="Information about the third version of Arvopia">
-    <meta name="author" content="Zandgall">
-    
-    <link rel="icon" href="assets/Icon.png">
-    
-    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="scroll.css">
-    <link rel="stylesheet" href="global/parallax.css">
-</head>
+<?php 
+$pagetitle = "Zandgall - Arvopia 0.3";
+$pagedesc = "Information about Arvopia 0.3";
+include "global/head_.php"?>
 
 <body>
     <?php 
     $title = "Arvopia 0.3!";
     $subtitle = "How much more classic can you get?";
-    ?>
-    <!--    Split everything into a universal div-->
-    <div id = "cut" style="height: 100vh; width: 100%; top: 0; left: 0; overflow: hidden;">
-        <div id="universal" class = "parallax">
-
-            <?php include "global/head.php"?>
+    include "global/head.php"?>
 
             <div class="section" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 80; width: 800">
                 

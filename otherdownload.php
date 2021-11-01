@@ -42,14 +42,14 @@
                         <div class="projoverlay", style="width:100%; height:inherit; position:absolute;"></div>
                     </div></a>
                     <a href="Downloads/Solar Glyphs0.2.zip"><div class="proj" style="width: 50%; height:200px;float:left;position:absolute; left: 50%; top: 000px">
-                        <img class="projimg" src="assets/solarglyphs/1.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
+                        <img class="projimg" id="solarglyphs" src="assets/solarglyphs/1.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
                         <div class = "splitter" style="position:absolute; width:100%; margin-top:32"></div>
                         <h1 class="basictext projtitle outlinetext", style="font-size:32; margin-top:0;width:100%; height:inherit; position:absolute;">Solar Glyphs 0.2</h1>
                         <h1 class="basictext projsubtitle outlinetext", style="font-size:16; margin-top:42; width:100%; height:inherit; position:absolute;">Finished, with many moons added, graphics and performance improved, better gui, and information about every single celestial being that exists (in Solar Glyphs)<br>2MB - 5/19/20</h1>
                         <div class="projoverlay", style="width:100%; height:inherit; position:absolute;"></div>
                     </div></a>
                     <a href="Downloads/Lants v1.0.0.zip"><div class="proj" style="width: 100%; height:200px;float:left;position:absolute; top: 200px">
-                        <img class="projimg" src="assets/lants/0.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
+                        <img class="projimg" id="lants" src="assets/lants/0.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
                         <div class = "splitter" style="position:absolute; width:100%; margin-top:32"></div>
                         <h1 class="basictext projtitle outlinetext", style="font-size:32; margin-top:0;width:100%; height:inherit; position:absolute;">Lants</h1>
                         <h1 class="basictext projsubtitle outlinetext", style="font-size:16; margin-top:42; width:100%; height:inherit; position:absolute;">Cellular Automata Simulation of Langton's Ant<br>1,159kb - 5/22/20</h1>
@@ -57,7 +57,7 @@
                     </div></a>
 
                     <a href="Downloads/Vector Field.zip"><div class="proj" style="width: 100%; height:200px;float:left;position:absolute; top: 400px">
-                        <img class="projimg" src="assets/vector fields/Title.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
+                        <img class="projimg" id="vectorfield" src="assets/vector fields/Title.png" style="width:100%; height:inherit; position:absolute; object-fit: cover">
                         <div class = "splitter" style="position:absolute; width:100%; margin-top:32"></div>
                         <h1 class="basictext projtitle outlinetext", style="font-size:32; margin-top:0;width:100%; height:inherit; position:absolute;">Vector Fields</h1>
                         <h1 class="basictext projsubtitle outlinetext", style="font-size:16; margin-top:42; width:100%; height:inherit; position:absolute;">A particle simulation that gives you eye candy. Lots of fun to play around with<br>10mb - 9/6/19</h1>
@@ -86,14 +86,14 @@
                         <div class="projoverlay", style="width:100%; height:inherit; position:absolute;"></div>
                     </div></a>
                     <a href="Downloads/Super Marbo 0.1.4.zip"><div class="proj" style="width: 50%; height:200px;float:left;position:absolute; left: 50%; top: 800px">
-                        <img class="projimg" src="assets/super marbo/Marbo0.1.4.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
+                        <img class="projimg" id="marbo" src="assets/super marbo/Marbo0.1.4.png" style="width:100%; height:inherit; position:absolute; object-fit: cover">
                         <div class = "splitter" style="position:absolute; width:100%; margin-top:32"></div>
                         <h1 class="basictext projtitle outlinetext", style="font-size:32; margin-top:0;width:100%; height:inherit; position:absolute;">Super Marbo 0.1.4</h1>
                         <h1 class="basictext projsubtitle outlinetext", style="font-size:16; margin-top:42; width:100%; height:inherit; position:absolute;">Everything from SMB and more! You can toggle locked screen scrolling, life limit, time limit, and switch to NSMB mode and use multiplayer<br>19mb - 11/15/19</h1>
                         <div class="projoverlay", style="width:100%; height:inherit; position:absolute;"></div>
                     </div></a>
 
-                    <a href="Downloads/Schute!.zip"><div class="proj" style="width: 50%; height:400px;float:left;position:absolute; top: 1000px">
+                    <a href="Downloads/Schute!.zip" ><div class="proj" style="width: 50%; height:400px;float:left;position:absolute; top: 1000px">
                         <img class="projimg" src="assets/thumbnail/SchuteThumb.png", style="width:100%; height:inherit; position:absolute; object-fit: cover">
                         <div class = "splitter" style="position:absolute; width:100%; margin-top:32"></div>
                         <h1 class="basictext projtitle outlinetext", style="font-size:32; margin-top:0;width:100%; height:inherit; position:absolute;">Schute!</h1>

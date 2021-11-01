@@ -1,32 +1,14 @@
 <html lang="en">
-    <head>
-    
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="layers.js"></script>
-    <title>Zandgall - Teasers</title>
-    <meta name="description" content="See what's in store for Arvopia and other projects by Zandgall">
-    <meta name="author" content="Zandgall">
-    
-    <link rel="icon" href="assets/Icon.png">
-    
-    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="scroll.css">
-    <link rel="stylesheet" href="global/parallax.css">
-</head>
+<?php 
+$pagetitle = "Zandgall - Teasers";
+$pagedesc = "Sneak peaks at upcoming projects or updates";
+include "global/head_.php"?>
 
 <body>
     <?php 
     $title = "The future!";
     $subtitle = "What's coming? You'll see here";
-    ?>
-    <!--    Split everything into a universal div-->
-    <div id = "cut" style="height: 100vh; width: 100%; top: 0; left: 0; overflow: hidden;">
-        <div id="universal" class = "parallax">
-
-            <?php include "global/head.php"?>
+    include "global/head.php"?>
 
             <div class="section" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 80; width: 800">
 
@@ -47,14 +29,14 @@
                 <h1 class="basictext">Improved Birds! (+Sound)</h1>
                 <video class="section" width="720" height="405" style="margin-bottom: 10" alt="Better Birds!" controls>
                     <source src="assets/videos/birdsnew.mp4" type="video/mp4">
-                    Your browser doesn't support videos
+                    I already said your browser doesn't support videos
                 </video>
             </div>
             <div class="section" style="margin-top: 20; text-align: center; width:auto; height:auto; margin-left: auto; margin-right: auto">
                 <h1 class="basictext">Better Lights!</h1>
                 <video class="section" width="720" height="405" style="margin-bottom: 10" alt="Lights!" controls>
                     <source src="assets/videos/reworkedlightsystem.mp4" type="video/mp4">
-                    Your browser doesn't support videos
+                    Can you guess what your browser doesn't support?
                 </video>
             </div>
 <!--

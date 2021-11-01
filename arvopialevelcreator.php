@@ -1,33 +1,15 @@
 
 <html lang="en">
-    <head>
-    
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="layers.js"></script>
-    <title>Zandgall - Arvopia Level Creator</title>
-    <meta name="description" content="Information about Arvopia's Level Creator">
-    <meta name="author" content="Zandgall">
-    
-    <link rel="icon" href="assets/Icon.png">
-    
-    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="scroll.css">
-    <link rel="stylesheet" href="global/parallax.css">
-</head>
+<?php 
+$pagetitle = "Zandgall - Arvopia Level Creator";
+$pagedesc = "Information about the legacy level creator for Arvopia";
+include "global/head_.php"?>
 
 <body>
     <?php 
     $title = "LevelCreator!";
     $subtitle = "Get Creative? I don't know";
-    ?>
-    <!--    Split everything into a universal div-->
-    <div id = "cut" style="height: 100vh; width: 100%; top: 0; left: 0; overflow: hidden;">
-        <div id="universal" class = "parallax">
-
-            <?php include "global/head.php"?>
+    include "global/head.php"?>
 
             <div class="section" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 80; width: 800">
                 

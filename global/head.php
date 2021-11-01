@@ -1,9 +1,5 @@
-<!--<div style="margin:auto; width: 766; height: 60">
-    <canvas id="links" width=766 height=232 style="z-index: -20; position:relative; width:766; height:232; margin-left: auto; margin-right: auto">
-    </canvas>
-    
-</div>-->
-<!-- <canvas id="BackgroundC" class="bg" syle="position: fixed;margin: 0;width: 100%;height: 100%">Canvas is not supported</canvas> -->
+<div id = "cut" style="height: 100vh; width: 100%; top: 0; left: 0; overflow: hidden;">
+<div id="universal" class = "parallax">
 
 <div style="left: 128px; top: 100px; position: absolute; width: 100; height: 100; visibility: visibe; overflow: hidden; -webkit-transform-style: preserve-3d; transform-style: preserve-3d; -webkit-transform: translateZ(10px); transform: translateZ(10px); z-index: 9;">
     <img class="sunmoon" style="height:32px; width: 32px; left:32px; top:32px; filter: drop-shadow(0px 0px 10px rgba(255, 255, 200, 0.5))" value="sun" onclick="togglenight()" src="assets/background/Sun.png" alt="Sun">
@@ -21,10 +17,6 @@
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud2.png' style="height: 144" alt="cloud">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud3.png' style="height: 144" alt="cloud">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud4.png' style="height: 144" alt="cloud">
-        
-        <!-- <div style="left: 100px; top: 240px; position: absolute; width: inherit; height: inherit; visibility: visible">
-            <img class="sunmoon" style="height:120px; width: 120px; cursor: pointer; filter: drop-shadow(0px 0px 10px rgba(255, 255, 200, 0.5)); z-index: 100" value="sun" src="assets/background/Sun.png">
-        </div> -->
     </div>
     <div class = "parallax__layer parallax__layer--back" style="top: 0vh; width:inherit; height:inherit; left: -100vw">
         <div class = "parallaxgradient"></div>
@@ -41,7 +33,6 @@
     <div class = "parallax__layer parallax__layer--base" style="top: 2564px; height: inherit; width:230vw; left: -100vw; background-image: url('assets/background/BGImg36.png'); background-repeat:repeat;">
         <div class = "parallaxgradient"></div>
         <img class = "parallaximg parallax__layer--base" src = "assets/background/bg0.png" alt="even more hills" style="image-rendering: pixelated; object-fit: cover; height: 1044; margin-top:-1044px; filter:none">
-        <!-- <img class = "parallaximg" alt="lots o' dirt" width=7140 height=7424 style="border:0; background-image: url('assets/background/BGImg36.png'); background-repeat: repeat; image-rendering: pixelated; object-fit: cover; filter: none; visibility:none"> -->
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud1.png' style="height: 72" alt="cloud">
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud2.png' style="height: 72" alt="cloud">
         <img class = 'paracloud pacl2' src = 'assets/background/Cloud3.png' style="height: 72" alt="cloud">
@@ -56,10 +47,6 @@
     </div>
     <div class = "parallax__layer parallax__layer--deep nightoverlay" style="left: -100vw; top: -100vh; z-index: 6;"></div>
 </div>
-
-<!-- <a class="option" href="#" style="top: 220px; z-index: 10; " onclick="killclouds()"><h3 class="basictext" style="margin: auto">Toggle Clouds</h3></a>
-<a class="option" href="#" style="top: 250px; z-index: 10;" onclick="killlayers()"><h3 class="basictext" style="margin: auto">Toggle Layers</h3></a>
-<a class="option" href="#" style="top: 280px; z-index: 10" onclick="killstars()"><h3 class="basictext" style="margin: auto">Toggle Stars</h3></a> -->
 
 <script type="application/javascript">
     function f(x) {
@@ -132,21 +119,6 @@
             $(".parallaxgradient").css("height", $("#universal")[0].scrollHeight);
         $(".nightoverlay").css("height", $("#universal")[0].scrollHeight*4);
 
-        // var s = $(".sunmoon");        
-        // if(lmouseX>32&&lmouseX<72&&lmouseY>80-$("#universal").scrollTop()/4&&lmouseY<120-$("#universal").scrollTop()/4){  // If mouse over sun/moon
-        //     $("html,body").css("cursor", "pointer");
-        // } else {
-        //     $("html,body").css("cursor", "");
-        // }
-
-        // if(lmouseX<300) {
-        //     var x = $(".option").offset().left;
-        //     $(".option").css("left", x + desire(10, x));
-        // } else {
-        //     var x = $(".option").offset().left;
-        //     $(".option").css("left", x + desire(-200, x));
-        // }
-
         if(!cloudToggled)
             return;
         var clouds = $(".paracloud");
@@ -156,7 +128,6 @@
                 rat = 3;
             if($(clouds[i]).is(".pacl1"))
                 rat = 2;
-                // $(clouds[i]).css("left", f($(clouds[i]).css("left"))+f($(clouds[i]).data("data-speed")));
             var trans = $(clouds[i]).css("transform") || $(clouds[i]).css("-webkit-transform") || $(clouds[i]).css("-moz-transform") || $(clouds[i]).css("-mz-transform") || $(clouds[i]).css("-o-transform");
             var mat = (trans.replace(/[^0-9\-.,]/g, '').split(','));
             var x = f(mat[12] || mat[4] || 0) + f($(clouds[i]).data("data-speed"));
@@ -204,7 +175,6 @@
                     $(menu[i]).css("margin-top", (i+1)*55 + 10 + (i==0 ? 0 : boffset[i-1].total));
                 }
             }
-            // $(".bmenu").css("margin-right") = $(".bmenu").css("margin-right") * 0.8;
         } else {
             for(let i = 0; i < menu.length; i++) {
                 if($(menu[i]).attr("class").includes("bline")) {
@@ -221,7 +191,6 @@
                     $(menu[i]).css("margin-top", (i+1)*55 + 10 + (i==0 ? 0 : boffset[i-1].total));
                 }
             }
-            // $(".bmenu").css("margin-right") = $(".bmenu").css("margin-right") * 0.8 + -200*0.2;
         }
     }
 
@@ -289,7 +258,7 @@
     }
 </script>
 
-<header class="title" style="text-align: center; position:relative;">Zandgall.com</header>
+<h1 class="title" style="text-align: center; margin: auto; position:relative;"><a href=".." class="title"style="text-decoration: none; text-align: center; margin: auto">Zandgall.com</a></h1>
 
 <!-- <div class = "splitter"></div> -->
 
@@ -297,51 +266,6 @@
     echo "<h1 style='font-family: monospace;margin: 0;text-align: center;position: relative;'>" . $title . "</h1>";
     echo "<h1 style='font-family: monospace;margin: 0;text-align: center;font-style: italic;font-size: 14;position: relative;'>" . $subtitle . "</h1>";
 ?>
-
-<!-- <div class = "splitter"></div> -->
-<!-- <div style="position: relative; margin: auto; width: 100%; height:200;"></div> -->
-<!-- <div class="__links__"style="position: absolute; top: 110; margin:0; width: 850px; height: 10; display: flex; z-index: 2">
-    <div class = "link" style="width: 100" tabindex = "0">
-        <div class = "linktop"></div>
-        <h1 class = "basictext">Home</h1>
-        <div class = "linkbottom"></div>
-        <a class = "linkpages" href = "index">Homepage</a>
-        <a class = "linkpages" href = "about">About</a>
-    </div>
-
-    <div class = "link" style="width: 160" tabindex = "0">
-        <div class = "linktop"></div>
-        <h1 class = "basictext">Download</h1>
-        <div class = "linkbottom" style="width: inherit"></div>
-        <a class = "linkpages" href = "arvopiadownload">Arvopia</a>
-        <a class = "linkpages" href = "levelcreatordownload">LevelCreator</a>
-        <a class = "linkpages" href = "arvopiabuilddownload">Arvopia Builds</a>
-        <a class = "linkpages" href = "otherdownload">Other Projects</a>
-    </div>
-
-    <div class = "link" style="width: 190" tabindex = "0">
-        <div class = "linktop"></div>
-        <h1 class = "basictext">What's new</h1>
-        <div class = "linkbottom"></div>
-        <a class = "linkpages" href = "teasers">Teasers</a>
-        <a class = "linkpages" href = "futureplans">Future plans</a>
-    </div>
-
-    <div class = "link" style="width: 120" tabindex = "0">
-        <div class = "linktop"></div>
-        <h1 class = "basictext">Contact</h1>
-        <div class = "linkbottom"></div>
-        <a class = "linkpages" href = "socialmedia">Social Media</a>
-    </div>
-
-    <div class = "link" style="width: 170" tabindex = "0">
-        <div class = "linktop"></div>
-        <h1 class = "basictext">Resources</h1>
-        <div class = "linkbottom"></div>
-        <a class = "linkpages" href = "music">Music</a>
-        <a class = "linkpages" href = "funstuff">Fun stuff</a>
-    </div>
-</div> -->
 
 <div style="position: relative;margin: auto; margin-top:-110px; width: 800px; height:200px; float: right">
     <a href="#" class="burger" onclick="openmenu()"><div id="hamburger" style="width:50px; height:50px; position: absolute; top:25px; left: 725px">
@@ -377,12 +301,13 @@
     <div class="bmenu bholder">
         <a class="linkpages" href="arvopia"><h3 class="basictext link linkpages">Arvopia</h3></a>
         <a class="linkpages" href="bubblecannons"><h3 class="basictext link linkpages">BubbleCannons</h3></a>
-        <a class="linkpages" href="solarglyphs"><h3 class="basictext link linkpages">SolarGlyphs</h3></a>
-        <a class="linkpages" href="marbo"><h3 class="basictext link linkpages">Marbo</h3></a>
+        <a class="linkpages" href="solarglyphs"><h3 class="basictext link linkpages">Solar Glyphs</h3></a>
+        <a class="linkpages" href="vectorfield"><h3 class="basictext link linkpages">Vector Field</h3></a>
+        <a class="linkpages" href="marbo"><h3 class="basictext link linkpages">Super Marbo</h3></a>
         <a class="linkpages" href="lants"><h3 class="basictext link linkpages">Lants</h3></a>
         <a class="linkpages" href="schute"><h3 class="basictext link linkpages">Schute!</h3></a>
         <a class="linkpages" href="fallingmine"><h3 class="basictext link linkpages">Falling Mine</h3></a>
-        <a class="linkpages" href="mapcreator"><h3 class="basictext link linkpages">Map creator</h3></a>
+        <a class="linkpages" href="mapdecoder"><h3 class="basictext link linkpages">Map decoder </h3></a>
         <a class="linkpages" href="normalbuddy"><h3 class="basictext link linkpages">Normal Buddy</h3></a>
         <a class="linkpages" href="miscarvopiatools"><h3 class="basictext link linkpages">Misc Arvopia Tools</h3></a>
     </div>
@@ -390,6 +315,7 @@
         <a class="linkpages" href="funstuff"><h3 class="basictext link linkpages">Fun stuff</h3></a>
         <a class="linkpages" href="otherdownload"><h3 class="basictext link linkpages">Project Downloads</h3></a>
         <a class="linkpages" href="arvopiadownload"><h3 class="basictext link linkpages">Arvopia Downloads</h3></a>
+        <a class="linkpages" href="arvopiabuilddownload"><h3 class="basictext link linkpages">Beta Downloads</h3></a>
         <a class="linkpages" href="music"><h3 class="basictext link linkpages">Music</h3></a>
         <!-- <a class="linkpages" href="resume"><h3 class="basictext link linkpages">Resume</h3></a> -->
     </div>
@@ -398,7 +324,7 @@
         <a class="linkpages" href="#" onclick="killlayers()"><h3 class="basictext link linkpages">Toggle Layers</h3></a>
         <a class="linkpages" href="#" onclick="killstars()"><h3 class="basictext link linkpages">Toggle Stars</h3></a>
         <a class="linkpages" href="arvopialevelcreator"><h3 class="basictext link linkpages">Arvopia Level Creator</h3></a>
-        <a class="linkpages" href="arvopialevelcreatordownload"><h3 class="basictext link linkpages">ALC Download</h3></a>
+        <a class="linkpages" href="levelcreatordownload"><h3 class="basictext link linkpages">ALC Download</h3></a>
     </div>
 </div>
  <div style="position: relative; margin: auto; width: 100%; height:100;"></div>

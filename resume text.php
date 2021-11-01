@@ -1,24 +1,12 @@
 
 <html lang="en">
-    <head>
-    
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="layers.js"></script>
-    <title>Zandgall - Pause</title>
-    <meta name="description" content="Resume">
-    <meta name="author" content="Zandgall">
-    
-    <link rel="icon" href="assets/Icon.png">
-    
-    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mate+SC&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="scroll.css">
-    <link rel="stylesheet" href="global/parallax.css">
-</head>
+<link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Mate+SC&display=swap" rel="stylesheet">
+<?php 
+$pagetitle = "Zandgall - Pause";
+$pagedesc = "My resume";
+include "global/head_.php"?>
 
 <body>
     <div class="" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: 1200">
