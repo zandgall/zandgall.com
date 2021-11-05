@@ -338,7 +338,7 @@ include "global/head_.php"?>
         style="width: 800px; margin: 120px auto 40px 60%; transform: translateX(-50%); position: relative; ">
         <img id="MarboTitle" width=880
             style="margin-top: -10%; margin-left: -40; margin-bottom: 10; position: relative; width:880; height: auto;"
-            src="assets/super marbo/Title.png" alt="Super Marbo">
+            src="assets/super marbo/Title" alt="Super Marbo">
 
         <h1 class="basictext" style="font-size: 48; font-weight: bold; margin-bottom: -10;">Super Marbo</h1>
         <h2 class="basictext">All 4 versions of Super Marbo are up for download</h2>

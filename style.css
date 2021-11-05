@@ -353,11 +353,12 @@ h4.night {
 }
 
 a {
-    color: #0000ff
+    color: #9696e9;
+    text-decoration: none;
 }
 
 a.night {
-    color: #f239f2
+    color: #ebb5eb
 }
 
 :hover {
