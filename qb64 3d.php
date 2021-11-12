@@ -11,6 +11,10 @@
         }
 
     </style>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
 <?php 
 $pagetitle = "Zandgall - QB64 3D Rasterizer";
 $pagedesc = "Overview of a program that can rasterize 3d graphics, written in QB64, a close recreation of BASIC";
@@ -34,7 +38,7 @@ function pointer($fromtop, $length, $isfromleft) {
     include "global/head.php"?>
 
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto; font-size: 48">3D Rasterizing in QB64</h1>
-    <img src="assets/qb64 3d/thumb.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; float: center">
+    <img src="assets/qb64 3d/thumb.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; float: center; image-rendering: pixelated">
     <h3 class="basictext outline"></h3>
 
     <h3 class="basictext outlinetext" style="font-size: 24px; margin: auto auto 100px auto">
@@ -106,7 +110,7 @@ function pointer($fromtop, $length, $isfromleft) {
         Note that a line is given by the equation: "y = mx + b", and rewritten, we can find x when given y, using "x = (y - b)/m". 
         With this in mind, we can solve for the x-values of either side-line given the y position.
         Which can come straigh from our loop between the two y-limits of our triangles.</h3>
-        <canvas class="section" id="lineExample_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="lineExample_mouseMove(event);"></canvas>
+        <canvas class="section" id="lineExample_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="lineExample_mouseMove(event);">Canvas Unsupported</canvas>
         <script type="application/javascript">
         {
         let can = $("#lineExample_canvas")[0];
@@ -149,7 +153,7 @@ function pointer($fromtop, $length, $isfromleft) {
         For our case, we do not need "b" in there at all, when we know what our original x value is, we can reason that for every change in y,
         x changes by the change in y times the inverse-slope. "Δy * 1/m". Secondly, we are able to find what "m" equals before we start any loop,
         and thus, can find 1/m to save calculations during our loop.</h3>
-        <canvas class="section" id="lineWalkExample_canvas" width=800 height=400 style="width:800; height:400;"></canvas>
+        <canvas class="section" id="lineWalkExample_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
         <script type="application/javascript">
         {
         let can = $("#lineWalkExample_canvas")[0];
@@ -277,7 +281,7 @@ function pointer($fromtop, $length, $isfromleft) {
         &emsp;Given all that, we can now fully loop through every pixel inside of a flat-terminating-triangle. Making sure that we are finding a
         floored or rounded x and y value, because we need integer values for settings pixels and further calculations.</h3>
 
-        <canvas class="section" id="flatTriangle_canvas" width=800 height=400 style="width:800; height:400;"></canvas>
+        <canvas class="section" id="flatTriangle_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
         <script>
         {
         let can = $("#flatTriangle_canvas")[0];
@@ -430,7 +434,7 @@ function pointer($fromtop, $length, $isfromleft) {
         By taking one of the points in the line, (lets call it x1, y1) and adding the inverse slope time the change in y to it, we can find the new x.
         </h3>
 
-        <canvas class="section" id="triangleMidpoint_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="triangleMidpoint_mousemove(event)" onmousedown="triangleMidpoint_mousedown(event)" onmouseup="triangleMidpoint_mouseup(event)"></canvas>
+        <canvas class="section" id="triangleMidpoint_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="triangleMidpoint_mousemove(event)" onmousedown="triangleMidpoint_mousedown(event)" onmouseup="triangleMidpoint_mouseup(event)">Canvas Unsupported</canvas>
         <script type="application/javascript">
         {
         let can = $("#triangleMidpoint_canvas")[0];
@@ -583,18 +587,165 @@ function pointer($fromtop, $length, $isfromleft) {
 
         }
         </script>
+        <h3 class="basictext outlinetext">Try moving points around, observe what calculations are used to find (x, y)</h3>
+
+        <h3 class="basictext outlinetext" style="text-align: left">
+        &emsp;Given all this, we can now draw any 2 dimensional triangle to the screen by splitting it into two flat-terminating triangles and drawing each of them with our flat-terminating triangle method.
+        </h3>
+
+        <div style="width: 800; border: inset 2px #A3C3A3; background-color: #A3C3A3">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#202030">
+            Sub flat_triangle(x1, y1, x2, x3, term) <span style="color:#602060">A is (x1, y1), B is (x2, term), and C is (x3, term)<br></span>
+            <span style="color:#602060">&emsp;Declare inverse slops from a to b, and a to c<br></span>
+            &emsp;a_m = (x2 - x1) / (term - y1)<br>
+            &emsp;b_m = (x3 - x1) / (term - y1)<br><br>
+
+            <span style="color:#602060">&emsp;Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
+            &emsp;fty = term<br>
+            <span style="color:#602060"><br>&emsp;Declare the two x values that walk the lines from the terminator to the origin<br></span>
+            &emsp;lx = x2<br>
+            &emsp;rx = x3<br>
+            <span style="color:#602060">&emsp;Sign dictates whether rx is in the positive-x or negative-x direction from lx<br></span>
+            &emsp;sign = Sgn(rx-lx)<br>
+            <span style="color:#602060">&emsp;Same with ysign and y1-terminator<br></span>
+            &emsp;ysign = Sgn(y1-term)<br><br>
+            &emsp;Do<br>
+            <span style="color:#602060">&emsp;&emsp;Increment y towards the origin<br></span>
+            &emsp;&emsp;fty = fty + ysign<br>
+            <span style="color:#602060">&emsp;&emsp;Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b<br></span>
+            &emsp;&emsp;lx = lx + a_m<br>
+            &emsp;&emsp;rx = rx + b_m<br>
+            <span style="color:#602060">&emsp;&emsp;Declare the current x position that we will plot a pixel at<br></span>
+            &emsp;&emsp;ftx = lx<br>
+            &emsp;&emsp;Do<br>
+            &emsp;&emsp;&emsp;PSet (ftx + xoff, fty + yoff) <span style="color:#602060">Set the pixel!</span><br>
+            <span style="color:#602060">&emsp;&emsp;&emsp;Increment ftx in the direction of rx<br></span>
+            &emsp;&emsp;&emsp;ftx = ftx + sign<br>
+            <span style="color:#602060">&emsp;&emsp;&emsp;Do this until the current x surpasses rx.<br>
+            &emsp;&emsp;&emsp;Sign is checked in order to tell if ftx surpasses rx when it's greater, or lower<br></span>
+            &emsp;&emsp;Loop While ((sign = 1 And ftx < rx) Or (sign = -1 And ftx > rx))<br>
+            &emsp;Loop While ((ysign = 1 And ftx < y1) Or (ysign = -1 And ftx > y1))<br>
+            End Sub
+            </h3>
+        </div>
+        <div style="width: 800; border: inset 2px #A3C3A3; background-color: #A3C3A3">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#202030">
+            Sub triangle (x1, y1, x2, y2, x3, y3)<br>
+            <span style="color:#602060">&emsp;If any two y coordinates are equal, then draw a flat triangle<br></span>
+            &emsp;If y1 = y2 Then<br>
+            &emsp;&emsp;Call flat_triangle(x3, y3, x1, x2, y1): GoTo ft2dskip<br>
+            &emsp;ElseIf y2 = y3 Then<br>
+            &emsp;&emsp;Call flat_triangle(x1, y1, x2, x3, y2): GoTo ft2dskip<br>
+            &emsp;ElseIf y3 = y1 Then<br>
+            &emsp;&emsp;Call flat_triangle(x2, y2, x1, x3, y1): GoTo ft2dskip<br>
+            &emsp;End If<br><br>
+
+            <span style="color:#602060">&emsp;Find the middle y-coordinate and split the triangle into 2 flat triangles<br>
+            &emsp;And for each point, find the missing x value opposite of the middle<br>
+            &emsp;During the explanation, I used the top point to find the missing midpoint.<br>
+            &emsp;But it can be found even if we interchange the bottom and top point,<br>
+            &emsp;so we can avoid figuring out which is the top and find the midpoint directly from<br>
+            &emsp;one of the non-middle points<br><br></span>
+            &emsp;If (y1 < y2 And y1 > y3) Or (y1 > y2 And y1 < y3) Then<br>
+            &emsp;&emsp;m = x2 + (y1 - y2) * (x3 - x2) / (y3 - y2)<br>
+            &emsp;&emsp;Call flat_triangle(x3, y3, x1, m, y1)<br>
+            &emsp;&emsp;Call flat_triangle(x2, y2, x1, m, y1)<br>
+            &emsp;&emsp;GoTo ft2dskip<br>
+            &emsp;ElseIf (y2 < y1 And y2 > y3) Or (y2 > y1 And y2 < y3) Then<br>
+            &emsp;&emsp;m = x1 + (y2 - y1) * (x3 - x1) / (y3 - y1)<br>
+            &emsp;&emsp;Call flat_triangle(x3, y3, x2, m, y2)<br>
+            &emsp;&emsp;Call flat_triangle(x1, y1, x2, m, y2)<br>
+            &emsp;&emsp;GoTo ft2dskip<br>
+            &emsp;ElseIf (y3 < y1 And y3 > y2) Or (y3 > y1 And y3 < y2) Then<br>
+            &emsp;&emsp;m = x1 + (y3 - y1) * (x2 - x1) / (y2 - y1)<br>
+            &emsp;&emsp;Call flat_triangle(x2, y2, x3, m, y3)<br>
+            &emsp;&emsp;Call flat_triangle(x1, y1, x3, m, y3)<br>
+            &emsp;End If<br><br>
+            &emsp;ft2dskip:<br>
+            End Sub<br>
+            </h3>
+        </div>
+
+        
 
         <div class="section" style="position: absolute; left:900; top:100; width:250">
             <h3 class="basictext outlinetext">The only time a triangle can't be split up this way, is if it already has a horizontally-flat edge; In the program we will test for these cases and use them to speed up our rasterization.</h3>
             <?php pointer(50, 130, false)?>
         </div>
 
-        <div class="section" style="position: absolute; left:900; top:3300; width:350">
+        <div class="section" style="position: absolute; left:825; top:3300; width:350">
             <h3 class="basictext outlinetext" style="text-align: left; margin: 5px">If y1 < y2 and y1 > y3 Then<br>&emsp;y1 is middle<br>&emsp;y2 is bottom (y-positive is down)<br>&emsp;y3 is top<br><br>Etc.</h3>
             <?php pointer(48, 340, false)?>
         </div>
     </div>
 
+    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto">Barycentric Coordinates</h1>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+        <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;Before we move on from triangles, there is one more topic we need to discuss. Barycentric coordinates is a system of coordinates
+        that, for triangles, gives you the area of 3 sub-triangles in relation to the area of the original triangle given point P.
+        This is used to blend vertex attributes, such as color or depth. We will need barycentric coordinates for depth, but we can also use it to make our
+        triangles look a little more interesting, by binding point 1 of our triangle to the color red, point 2 to green, and point 3 to blue, and then
+        using barycentric coordinates to find the color of any given pixel in between.
+        </h3>
+        <img src="assets/qb64 3d/barycentric.png" style="width:100%">
+        <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;Calculating the barycentric coordinates are just as they're defined. We take a point we wish to take the barycentric coordinates of, say P.
+        Then, with triangle, ΔABC, the barycentric coordinates would be denoted as
+        &emsp;&emsp;$$\left(\frac{\mathrm{area of} ΔPBC}{\mathrm{area of} ΔABC}, \frac{\mathrm{area of} ΔPAC}{\mathrm{area of} ΔABC}, \frac{\mathrm{area of} ΔPAB}{\mathrm{area of} ΔABC}\right).$$<br>
+        &emsp;As we are given our 3 triangle points during rendering, and we find our point P (the x and y of the pixel we're writing to), we just need to
+        solve for a few areas in order to gather the barycentric coordinates of our pixel.
+        </h3>
+        <h2 class="basictext outlinetext">Triangle Area via Cross Product</h2>
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;The method we will use for solving the area of a triangle, will be the cross product. Note that the magnitude of the cross product
+            of 2 vectors is equal to the area of a parallelogram formed by those two vectors. Also take note that the area of a triangle is half of
+            that of a parallelogram formed by two of it's sides. Knowing this brings us to the conclusion that solving the area of a triangle given 3 points
+            is as simple as forming 2 vectors from it's 3 points, making one the origin, and cross multiplying. Taking the absolute value of the result,
+            and taking one half of it.  
+        </h3>
+        <img src="assets/qb64 3d/acrossb.png" style="width:100%">
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;The nature for this is enveloped in linear algebra, but the cross product takes two vectors and finds a vector perpendicular to both,
+            with said magnitude being the area of a parallelogram. This is convenient for us, as we are working with 2d triangles, meaning that the perpendicular
+            vector will be in either the positive or negative z direction, with x and y components being 0. Therefore, we just need to calculate the z component
+            of the cross product between two vectors made from our triangle.
+        </h3>
+        <img src="assets/qb64 3d/trianglearea.gif" style="width:100%">
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;Calculating the z component of the cross product between two 2D vectors relies on linear algebra, but getting straight to the calculations we get;
+            $$a_x * b_y - a_y * b_x$$
+            Or, given 3 points;
+            $$\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right) $$
+            Or, finding triangle area;
+            $$\frac{\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right)}{2}$$
+            <br>
+            &emsp;Then, when taking the barycentric coordinates, (denoted u, v, and w), we replace \(x_1\) with our sample point's x, \(p_x\) and we replace
+            \(y_1\) with \(p_y\), then replacing \(x_2\) and \(y_2\) with our point, and finally \(x_3\) and \(y_3\), giving us:
+            $$a = \frac{\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right)}{2}$$
+            $$u = \frac{\left(x_2-p_x\right) * \left(y_3-p_y\right) - \left(y_2-p_y\right) * \left(x_3-p_x\right)}{2a}$$
+            $$v = \frac{\left(p_x-x_1\right) * \left(y_3-y_1\right) - \left(p_y-y_1\right) * \left(x_3-x_1\right)}{2a}$$
+            $$w = \frac{\left(x_2-x_1\right) * \left(p_y-y_1\right) - \left(y_2-y_1\right) * \left(p_x-x_1\right)}{2a}$$
+            
+        </h3>
+
+
+        <div class="section" style="position: absolute; left:-300; top:1350; width:250">
+            <h3 class="basictext outlinetext">To learn why that is, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products</h3>
+            <?php pointer(20, 40, true)?>
+        </div>
+        <div class="section" style="position: absolute; left:900; top:3700; width:250">
+            <h3 class="basictext outlinetext">You may simplify \(\frac{...}{2a}\) with \(\frac{...}{a}\) by not dividing \(a\) by 2, however you will need to keep in mind that \(a\) is now twice the area of the triangle.</h3>
+            <?php pointer(70, 260, false)?>
+        </div>
+    </div>
+
+
+    <!--
+        Resources:
+        3blue1brown cross product: relation to the area of a parallelogram
+        https://www.youtube.com/watch?v=eu6i7WJeinw
+    -->
     <!-- Required to end Universal and "cut" divs -->
     </div>
     </div>
