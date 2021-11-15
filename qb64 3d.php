@@ -46,6 +46,7 @@ function pointer($fromtop, $length, $isfromleft) {
         <a class="link basictext" href="#qb64">What is QB64?<a><br>
         <a class="link basictext" href="#raster">What is 3D Rasterizing?</a><br>
         <a class="link basictext" href="#triangles">Triangles 101</a><br>
+        <a class="link basictext" href="#barycentric">Barycentric Coordinates</a><br>
         <a class="link basictext" href="#linear">Linear Algebra for the Faint of Heart</a><br>
         <a class="link basictext" href="#depth">Depth is Easier than it Seems</a><br>
         <a class="link basictext" href="#extra">Extra Little Detail</a><br>
@@ -679,16 +680,19 @@ function pointer($fromtop, $length, $isfromleft) {
         </div>
     </div>
 
-    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto">Barycentric Coordinates</h1>
+    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="barycentric">Barycentric Coordinates</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
         <h3 class="basictext outlinetext" style="text-align:left">
-        &emsp;Before we move on from triangles, there is one more topic we need to discuss. Barycentric coordinates is a system of coordinates
+        &emsp;Barycentric coordinates are a system of coordinates
         that, for triangles, gives you the area of 3 sub-triangles in relation to the area of the original triangle given point P.
         This is used to blend vertex attributes, such as color or depth. We will need barycentric coordinates for depth, but we can also use it to make our
         triangles look a little more interesting, by binding point 1 of our triangle to the color red, point 2 to green, and point 3 to blue, and then
         using barycentric coordinates to find the color of any given pixel in between.
         </h3>
-        <img src="assets/qb64 3d/barycentric.png" style="width:100%">
+        <!-- <img src="assets/qb64 3d/barycentric.png" style="width:100%"> -->
+        <video width="100%" height="auto" autoplay loop muted>
+            <source src="assets/qb64 3d/UVWfromArea.mp4" type="video/mp4" />
+        </video>
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;Calculating the barycentric coordinates are just as they're defined. We take a point we wish to take the barycentric coordinates of, say P.
         Then, with triangle, ΔABC, the barycentric coordinates would be denoted as
@@ -704,14 +708,17 @@ function pointer($fromtop, $length, $isfromleft) {
             is as simple as forming 2 vectors from it's 3 points, making one the origin, and cross multiplying. Taking the absolute value of the result,
             and taking one half of it.  
         </h3>
-        <img src="assets/qb64 3d/acrossb.png" style="width:100%">
+        <!-- <img src="assets/qb64 3d/acrossb.png" style="width:100%"> -->
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;The nature for this is enveloped in linear algebra, but the cross product takes two vectors and finds a vector perpendicular to both,
             with said magnitude being the area of a parallelogram. This is convenient for us, as we are working with 2d triangles, meaning that the perpendicular
             vector will be in either the positive or negative z direction, with x and y components being 0. Therefore, we just need to calculate the z component
             of the cross product between two vectors made from our triangle.
         </h3>
-        <img src="assets/qb64 3d/trianglearea.gif" style="width:100%">
+        <video width="100%" height="auto" autoplay loop muted>
+            <source src="assets/qb64 3d/areafromcross.mp4" type="video/mp4" />
+        </video>
+
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;Calculating the z component of the cross product between two 2D vectors relies on linear algebra, but getting straight to the calculations we get;
             $$a_x * b_y - a_y * b_x$$
@@ -729,22 +736,77 @@ function pointer($fromtop, $length, $isfromleft) {
             
         </h3>
 
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;The resulting \(u\), \(v\), and \(w\) can be thought of as percentages that can be used to interpolate values between vertices. For instance,
+            if \(u\) is 1, then the pixel point lies at vertex 1, and the equivelent subtriangle for u is equal to the total area. But if \(u\) is 0, the pixel point
+            is as far away from \(u\) it can be, and should inherit no value from vertex 1. This makes points with \(u\) values of 0.5 inherit half of it's data
+            from vertex 1, and the rest of it's data from vertices 2 and 3.<br>
+            &emsp;If we assign color to points with \(u\) resulting in red, \(v\) in green, and \(w\) in blue, we can create a gradient of colors being more red near
+            vertex 1, green near vertex 2, and blue near vertex 3, and a mixture of all three throughout the triangle.
+        </h3>
+        <video width="100%" height="auto" autoplay loop muted>
+            <source src="assets/qb64 3d/usinguvw.mp4" type="video/mp4" />
+        </video>
+
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;The same can be applied to texture coordinates. Say that each vertex lies at a certain point on an image, you can use barycentric coordinates to
+            figure out where each pixel lands on that given image.
+        </h3>
+        <!-- <img src="assets/qb64 3d/rainbowtextureexample.png" style="width:50%; height: auto; display:block; margin: auto" /> -->
+        <video autoplay loop muted style="display: block; margin: auto">
+            <source src="assets/qb64 3d/uvtotexture.mp4" type="video/mp4" />
+        </video>
 
         <div class="section" style="position: absolute; left:-300; top:1350; width:250">
-            <h3 class="basictext outlinetext">To learn why that is, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products</h3>
-            <?php pointer(20, 40, true)?>
+            <h3 class="basictext outlinetext">To learn why that is, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products</a></h3>
+            <?php pointer(20, 20, true)?>
         </div>
-        <div class="section" style="position: absolute; left:900; top:3700; width:250">
+        <div class="section" style="position: absolute; left:900; top:2150; width:250">
             <h3 class="basictext outlinetext">You may simplify \(\frac{...}{2a}\) with \(\frac{...}{a}\) by not dividing \(a\) by 2, however you will need to keep in mind that \(a\) is now twice the area of the triangle.</h3>
-            <?php pointer(70, 260, false)?>
+            <?php pointer(40, 260, false)?>
+            <?php pointer(110, 260, false)?>
         </div>
     </div>
-
+    
+    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="linear">Linear Algebra for the Faint of Heart</h1>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+        <h3 class="basictext outlinetext">For a more in-depth and general approach, I recommend Grand Sanderson/3blue1brown's series:
+            <a href="https://youtu.be/fNk_zzaMoSs?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of Linear Algebra</a>
+            It goes through everything visually and can teach anyone with any amount of knowledge a general understanding of what Linear Algebra is.
+        </h3>
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;Our usage of Linear Algebra revolves around using Matrices to transform Vectors. But firstly, we shall define those terms.
+            A Matrix, (plural Matrices) is a # by # series of numbers, typically used to describe a transformation. For instance, a matrix might stretch/scale
+            all x values out by a factor of 2.
+            $$\begin{bmatrix}2 & 0\\ 0 & 1\end{bmatrix}$$
+            Or
+            $$x' = 2*x + 0*y$$
+            $$y' = 0*x + 1*y$$
+        </h3>
+        <video width="100%" height="auto" autoplay loop muted>
+            <source src="assets/qb64 3d/matrixExample.mp4"/>
+        </video>
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;A vector, in the way we define it, is an arrow with the tail end sitting on the Origin, (the coordinates 0, 0), and the tip sitting at
+            a given coordinate. It is defined only by it's tip's coordinates, as the tail will never be anywhere besides the origin.<br>
+            &emsp;And so matrix multiplication can be thought of as a global transformer. You can plug any vector or coordinate in and get a resulting coordinate
+            that follows the rules. This is useful to us as we can then create a transformation that say, rotates all vectors. Or one that projects all vectors from 3d to 2d. 
+        </h3>
+        <video width="100%" height="auto" autoplay loop muted>
+            <source src="assets/qb64 3d/vectormatrixexample.mp4"/>
+        </video>
+    </div>
 
     <!--
         Resources:
         3blue1brown cross product: relation to the area of a parallelogram
         https://www.youtube.com/watch?v=eu6i7WJeinw
+
+        Correct way to interpolate depth from Scratchapixel; Overall great resource for 3d rendering/rasterizing
+        https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/visibility-problem-depth-buffer-depth-interpolation
+
+        Another scratchapixel source to show why and how we correct UVW to fit perspective
+        https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/perspective-correct-interpolation-vertex-attributes
     -->
     <!-- Required to end Universal and "cut" divs -->
     </div>
