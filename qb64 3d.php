@@ -49,6 +49,7 @@ function pointer($fromtop, $length, $isfromleft) {
         <a class="link basictext" href="#barycentric">Barycentric Coordinates</a><br>
         <a class="link basictext" href="#linear">Linear Algebra for the Faint of Heart</a><br>
         <a class="link basictext" href="#depth">Depth is Easier than it Seems</a><br>
+        <a class="link basictext" href="#correctionbarycentric">Correcting Barycentric Coordinates with Depth</a><br>
         <a class="link basictext" href="#extra">Extra Little Detail</a><br>
         <a class="link basictext" href="#gallery">Gallery</a><br>
         <a class="link basictext" href="#resources">Further Resources</a><br>
@@ -779,7 +780,7 @@ function pointer($fromtop, $length, $isfromleft) {
             A Matrix, (plural Matrices) is a # by # series of numbers, typically used to describe a transformation. For instance, a matrix might stretch/scale
             all x values out by a factor of 2.
             $$\begin{bmatrix}2 & 0\\ 0 & 1\end{bmatrix}$$
-            Or
+            <span style="text-align:center">Or</span>
             $$x' = 2*x + 0*y$$
             $$y' = 0*x + 1*y$$
         </h3>
@@ -795,6 +796,182 @@ function pointer($fromtop, $length, $isfromleft) {
         <video width="100%" height="auto" autoplay loop muted>
             <source src="assets/qb64 3d/vectormatrixexample.mp4"/>
         </video>
+        <h3 class="basictext outlinetext">
+            &emsp;The Matrices used above are as follows
+            $$\begin{bmatrix}2 & 0\\ 0 & 1\end{bmatrix}$$
+            $$\begin{bmatrix}cos(90^{\circ}) & -sin(90^{\circ})\\sin(90^{\circ}) & cos(90^{\circ})\end{bmatrix}$$
+            And
+            $$\begin{bmatrix}1 & 1\\ 0 & 1\end{bmatrix}$$            
+        </h3>
+
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;The Matrices we use will be based off of Column Vectors. Meaning that we will write our vectors standing upright as so
+            $$\begin{bmatrix}x\\y\\z\\w\end{bmatrix}$$
+            &emsp;This matters as the process of multiplying a Row Vector with a matrix, and a Column Vector with a matrix changes the output, even though
+            the only difference between Row and Column Vectors is notation.
+            $$\begin{bmatrix}x\\y\\z\\w\end{bmatrix}\begin{bmatrix}\color{red}a_0 & \color{red}a_1 & \color{red}a_2 & \color{red}a_3\\\color{green}b_0&\color{green}b_1&\color{green}b_2&\color{green}b_3\\\color{blue}c_0&\color{blue}c_1&\color{blue}c_2&\color{blue}c_3\\\color{yellow}d_0&\color{yellow}d_1&\color{yellow}d_2&\color{yellow}d_3\end{bmatrix}$$
+            $$=$$
+            $$x' = x\textcolor{red}{a_0} + y\textcolor{red}{a_1} + z\textcolor{red}{a_2} + w\textcolor{red}{a_3}$$
+            $$y' = x\textcolor{green}{b_0} + y\textcolor{green}{b_1} + z\textcolor{green}{b_2} + w\textcolor{green}{b_3}$$
+            $$z' = x\textcolor{blue}{c_0} + y\textcolor{blue}{c_1} + z\textcolor{blue}{c_2} + w\textcolor{blue}{c_3}$$
+            $$w' = x\textcolor{yellow}{d_0} + y\textcolor{yellow}{d_1} + z\textcolor{yellow}{d_2} + w\textcolor{yellow}{d_3}$$
+
+            $$\begin{bmatrix}x&y&z&w\end{bmatrix}\begin{bmatrix}\color{red}a_0 & \color{red}a_1 & \color{red}a_2 & \color{red}a_3\\\color{green}b_0&\color{green}b_1&\color{green}b_2&\color{green}b_3\\\color{blue}c_0&\color{blue}c_1&\color{blue}c_2&\color{blue}c_3\\\color{yellow}d_0&\color{yellow}d_1&\color{yellow}d_2&\color{yellow}d_3\end{bmatrix}$$
+            $$=$$
+            $$x' = x\textcolor{red}{a_0} + y\textcolor{green}{b_0} + z\textcolor{blue}{c_0} + w\textcolor{yellow}{d_0}$$
+            $$y' = x\textcolor{red}{a_1} + y\textcolor{green}{b_1} + z\textcolor{blue}{c_1} + w\textcolor{yellow}{d_1}$$
+            $$z' = x\textcolor{red}{a_2} + y\textcolor{green}{b_2} + z\textcolor{blue}{c_2} + w\textcolor{yellow}{d_2}$$
+            $$w' = x\textcolor{red}{a_3} + y\textcolor{green}{b_3} + z\textcolor{blue}{c_3} + w\textcolor{yellow}{d_3}$$
+            <!--&emsp;Now that we've established what Matrix with Vector multiplication is and how it works, we can define exactly what we will use it for.
+            In the program I built, I have used it for two things, Projection, and Rotation. It can be used for Translation, i.e. moving an object around, 
+            but as cutting as many corners as we can is important for us, I have left translation up to simply adding numbers to the X, Y, and Z coordinates.<br>
+            &emsp;Starting things off with Projection, projection is the process of taking an n-Dimensional scene and bringing it down to a (n-1)-Dimensional
+            representation. Like casting a shadow of one to the other. And so, 3D projection involves taking a 3D scene and bringing it down to a 2D one. You
+            may recall from personal experience that things appear smaller as the distance from your eye(s) and the thing increases. And so we want a matrix
+            that scales down an object as it gets further away from whatever is looking at it. But what IS the distance?<br>
+            &emsp; We can describe our "viewpoint" as whatever we're looking through to see the object. Let's place this at the origin, or (0, 0, 0) as we're in
+            3 Dimensions. X, Y, and Z. But what's W then? Well, in 3D graphics, W is a assisting dimension that's almost always equal to 1. This is useful for
+            Translation, as in our column vector example, \(x'\) adds \(w * a_3\), and if w is always 1, then \(x'\) is just adding \(a_3\).<br>
+            &emsp;But back to projection, recall that scaling a scene is done through multiplication. And if we want our 2D x and y coordinates to decrease
+            in scale, we must be specifically dividing by \(z\), or multiplying by \(1\over z\). This starts our illusion that we desire.-->
+        </h3>
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;3D rendering of all sorts relies around transforming from one coordinate space to another. But what is a coordinate space?
+            You may recall that your screen is a series
+            of pixels given at a certain resolution. This can give you the coordinates for each pixel. Generally 2D integers coordinates, such as (100, 240) or
+            (145, 23). The coordinates we will be supplying our 3D projector is abstract units that could be integers or have decimals or whatever scale you,
+            the programmer and artist of this project, chooses. Our projector will then transform these coordinates into "screenspace coordinates", which are
+            2 dimensional coordinates ranging from (-1, -1) to (1, 1). And finally, we must convert this range of numbers to pixel coordinates in order to show
+            the image we desire.<br>
+            &emsp;The first transforming Matrix we will use, is;
+            $$\begin{bmatrix}\color{red}F_x & 0 & 0 & 0\\0 & \color{red}F_y & 0 & 0\\0 & 0 & \color{yellow}Z_m & \color{yellow}Z_a \\ 0 & 0 & \color{blue}-1 & 0 \\\end{bmatrix}$$
+            &emsp;And the second one we will use is;
+            $$\begin{bmatrix}\color{red}1/z'&0&0&0\\0&\color{red}1/z'&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix}$$
+            &emsp;Or, simply:
+            $$x'' = x' / z'$$
+            $$y'' = y' / z'$$
+            &emsp;The first prepares for projection, and the second does the projection in scaling as the distance, (i.e. the z value) changes. But let's
+            discuss each operation as they're happening.
+        </h3>
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;\(F_x\) and \(F_y\) each transform the x coordinates and the y coordinates based on a defined FOV and ratio between the width and height
+            of the display. As, if scaled equally, the x and the y would appear squished if the width was greater than the height of the display, and
+            stretched if the height is greater than the width. The FOV is calculated through \(\cot(\frac{\theta}{2})\)
+            And it represents the plane at which everything is projected onto being scaled up and down as the FOV of the "viewpoint" looking at it increases.
+            In order to take into account the display width-height ratio, we would scale \(\theta\) for \(F_x\) and \(F_y\) differently according to the width
+            height ratio.<br>
+            &emsp;So in conclusion, \(F_x\) and \(F_y\) scale the x and y coordinates based on a Field of View angle and width-height ratio.<br>
+            &emsp;\(Z_m\) and \(Z_a\) are more about setting a maximum and minimum z-value, otherwise known as the Far and Near Clipping Planes. We want a Z
+            that originally is equal to the Far plane, to stay equal to the far plane. And a Z that is equal to the near plane, to be equal to 0. For this we
+            can set.
+            $$ Z_m = \mp\frac{F}{F-N} $$ 
+            $$ Z_a = -\frac{F \times N}{F-N} $$
+            &emsp;Whether or not \(Z_m\) is positive or negative depends on which z-direction is forward. It's typically negative, as, following the right
+            hand coordinate system, Z-negative is "forward". \(Z_a\) is ultimately added to the input z (after multiplying it by \(Z_m\)) as z will be equal to
+            \(x \times 0 + y \times 0 + z \times Z_m + w \times Z_a\) where we've already established that w = 1.
+            And such, we have a final Matrix of
+            $$\begin{bmatrix}cot(\frac{\theta}{2}) & 0 & 0 & 0 \\ 0 & cot(\frac{\theta}{2} \times \frac{W}{H}) & 0 & 0 \\ 0 & 0 & -\frac{F}{F-N} & -\frac{F \times N}{F-N} \\ 0 & 0 & -1 & 0 \end{bmatrix}$$
+            Where \(\theta\) is the angle of FOV, \(W\) and \(H\) are the dimensions of the display, and \(F\) and \(N\) being the Near and Far clipping planes respectively.<br>
+            &emsp;When programming in a high-maintenance environment like BASIC, it's important to pre-compute as much as possible. So it's helpful that we
+            should define all these numbers before any triangles have started rasterizing. With this in mind, lets step out of Matrix notation and show each
+            computation that needs to genuinely be done.
+            $$ z' = z \times Z_m + Z_a $$
+            $$ x' = \frac{x \times cot(\frac{\theta}{2})}{z'} $$
+            $$ y' = \frac{y \times cot(\frac{\theta}{2} \times \frac{W}{H})}{z'} $$ 
+            This gives us 2D x and y values \(x'\) and \(y'\) ranging from -1 to 1. We can translate these to pixel coordinates by simply
+            $$ x'' = (x' \times 0.5 + 0.5) \times W $$
+            $$ y'' = (y' \times 0.5 + 0.5) \times H $$
+            But we've almost forgotten something. You see that -1 in row 4 column 3 of the perspective matrix? That means that after multiplying a vector with it,
+            \(w' = -z\). This is used to preserve the original Z coordinates. And since negative-z direction is 'forward', we make it negative in order to prime for
+            depth testi
+            ng. We've converted to 2 Dimensions, we still need to make sure things closer to the viewpoint are shown over things further from it.
+        </h3>
+
+        <div class="section" style="position: absolute; left:110%; top:1600; width:250">
+            <h3 class="basictext outlinetext">
+                Simplifies to
+                $$\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}$$
+                <?php pointer(30, 360, false)?>
+            </h3>
+        </div>
+        
+    </div>
+    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="depth">Depth is Easier than it Seems</h1>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;Even though we have managed to project 3d points into 2d ones, and use them to draw triangles, we still need to keep ahold of their distance
+            from the viewpoint, (or depth as it's called) otherwise pixels would be shown in whatever order the triangles are drawn. Making far away triangles
+            possibly show up in front of near-by triangles. This is actually quite simple, as we just need to test if the original z value is closer or further
+            to 0.<br>
+            &emsp;But if it didn't need any explanation, I wouldn't have dedicated a section to it. There's a bit of a trickiness to it. As it turns out, we
+            need to gather the depth of each pixel. And here's a hint, we can do this with barycentric coordinates.<br>
+            &emsp;Unfortunately, unlike colors and other linear vertex attributes, we can't just do
+            $$depth = depth_u * u + depth_v * v + depth_w * w$$
+            We instead need to do
+            $$\frac{1}{depth} = u\frac{1}{depth_u} + v\frac{1}{depth_v} + w\frac{1}{depth_w}$$
+            &emsp;You'll find that by attempting to use the first equation over the latter to calculate depth will result in strange curves when geometry
+            intersects eachother. The reasoning for this lies in how depth actually effects coordinates. Each x and y value are divided by their depth,
+            rather than simply translated. This ends in every x and y value not being transformed equally, the depth of a triangle per-pixel would appear
+            more like this, rather than this.
+        </h3>
+        <img src="assets/qb64 3d/triangledepth.png" alt="triangle depth 'graphs'"/>
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;You can think about it as if a point is traveling an inch per every second along a triangle before it's projected. From the projection's perspective (pun intended)
+            the point travels slower and slower as it gets further away, but we know it's still physically moving an inch per second. This shows us that
+            although the pixels at which the point is projected to may change slower and slower over time, but it's still changing distance, and this is lost
+            with simple 2d barycentric coordinates.<br>
+            &emsp;We can see that using reciprocals fights that linear bias, and results in a more realistic interpolated depth. You can think about it as
+            when the Z value of a point increases, the reciprocal shrinks, but it doesn't shrink as fast when Z is changing from 9 to 10, than when it changes
+            from 1 to 2.
+        </h3>
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;Now we have taken the depth of every pixel, it's time we should compare them. The method I have dedicated towards my program is by holding two seperate buffers
+            for each pixel, one dedicated to depth, and one to the time a pixel was last updated. And thus the method for every pixel will be this:<br>
+            &emsp;&emsp;For every pixel, determine it's depth, and take note of which frame it is being drawn on.<br>
+            &emsp;&emsp;Check the depth and time buffers. Draw the pixel if either it has a distance less than that in the depth buffer, or if it's time is greater (newer) than the time stored at that pixel in the time buffer<br>
+            &emsp;This allows pixels to be drawn in the correct order, and for older pixels to be ignored without having to clear any buffer.
+        </h3>
+        <h3 class="basictext outlinetext">
+            \[\begin{gather*}
+            depth[W*H]\\
+            times[W*H]\\
+            currenttime = 0\\
+            ...\\
+            every\ frame: currenttime = currenttime + 1\\
+            ...\\
+            for\ every\ triangle\ pixel\ p:\\
+            if\ \left(p_{depth} < depth[p_y * W + p_x]\; or\; currenttime < times[p_y * W + p_x]\right):\\
+                then \\
+                depth[p_y * W + p_x] = p_{depth}\\
+                times[p_y * W + p_x] = currenttime\\
+                draw\ pixel\ p.\\
+            \end{gather*}\]
+        </h3>
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;It's reasonable then to check for depth as soon as we can in our final triangle rasterizer. As we don't want to waste any computational time
+            on unseen pixels.
+        </h3>
+    </div>
+    <h1 class="basictext outlinetext" id="correctionbarycentric">Correcting Barycentric Coordinates with Depth</h1>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;Now there is nothing wrong with our barycentric coordinates directly. I haven't lied to you about how we get barycetric coordinates.
+            But you might find that as you plug in all these formulas that something seems off about the triangles. They all look 2D. This is a weird
+            claim to make but it makes sense with an explanation. With the barycentric coordinates we have now, the triangle uses the 2D center
+            of the triangle we have given it, when in reality, the center of a 3D triangle depends on the depth of each of its points.<br>
+            &emsp;This is showcased by Scratchapixel in this graphic displaying the difference between "naive" barycentric interpolation, and perspective
+            correct interpolation.
+        </h3>
+        <img src="assets/qb64 3d/perspectivecorrection.png" style="width:100%">
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;You'll see in the image that the triangle on the left appears 2 Dimensional and flat, whereas it's easier to gather the depth from the
+            second triangle. This is how things will appear after depth correction of the vertex attributes.<br>
+            &emsp;This problem is more apparent when using textures as images will hold straight lines, whereas simple gradients might hide misteps.
+        </h3>
+        <img src="assets/qb64 3d/naivevscorrect.png" style="width:100%">
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;The answer lies simply in using the depths of each vertex in comparison to the current depth of the pixel.    
+        </h3>
     </div>
 
     <!--
@@ -807,6 +984,9 @@ function pointer($fromtop, $length, $isfromleft) {
 
         Another scratchapixel source to show why and how we correct UVW to fit perspective
         https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/perspective-correct-interpolation-vertex-attributes
+
+        Scratchapixel overview for projection matrices
+        https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix
     -->
     <!-- Required to end Universal and "cut" divs -->
     </div>
