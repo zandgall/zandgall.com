@@ -30,6 +30,30 @@ function pointer($fromtop, $length, $isfromleft) {
 }
 
 ?>
+<style>
+.section {
+    background: linear-gradient(rgba(124, 182, 229, 0.5), rgba(114, 142, 224, 0.5));
+    border-radius: 15px;
+    border: 2px solid rgba(59, 99, 163, 0.5);
+    box-shadow: 0 0 8px 0px #22222c;
+}
+
+.section.night {
+    background: linear-gradient(rgba(56, 56, 78, 0.5), rgba(44, 46, 64, 0.5));
+    border-radius: 15px;
+    border: 2px solid rgba(3, 9, 52, 0.5);
+    box-shadow: 0 0 8px 0px #22222c;
+}
+.codeexample {
+    width: 800; 
+    margin: 10px auto 10px auto; 
+    border: inset 2px #000027; 
+    background-color: #000027
+}
+.codeexample.h3 {
+    font-family: basicbit2
+}
+</style>
 
 <body>
     <?php 
@@ -60,364 +84,447 @@ function pointer($fromtop, $length, $isfromleft) {
         <h2 class="basictext outlinetext">In order to understand QB64, you must first know what BASIC is</h2>
 
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;BASIC is a programming language developed in the late 60s and early 70s, becoming a mainstay as one of, if not the most influential programming languages of all time during the 80s. It was created to be a simple programming language that could be extremely easy to learn, but still really powerful as we'll soon see. During it's reign, an IDE called "Quick BASIC", or QBasic for short was created for DOS, accelerating BASIC's popularity and accessibility. Decades later, QBasic became the influence for QB64, a BASIC IDE for the 2000s. This became my IDE of choice, due to the modern OS compiling it brings, and it's simple project setup.</h3>
-        <h3 class="basictext outlinetext" style="text-align:left">&emsp;Although being built for 64 bit systems, QB64 gives you similar capabilities that BASIC would have given you back in the day, another reason why I chose it. But one problem it does bring to the project, is that one of it's benefits lies in the realm of graphics. However, the extent at which it was used was very minimal, and did not harm the project or my learning experience in this field.</h3>
+        <h3 class="basictext outlinetext" style="text-align:left">&emsp;Although being built for 64 bit systems, QB64 doesn't give you many more capabilities that BASIC would have given you back in the day. However, it does bring benefits in the realm of graphics, but this did not impede the project or learning experience.</h3>
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;More information about QB64 and it's capabilities can be found at the <a href="https://www.qb64.org" style="text-decoration: none">QB64 homepage</a></h3>
         <img src="assets/qb64 3d/uiexample.png" style="display: block; width: 800; height: auto; margin: auto">
     </div>
-    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="raster">What is 3D Rasterizating?</h1>
+    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="raster">What is 3D Rasterization?</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800;">
         <h2 class="basictext outlinetext">3D Rasterization is a technique for drawing 3D scenes to a raster</h2>
-        <h3 class="basictext outlinetext" style="text-align:left">&emsp;Rasterization in general is the practice of mapping vector graphics to a raster. A raster, like a screen, tends to be a list of colors, or 'pixels'. In 3D rasterization, these vector graphics are 3D objects projected onto a 2D plane, usually triangles onto a cross section of a virtual camera's viewport.</h3>
-        <h3 class="basictext outlinetext" style="text-align:left">&emsp;But let's slow down here. Projecting and Rasterizing 3D objects is complicated to learn, but becomes simple to execute when understood. From here on, I shall describe only the processes I used, but there are numberous paths to achieve this same end point, many of which I do not understand at this given time.</h3>
-        <h3 class="basictext outlinetext" style="text-align:left">&emsp;I chose to use triangles like many others for their efficiency in rasterization, helpfullness in transforming vertex attributes, and ability to form any other flat-faces 3d shape with them. They have a great deal of research and mathematical use behind them that makes them an extremely powerful and versitile shape, yet very efficient as well.</h3>
-        <h3 class="basictext outlinetext" style="text-align:left">&emsp;Before we can work with triangles, we need to know how to project individual 3d points. Projecting onto the screen of a "Virtual Camera" sounds more complicated than is ever necessary. But it all comes down to some tricky calculations that are entirely handled by the computer. We will simplify our process a bit though by cutting out any movement or rotation of the camera, making the scene less interactive but simplifying and speeding things up a bit in comparison.</h3>
-        <h3 class="basictext outlinetext" style="text-align:left">&emsp;Beyond transforming and projecting triangles, we need to make sure that we aren't drawing any objects or triangles on top of something that's supposed to be closer to the camera. Fortunately, if we store an array of the current depth at each pixel, we can check that array during rasterization to see if there is already a pixel there closer to the camera, or 'origin' in our case.</h3>
+        <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;Rasterization in general is the practice of mapping vector graphics to a raster. A raster, like a screen, tends to be a list of colors, or 'pixels'.
+        In 3D rasterization, these vector graphics are 3D objects projected onto a 2D plane, usually triangles onto a cross section of a virtual camera's viewport.
+        That is, given a list of 3d objects and attributes of each of those objects, 3d rasterizing is a method that takes in said list and returns an image with
+        a finite resolution.</h3>
+        <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;Projecting and Rasterizing 3D objects is complicated to learn, but becomes simple to execute when understood.
+        There are numerous paths to achieve the desired result, but the paths this project took will be the only ones discussed here.
+        This project, like many others, relies on triangles for their efficiency in rasterization, use of vertex attributes,
+        and ability to form any other flat-faced 3d shape. There is a great deal of research and mathematical use behind triangles that makes them an
+        extremely powerful and versitile shape, while still being very efficient.</h3>
+        <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;But before the project can display a full triangle, it needs to know how to project individual 3d points. It all comes down to some basic calculations,
+        but the origins of which are fascinating. The process will be simplified by cutting out any movement or rotation of the viewport, this will result in a less
+        interactive scene, but it cuts out many intermediate computations that would otherwise be necessary.</h3>
+        <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;After the process knows how to transform and project triangles, it needs to know how to avoid drawing any objects or triangles on top of something that's
+        supposed to be appear in front of it. Fortunately, it is an extremely simple process to include once the project is already drawing everything pixel-by-pixel.</h3>
         <div class="section" style="position: absolute; left:-300; top:0; width:250">
             <h3 class="basictext outlinetext">Vector graphics consist of shapes and perfect lines, they are infinitely scalable and don't conform to a resolution, unlike images</h3>
             <?php pointer(48, 50, true)?>
         </div>
         <div class="section" style="position: absolute; left:850; top:250; width:250">
             <h3 class="basictext outlinetext"><a href="#triangles">Triangles 101</a></h3>
-            <?php pointer(12, 140, false)?>
+            <?php pointer(15, 45, false)?>
         </div>
-        <div class="section" style="position: absolute; left:-300; top:340; width:250">
+        <div class="section" style="position: absolute; left:-300; top:343; width:250">
             <h3 class="basictext outlinetext"><a href="#linear">Linear Algebra for the Faint of Heart</a></h3>
             <?php pointer(28, 50, true)?>
         </div>
-        <div class="section" style="position: absolute; left:850; top:540; width:250">
+        <div class="section" style="position: absolute; left:850; top:475; width:250">
             <h3 class="basictext outlinetext"><a href="#depth">Depth is Easier than it Seems</a></h3>
             <?php pointer(25, 50, false)?>
         </div>
     </div>
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="triangles">Triangles 101</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
-        <h2 class="basictext outlinetext">Before trying to understand the exact math and programming behind rasterizing a triangle, it's important to start thinking about triangles in these three ways.</h2>
+        <h2 class="basictext outlinetext">Before trying to understand the exact math and programming behind rasterizing a triangle, it's important to define triangles in these three ways.</h2>
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;1: A set of 3 points, with lines connecting points 1 - 2, 2 - 3, and 3 - 1.<br>&emsp;2: A single point with two lines jetting out from it, being filled until a terminating line.<br>&emsp;3: A set of two triangles. With each of their terminating lines being horizontally flat.</h3>
         <img src="assets/qb64 3d/aspointswithlines.png" style="display:block; width: 300px;height:auto; margin-left:-50px; float:left">
         <img src="assets/qb64 3d/asoriginterminator.png" style="display:block; width: 300px;height:auto; float:left; position:relative; z-index:14">
         <img src="assets/qb64 3d/as2terminatingtriangles.png" style="display:block; width: 300px;height:auto;margin-right:-50px; float:left">
         <h3 class="basictext outlinetext" style="text-align:left; margin-top:350;">
-        &emsp;With these three manners, we can split up the process of drawing the pixels of a triangle in simple steps.
+        &emsp;With these three manners, we can split up the process of drawing a triangle into simple steps.
         Firstly, drawing a triangle with a flat terminating line is much easier than one with a slanted terminating line.
-        As with a triangle of this manner, we can loop from y positions from the terminating line to the source,
-        and find the range of x values for every y position in said triangle.
-        Knowing this, and assuming #3 is true, we can write the processes for a flat-terminating triangle, and be able to draw any triangle
-        after figuring out how to split it up.<br><br>
-        &emsp;As mentioned, the rasterization process of a flat-terminating triangle is as easy and as complicated as it sounds. 
-        Knowing the highest y point, and lowest y point, (those being the y-point of the origin, and the y point of the terminator),
-        we can loop through each y level that the triangle envelopes.</h3>
+        That is because, given a triangle of this manner, we can loop through every y position from the terminating line to the source.
+        And given a y-value in a triangle, we can find the range of x values that form a horizontal slice of the triangle.
+        Knowing this, we can write the processes for a flat-terminating triangle and be able to draw any triangle
+        given that we can split it into it's top-triangle and bottom triangle as defined by definition #3.</h3>
         <img src="assets/qb64 3d/yrangeoftri.png" style="display:block; width:800px; height:auto">
         <h3 class="basictext outlinetext" style="text-align:left;">
-        &emsp;To know each x value, we can consider the two lines that run through the origin.
+        &emsp;To know each x value, we can consider the two lines that run through the origin, as defined by definition #2.
         Note that a line is given by the equation: "y = mx + b", and rewritten, we can find x when given y, using "x = (y - b)/m". 
-        With this in mind, we can solve for the x-values of either side-line given the y position.
-        Which can come straigh from our loop between the two y-limits of our triangles.</h3>
+        With this in mind, we can solve for the x-values of either line running through the origin when given the y position.
+        Which can come straigh from our loop between the two y-limits of our triangles. We can simplify this however. We do not know b in our example, so let's replace this equation with
+        "x = (y-offset.y)/m  + offset.x". This equation means that we are using the difference in y to find the difference in x, since we know that both x and y start at our offset.</h3>
         <canvas class="section" id="lineExample_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="lineExample_mouseMove(event);">Canvas Unsupported</canvas>
         <script type="application/javascript">
-        {
-        let can = $("#lineExample_canvas")[0];
-        let ctx = can.getContext("2d");
-        function lineExample_mouseMove(evt) {
-            let rect = can.getBoundingClientRect();
-            ctx = can.getContext("2d");
-            let mouse = {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
-            let lineX = 500 + mouse.y/2; // Physical y is (mouse.y - 400)/-1, but considering that positive-y is towards the bottom, simplifying will do
-            console.log("Drawing...", mouse, lineX, ctx, can);
-            ctx.clearRect(0, 0, 800, 400);
-            ctx.fillStyle = "blue";
-            ctx.strokeStyle ="blue";
-            ctx.lineWidth = 5;
+            {
+                let can = $("#lineExample_canvas")[0];
+                let ctx = can.getContext("2d");
+                function lineExample_mouseMove(evt) {
+                    let rect = can.getBoundingClientRect();
+                    ctx = can.getContext("2d");
+                    let mouse;
+                    if(evt == undefined) {
+                        mouse = {x: 0, y: 0}
+                    } else {
+                        mouse = {
+                            x: evt.clientX - rect.left,
+                            y: evt.clientY - rect.top
+                        };
+                    }
+                    let lineX = 500 + mouse.y/2;
+                    let lineX2 = 575 + mouse.y/-1; // Physical y is (mouse.y - 400)/-1, but considering that positive-y is towards the bottom, simplifying will do
+                    // console.log("Drawing!");
+                    ctx.clearRect(0, 0, 800, 400);
+                    ctx.fillStyle = "blue";
+                    ctx.strokeStyle ="blue";
+                    ctx.lineWidth = 5;
 
-            ctx.beginPath();
-            ctx.moveTo(500, 0);
-            ctx.lineTo(700,400);
-            ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(500, 0);
+                    ctx.lineTo(700,400);
+                    ctx.moveTo(575, 0);
+                    ctx.lineTo(175,400);
+                    ctx.stroke();
+                    ctx.setLineDash([10,10]);
+                    ctx.strokeStyle = "white";
+                    ctx.beginPath();
+                    ctx.moveTo(0, 350);
+                    ctx.lineTo(800, 350);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
 
-            ctx.beginPath();
-            ctx.ellipse(lineX, mouse.y, 10, 10, 0, 0, 2*Math.PI);
-            ctx.fill();
+                    ctx.beginPath();
+                    ctx.ellipse(lineX, mouse.y, 10, 10, 0, 0, 2*Math.PI);
+                    ctx.ellipse(lineX2, mouse.y, 10, 10, 0, 0, 2*Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.ellipse(525, 50, 10, 10, 0, 0, 2*Math.PI);
+                    ctx.fill();
 
-            ctx.font = "bold 1.17em sans-serif";
-            ctx.lineWidth = 4;
-            ctx.fillStyle="white";
-            ctx.strokeStyle="black";
-            ctx.strokeText("y = mouseY", 10, 40);
-            ctx.fillText("y = mouseY", 10, 40);
-            ctx.strokeText("x = (mouseY - b)/m", 10, 70);
-            ctx.fillText("x = (mouseY - b)/m", 10, 70);
-        }
-        }
-        </script>
-        <h3 class="basictext outlinetext" style="text-align:left;">&emsp;Before we drop in our loop and edge finders, let's simplify this "x = (y - b)/m".
-        For our case, we do not need "b" in there at all, when we know what our original x value is, we can reason that for every change in y,
-        x changes by the change in y times the inverse-slope. "Δy * 1/m". Secondly, we are able to find what "m" equals before we start any loop,
-        and thus, can find 1/m to save calculations during our loop.</h3>
-        <canvas class="section" id="lineWalkExample_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
-        <script type="application/javascript">
-        {
-        let can = $("#lineWalkExample_canvas")[0];
-        let ctx = can.getContext("2d");
-        ctx.font = "bold 1.17em sans-serif";
-        let lineWalk_step = -2;
-        let lineWalk_y = 0;
-        let lineWalk_x = 0;
-
-        function canvas_arrow(context, fromx, fromy, tox, toy, r){
-            var x_center = tox;
-            var y_center = toy;
-
-            var angle;
-            var x;
-            var y;
-
-            context.beginPath();
-            context.moveTo(fromx, fromy);
-            context.lineTo(tox, toy);
-            context.stroke();
-
-            context.beginPath();
-
-            angle = Math.atan2(toy-fromy,tox-fromx)
-            x = r*Math.cos(angle) + x_center;
-            y = r*Math.sin(angle) + y_center;
-
-            context.moveTo(x, y);
-
-            angle += (1/3)*(2*Math.PI)
-            x = r*Math.cos(angle) + x_center;
-            y = r*Math.sin(angle) + y_center;
-
-            context.lineTo(x, y);
-
-            angle += (1/3)*(2*Math.PI)
-            x = r*Math.cos(angle) + x_center;
-            y = r*Math.sin(angle) + y_center;
-
-            context.lineTo(x, y);
-
-            context.closePath();
-
-            context.fill();
-        } // Thanks stackoverflow! https://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
-        function lineWalk_update() {
-            ctx.clearRect(0, 0, 800, 400);
-            ctx.fillStyle="blue";
-            ctx.strokeStyle="blue";
-            ctx.beginPath();
-            ctx.moveTo(500, 0);
-            ctx.lineTo(700, 400);
-            ctx.lineWidth = 5;
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.ellipse(lineWalk_x*50 + 500,  lineWalk_y*50, 10, 10, 0, 0, 2*Math.PI);
-            ctx.fillStyle="blue";
-            ctx.fill();
-            switch(lineWalk_step) {
-            case 0:
-                ctx.beginPath();
-                ctx.fillStyle="white";
-                ctx.strokeStyle="white";
-                canvas_arrow(ctx, lineWalk_x*50 + 500, lineWalk_y*50 + 10, lineWalk_x*50 + 500, lineWalk_y*50 + 50, 5);
-                ctx.fillStyle= "white";
-                ctx.strokeStyle="black";
-                ctx.lineWidth = 4;
-                ctx.strokeText("y+1", lineWalk_x*50 + 487, lineWalk_y*50 + 70);
-                ctx.fillText("y+1", lineWalk_x*50 + 487, lineWalk_y*50 + 70);
-
-                lineWalk_y++;
-                break;
-            case 2:
-                ctx.beginPath();
-                ctx.fillStyle="white";
-                ctx.strokeStyle="white";
-                canvas_arrow(ctx, lineWalk_x*50 + 510, lineWalk_y*50, lineWalk_x*50 + 525, lineWalk_y*50, 5);
-                ctx.fillStyle= "white";
-                ctx.strokeStyle="black";
-                ctx.lineWidth = 4;
-                ctx.strokeText("x+1/m", lineWalk_x*50 + 500, lineWalk_y*50 + 20);
-                ctx.fillText("x+1/m", lineWalk_x*50 + 500, lineWalk_y*50 + 20);
-                lineWalk_x+=1/2;
-                break;
-            case 4:
-                break;
-            default:
-                break;
+                    ctx.font = "bold 1.17em sans-serif";
+                    ctx.lineWidth = 4;
+                    ctx.fillStyle="white";
+                    ctx.strokeStyle="black";
+                    ctx.strokeText("y = mouseY", 10, 40);
+                    ctx.fillText("y = mouseY", 10, 40);
+                    ctx.strokeText("x = (y-origin.y)/m + origin.x", 10, 70);
+                    ctx.fillText("x = (y-origin.y)/m + origin.x", 10, 70);
+                    ctx.strokeText("Origin", 540, 60);
+                    ctx.fillText("Origin", 540, 60);
+                    ctx.strokeText("Terminator", 10, 345);
+                    ctx.fillText("Terminator", 10, 345);
+                }
+                $(document).ready(function() {
+                    lineExample_mouseMove(undefined);
+                });
             }
-
-            ctx.lineWidth = 4;
-            ctx.strokeStyle="black";
-            ctx.fillStyle=(lineWalk_step < 0 ? "yellow" : "white");
-            ctx.strokeText("START", 10, 40);
-            ctx.fillText("START", 10, 40);
-            ctx.fillStyle=(((lineWalk_step == 0 || lineWalk_step == 1) && lineWalk_y <= 8) ? "yellow" : "white");
-            ctx.strokeText("y = y + 1", 10, 70);
-            ctx.fillText("y = y + 1", 10, 70);
-            ctx.fillStyle=((lineWalk_step == 2 || lineWalk_step == 3) ? "yellow" : "white");
-            ctx.strokeText("x = x + 1/m", 10, 100);
-            ctx.fillText("x = x + 1/m", 10, 100);
-            ctx.fillStyle=(lineWalk_y > 8 ? "#20ff60" : (lineWalk_step == 4 || lineWalk_step == 5) ? "yellow" : "white");
-            ctx.strokeText("STOP WHEN (y ≥ terminator)", 10, 130);
-            ctx.fillText("STOP WHEN (y ≥ terminator)", 10, 130);
-            if(lineWalk_step == 5)
-                lineWalk_step = -1;
-            lineWalk_step++;
-            if(lineWalk_y > 8 && lineWalk_step == 2) {
-                lineWalk_y = 0;
-                lineWalk_x = 0;
-                lineWalk_step = -2;
-            }
-        }
-        window.setInterval(lineWalk_update, 500);
-        }
         </script>
         <h3 class="basictext outlinetext" style="text-align:left;">
-        &emsp;In summary, we will loop through the y values, as there is a definite top and bottom. And for each y value,
-        we will find the boundaries of x by solving for the x values of the lines that surround the triangle. 
-        We will call our two resulting values, "left x" and "right x".<br><br>
-        &emsp;Noting that we can find the slope of a line going through two points by (y2-y1)/(x2-x1),
-        we can calculate the slopes of the two sides of the triangle that we need to know, given the 3 points of our triangle.
-        And better yet, we can calculate the inverse slope, by calculating (x2-x1)/(y2-y1) instead of the original reciprocal.<br><br>
-        &emsp;Given all that, we can now fully loop through every pixel inside of a flat-terminating-triangle. Making sure that we are finding a
-        floored or rounded x and y value, because we need integer values for settings pixels and further calculations.</h3>
+        &emsp;From this idea of using the difference in y to find difference in x, we can simplify this process for the computer. For our end product, we will be looping through every pixel in a triangle,
+        and for every y position included in the triangle, we find the range of x values included for the equivelent horizontal slice. We can loop through all y values very easily by setting an initial y value
+        to the highest y coordiante of the triangle, and incrementing it until it surpasses the lowest y coordinate of the triangle. This is even easier with a horizontal-terminator triangle, as it just needs
+        to loop between the y coordinate of the origin and the y coordinate of the terminator.<br>
+        &emsp;This also makes calculating the x range much simpler. As we can set an initial x value to the x coordinate of the origin, and every time we increment the y value, we add 1/m to our x value. 
+        We use 1/m as it is the derivative of "x = (y - origin.x)/m + origin.x" (more specifically the dx/dy). Essentially, the difference between "x = (y - origin.x)/m + origin.x" and "x = (y + 1 - origin.x)/m + origin.x"
+        is just 1/m.</h3>
+        <canvas class="section" id="lineWalkExample_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
+        <script type="application/javascript">
+            {
+            let can = $("#lineWalkExample_canvas")[0];
+            let ctx = can.getContext("2d");
+            ctx.font = "bold 1.17em sans-serif";
+            let lineWalk_step = -3;
+            let lineWalk_y = 1;
+            let lineWalk_x = 0.5;
+            let lineWalk_x2 = -1;
+
+            function canvas_arrow(context, fromx, fromy, tox, toy, r){
+                var x_center = tox;
+                var y_center = toy;
+
+                var angle;
+                var x;
+                var y;
+
+                context.beginPath();
+                context.moveTo(fromx, fromy);
+                context.lineTo(tox, toy);
+                context.stroke();
+
+                context.beginPath();
+
+                angle = Math.atan2(toy-fromy,tox-fromx)
+                x = r*Math.cos(angle) + x_center;
+                y = r*Math.sin(angle) + y_center;
+
+                context.moveTo(x, y);
+
+                angle += (1/3)*(2*Math.PI)
+                x = r*Math.cos(angle) + x_center;
+                y = r*Math.sin(angle) + y_center;
+
+                context.lineTo(x, y);
+
+                angle += (1/3)*(2*Math.PI)
+                x = r*Math.cos(angle) + x_center;
+                y = r*Math.sin(angle) + y_center;
+
+                context.lineTo(x, y);
+
+                context.closePath();
+
+                context.fill();
+            } // Thanks stackoverflow! https://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
+            function lineWalk_update() {
+                ctx.clearRect(0, 0, 800, 400);
+                ctx.fillStyle="blue";
+                ctx.strokeStyle="blue";
+                ctx.beginPath();
+                ctx.moveTo(500, 0);
+                ctx.lineTo(700, 400);
+                ctx.moveTo(575, 0);
+                ctx.lineTo(175, 400);
+                ctx.lineWidth = 5;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.ellipse(lineWalk_x*50 + 500,  lineWalk_y*50, 10, 10, 0, 0, 2*Math.PI);
+                ctx.ellipse(lineWalk_x2*50 + 575,  lineWalk_y*50, 10, 10, 0, 0, 2*Math.PI);
+                ctx.fillStyle="blue";
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(525, 50, 10, 10, 0, 0, 2*Math.PI);
+                ctx.fill();
+                switch(lineWalk_step) {
+                case 0:
+                    ctx.beginPath();
+                    ctx.fillStyle="white";
+                    ctx.strokeStyle="white";
+                    canvas_arrow(ctx, lineWalk_x*50 + 500, lineWalk_y*50 + 10, lineWalk_x*50 + 500, lineWalk_y*50 + 50, 5);
+                    canvas_arrow(ctx, lineWalk_x2*50 + 575, lineWalk_y*50 + 10, lineWalk_x2*50 + 575, lineWalk_y*50 + 50, 5);
+                    ctx.fillStyle= "white";
+                    ctx.strokeStyle="black";
+                    ctx.lineWidth = 4;
+                    ctx.strokeText("y+1", lineWalk_x*50 + 487, lineWalk_y*50 + 70);
+                    ctx.fillText("y+1", lineWalk_x*50 + 487, lineWalk_y*50 + 70);
+                    ctx.strokeText("y+1", lineWalk_x2*50 + 562, lineWalk_y*50 + 70);
+                    ctx.fillText("y+1", lineWalk_x2*50 + 562, lineWalk_y*50 + 70);
+
+                    lineWalk_y++;
+                    break;
+                case 2:
+                    ctx.beginPath();
+                    ctx.fillStyle="white";
+                    ctx.strokeStyle="white";
+                    canvas_arrow(ctx, lineWalk_x*50 + 510, lineWalk_y*50, lineWalk_x*50 + 525, lineWalk_y*50, 5);
+                    canvas_arrow(ctx, lineWalk_x2*50 + 565, lineWalk_y*50, lineWalk_x2*50 + 525, lineWalk_y*50, 5);
+                    ctx.fillStyle= "white";
+                    ctx.strokeStyle="black";
+                    ctx.lineWidth = 4;
+                    ctx.strokeText("x+1/m", lineWalk_x*50 + 500, lineWalk_y*50 + 20);
+                    ctx.fillText("x+1/m", lineWalk_x*50 + 500, lineWalk_y*50 + 20);
+                    ctx.strokeText("x+1/m", lineWalk_x2*50 + 515, lineWalk_y*50 + 20);
+                    ctx.fillText("x+1/m", lineWalk_x2*50 + 515, lineWalk_y*50 + 20);
+                    lineWalk_x+=0.5;
+                    lineWalk_x2-=1;
+                    break;
+                // case 4:
+                //     break;
+                default:
+                    break;
+                }
+
+                ctx.lineWidth = 4;
+                ctx.setLineDash([10,10]);
+                ctx.strokeStyle = "white";
+                ctx.beginPath();
+                ctx.moveTo(0, 350);
+                ctx.lineTo(800, 350);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.strokeStyle="black";
+                ctx.fillStyle=(lineWalk_step == -3 ? "yellow" : "white");
+                ctx.strokeText("START", 10, 40);
+                ctx.fillText("START", 10, 40);
+                ctx.fillStyle=(lineWalk_step == -2 ? "yellow" : "white");
+                ctx.strokeText("y = origin.y", 10, 70);
+                ctx.fillText("y = origin.y", 10, 70);
+                ctx.strokeText("x = origin.x", 10, 100);
+                ctx.fillText("x = origin.x", 10, 100);
+                ctx.fillStyle=(lineWalk_step == -1 ? "yellow" : "white");
+                ctx.strokeText("LOOP", 10, 130);
+                ctx.fillText("LOOP", 10, 130);
+                ctx.fillStyle=(((lineWalk_step == 0 || lineWalk_step == 1) && lineWalk_y <= 8) ? "yellow" : "white");
+                ctx.strokeText("y = y + 1", 30, 160);
+                ctx.fillText("y = y + 1", 30, 160);
+                ctx.fillStyle=((lineWalk_step == 2 || lineWalk_step == 3) ? "yellow" : "white");
+                ctx.strokeText("x = x + 1/m", 30, 190);
+                ctx.fillText("x = x + 1/m", 30, 190);
+                ctx.fillStyle=((lineWalk_step == 4) ? (lineWalk_y >= 7 ? "#20ff60" : "yellow") : "white");
+                ctx.strokeText("UNTIL (y ≥ terminator)", 10, 220);
+                ctx.fillText("UNTIL (y ≥ terminator)", 10, 220);
+                ctx.fillStyle = (lineWalk_step == 5 || lineWalk_step == 6) ? "yellow" : "white";
+                ctx.strokeText("STOP", 10, 250);
+                ctx.fillText("STOP", 10, 250);
+
+                ctx.fillStyle = "white";
+                ctx.strokeText("Origin", 540, 60);
+                ctx.fillText("Origin", 540, 60);
+                ctx.strokeText("Terminator", 10, 345);
+                ctx.fillText("Terminator", 10, 345);
+                if(lineWalk_step == 4)
+                    lineWalk_step = -2;
+                lineWalk_step++;
+                if(lineWalk_step == -1 && lineWalk_y >= 7)
+                    lineWalk_step = 5;
+                else if(lineWalk_step == 6 && lineWalk_y >= 7)
+                    lineWalk_step = -3;
+                else if(lineWalk_step == -2) {
+                    lineWalk_y = 1;
+                    lineWalk_x = 0.5;
+                    lineWalk_x2 = -1;
+                }
+            }
+            window.setInterval(lineWalk_update, 500);
+            }
+        </script>
+        <h3 class="basictext outlinetext" style="text-align:left;">
+        &emsp;In summary, we can draw a flat-terminating triangle by looping through it's included y values, and for y value,
+        finding the boundaries of x by solving for the x values of the left and right edge lines. We will call our two resulting x-values, "left x" and "right x".
+        We can find the slope of a line going through two points by calculating "m = (y2-y1)/(x2-x1)".
+        By calculating (x2-x1)/(y2-y1) instead of the original reciprocal, we can find the inverse slope or, in other words, the value we increment x by for every increment in y.<br><br>
+        &emsp;Given that, we simply loop through y values, finding the left and right x values along the way, and then loop between the left and right x in order
+        to get or set every pixel inside of the flat-terminating triangle.</h3>
 
         <canvas class="section" id="flatTriangle_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
         <script>
-        {
-        let can = $("#flatTriangle_canvas")[0];
-        let ctx = can.getContext("2d");
-        ctx.font = "bold 1.17em sans-serif";
+            {
+            let can = $("#flatTriangle_canvas")[0];
+            let ctx = can.getContext("2d");
+            ctx.font = "bold 1.17em sans-serif";
 
-        function sleep(ms) { // Simple sleep promise
-           return new Promise(resolve => setTimeout(resolve, ms));
-        }
-        let step = 1, gridSize = 20;
-        let a = {x: 410, y: 20};
-        let b = {x: 200, y: 380}; // Terminator is at y=380
-        let c = {x: 700, y: 380};
-
-        let a_b = (b.x-a.x)/(b.y-a.y);
-        let a_c = (c.x-a.x)/(c.y-a.y);
-
-        let left = {x: a.x, y:a.y}, right = {x:a.x, y:a.y};
-
-        let raster = [];
-
-        async function update() {
-            if(raster.length === 0) {
-                for(let i = 0; i < (800/gridSize)*(400/gridSize); i++) {
-                    raster[i] = false;
-                }
+            function sleep(ms) { // Simple sleep promise
+            return new Promise(resolve => setTimeout(resolve, ms));
             }
+            let step = 1, gridSize = 20;
+            let a = {x: 410, y: 20};
+            let b = {x: 200, y: 380}; // Terminator is at y=380
+            let c = {x: 700, y: 380};
 
-            switch (step) {
-            case 0:
-                right.y+=gridSize;
-                left.y+=gridSize;
-                right.x += a_c*gridSize;
-                left.x += a_b*gridSize;
-                if(left.y >= b.y) {
-                    for(let i = 0;  i < raster.length; i++)
+            let a_b = (b.x-a.x)/(b.y-a.y);
+            let a_c = (c.x-a.x)/(c.y-a.y);
+
+            let left = {x: a.x, y:a.y}, right = {x:a.x, y:a.y};
+
+            let raster = [];
+
+            async function update() {
+                if(raster.length === 0) {
+                    for(let i = 0; i < (800/gridSize)*(400/gridSize); i++) {
                         raster[i] = false;
-                    left.y = a.y;
-                    left.x = a.x;
-                    right.y = a.y;
-                    right.x = a.x;
-                }
-                break;
-            case 1:
-                ctx.fillStyle="white";
-                let _curlen = Math.floor(right.x/gridSize)+1 - Math.floor(left.x/gridSize);
-                for(let i = Math.floor(left.x/gridSize); i < Math.ceil(right.x/gridSize); i++) {
-                    raster[i + (left.y/gridSize)*(800/gridSize)] = true;
-                    ctx.fillRect(i*gridSize, left.y, gridSize, gridSize);
-                    await sleep(500/_curlen);
-                }
-                step = -1;
-                break;
-            }
-
-            ctx.clearRect(0, 0, 800, 400);
-            ctx.strokeStyle = "rgba(150, 150, 150, 0.5)"
-            ctx.fillStyle = "white";
-            ctx.lineWidth = 1;
-            for(let x = 0; x < 800; x+=gridSize) {
-                for(let y = 0; y < 400; y+=gridSize) {
-                    if(raster[y/gridSize * 800/gridSize +  x/gridSize]) {
-                        ctx.fillRect(x, y, gridSize, gridSize);
                     }
-                    ctx.strokeRect(x, y, gridSize, gridSize);
                 }
+
+                switch (step) {
+                case 0:
+                    right.y+=gridSize;
+                    left.y+=gridSize;
+                    right.x += a_c*gridSize;
+                    left.x += a_b*gridSize;
+                    if(left.y >= b.y) {
+                        for(let i = 0;  i < raster.length; i++)
+                            raster[i] = false;
+                        left.y = a.y;
+                        left.x = a.x;
+                        right.y = a.y;
+                        right.x = a.x;
+                    }
+                    break;
+                case 1:
+                    ctx.fillStyle="white";
+                    let _curlen = Math.floor(right.x/gridSize)+1 - Math.floor(left.x/gridSize);
+                    for(let i = Math.floor(left.x/gridSize); i < Math.ceil(right.x/gridSize); i++) {
+                        raster[i + (left.y/gridSize)*(800/gridSize)] = true;
+                        ctx.fillRect(i*gridSize, left.y, gridSize, gridSize);
+                        await sleep(500/_curlen);
+                    }
+                    step = -1;
+                    break;
+                }
+
+                ctx.clearRect(0, 0, 800, 400);
+                ctx.strokeStyle = "rgba(150, 150, 150, 0.5)"
+                ctx.fillStyle = "white";
+                ctx.lineWidth = 1;
+                for(let x = 0; x < 800; x+=gridSize) {
+                    for(let y = 0; y < 400; y+=gridSize) {
+                        if(raster[y/gridSize * 800/gridSize +  x/gridSize]) {
+                            ctx.fillRect(x, y, gridSize, gridSize);
+                        }
+                        ctx.strokeRect(x, y, gridSize, gridSize);
+                    }
+                }
+                ctx.strokeStyle= "black";
+                ctx.setLineDash([10,10]);
+                ctx.beginPath();
+                ctx.moveTo(0, b.y);
+                ctx.lineTo(800, b.y);
+                ctx.stroke();
+                ctx.strokeStyle = "white";
+                ctx.beginPath();
+                ctx.moveTo(0, left.y);
+                ctx.lineTo(800, left.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.strokeStyle= "black";
+                ctx.beginPath();
+                ctx.moveTo(a.x - (b.x-a.x)*2, a.y - (b.y - a.y)*2);
+                ctx.lineTo(a.x + (b.x-a.x)*2, a.y + (b.y - a.y)*2);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(a.x - (c.x-a.x)*2, a.y - (c.y - a.y)*2);
+                ctx.lineTo(a.x + (c.x-a.x)*2, a.y + (c.y - a.y)*2);
+                ctx.stroke();
+
+                ctx.fillStyle="blue";
+                ctx.beginPath();
+                ctx.ellipse(a.x, a.y, 10, 10, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(b.x, b.y, 10, 10, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(c.x, c.y, 10, 10, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.ellipse(left.x, left.y, 10, 10, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(right.x, right.y, 10, 10, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle="white";
+                ctx.strokeStyle="black";
+                ctx.lineWidth = 4;
+                ctx.strokeText("Left", left.x - 60, left.y+7);
+                ctx.fillText("Left", left.x - 60, left.y+7);
+
+                ctx.strokeText("Right", right.x + 20, left.y+7);
+                ctx.fillText("Right", right.x + 20, left.y+7);
+                
+                ctx.strokeText("y", 10, left.y-10);
+                ctx.fillText("y", 10, left.y-10);
+
+                step++;
             }
-            ctx.strokeStyle= "black";
-            ctx.setLineDash([10,10]);
-            ctx.beginPath();
-            ctx.moveTo(0, b.y);
-            ctx.lineTo(800, b.y);
-            ctx.stroke();
-            ctx.strokeStyle = "white";
-            ctx.beginPath();
-            ctx.moveTo(0, left.y);
-            ctx.lineTo(800, left.y);
-            ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.strokeStyle= "black";
-            ctx.beginPath();
-            ctx.moveTo(a.x - (b.x-a.x)*2, a.y - (b.y - a.y)*2);
-            ctx.lineTo(a.x + (b.x-a.x)*2, a.y + (b.y - a.y)*2);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(a.x - (c.x-a.x)*2, a.y - (c.y - a.y)*2);
-            ctx.lineTo(a.x + (c.x-a.x)*2, a.y + (c.y - a.y)*2);
-            ctx.stroke();
-
-            ctx.fillStyle="blue";
-            ctx.beginPath();
-            ctx.ellipse(a.x, a.y, 10, 10, 0, 0, Math.PI*2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.ellipse(b.x, b.y, 10, 10, 0, 0, Math.PI*2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.ellipse(c.x, c.y, 10, 10, 0, 0, Math.PI*2);
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.ellipse(left.x, left.y, 10, 10, 0, 0, Math.PI*2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.ellipse(right.x, right.y, 10, 10, 0, 0, Math.PI*2);
-            ctx.fill();
-            ctx.fillStyle="white";
-            ctx.strokeStyle="black";
-            ctx.lineWidth = 4;
-            ctx.strokeText("Left", left.x - 60, left.y+7);
-            ctx.fillText("Left", left.x - 60, left.y+7);
-
-            ctx.strokeText("Right", right.x + 20, left.y+7);
-            ctx.fillText("Right", right.x + 20, left.y+7);
             
-            ctx.strokeText("y", 10, left.y-10);
-            ctx.fillText("y", 10, left.y-10);
-
-            step++;
-        }
-            
-        window.setInterval(update, 800);
-        update();
-        }
+            window.setInterval(update, 800);
+            update();
+            }
         </script>
 
-        <div style="width: 800; margin: 10px auto 10px auto; border: inset 2px #A3C3A3; background-color: #A3C3A3">
-        <h3 class="basictext" style="text-align:left; margin: 5px">
-            LEFT = ORIGIN_X, RIGHT = ORIGIN_X<br>
-            LEFT_SLOPE = (TERMINATOR_LEFT - ORIGIN_X) / (TERMINATOR_Y - ORIGIN_Y)<br>
-            RIGHT_SLOPE = (TERMINATOR_RIGHT - ORIGIN_X) / (TERMINATOR_Y - ORIGIN_Y)<br>
+        <div class="codeexample">
+        <h3 class="basictext" style="text-align:left; margin: 5px; color:d8d8d8; font-family:basicbit2">
+            LEFT = ORIGIN_X<br>
+            RIGHT = ORIGIN_X<br>
+            <span style="color:#602060">' Left and Right inverse slopes</span><br>
+            LINVSLOPE = (TERMINATOR_LEFT - ORIGIN_X) / (TERMINATOR_Y - ORIGIN_Y)<br>
+            RINVSLOPE = (TERMINATOR_RIGHT - ORIGIN_X) / (TERMINATOR_Y - ORIGIN_Y)<br><br>
             For Y = ORIGIN_Y To TERMINATOR_Y<br>
-            &emsp;LEFT += LEFT_INV_SLOPE<br>
-            &emsp;RIGHT += RIGHT_INV_SLOPE<br>
+            &emsp;LEFT += LINVSLOPE<br>
+            &emsp;RIGHT += RINVSLOPE<br>
             &emsp;For X = LEFT To RIGHT<br>
             &emsp;&emsp;Set Pixel (X, Y)<br>
             &emsp;NEXT<br>
@@ -426,212 +533,215 @@ function pointer($fromtop, $length, $isfromleft) {
         </div>
 
         <h3 class="basictext outlinetext" style="text-align:left;">
-        &emsp;Given that we can now draw a triangle with flat terminators as detailed above,
-        we simply need to check if any given triangle has a horizontally-flat edge somewhere, and draw  it using that method if it does.
-        If it doesn't, we can figure out which point of said triangle lies in between the other two in terms of y. In BASIC, there is no quick easy way
-        to find this middle point, so we shall insert a series of checks.<br><br>
-        &emsp;But in order to define two triangles, we need to find the x position of the line across from our middle point. And we have two things in order to do that,
-        we have the line that the x position lies on, and the y position that the x is found at. Using our x = (y - b) / m, we can solve for x.
-        Thinking of our slope in terms of changes in y related to changes in x, we can find our new x in a slightly different way.
-        By taking one of the points in the line, (lets call it x1, y1) and adding the inverse slope time the change in y to it, we can find the new x.
+        &emsp;Given that we can now draw a triangle with a flat terminator as detailed above,
+        we need to then check if <i>any</i> given triangle has a horizontally-flat edge somewhere, drawing it using that method if it does,
+        and forming two flat-terminating triangles out of it if it doesn't. We can find this by splitting the given triangle horizontally along the middle-y coordinate. What is meant by this, is
+        finding which of the 3 points of the triangle lies in between the other two in terms of y values, and setting that as our y coordinate to split on.
+        In BASIC, there is no quick easy way to find this middle point, so we shall insert a series of checks.<br><br>
+        &emsp;In order to define the two triangles, we need to find a missing point on the line opposite of our middle point. And we have two things in order to do that,
+        we have the line that the point lies on, and the y position of the point. Using our x = (y - b) / m, we can solve for x.
+        Thinking of our slope in terms of changes in y related to changes in x, we can find our new x with "x = (y - y1) * m + x1". With (y1, x1) being either end point of our target line,
+        and m being the inverse slope; (x2 - x1)/(y2 - y1). This shows us our mystery point to be ((middlePoint.y-y1)*(x2-x1)/(y2-y1) + x1, middlePoint.y). While this is rather hefty in terms of a small computation,
+        it is only needed at maximum once for every time a triangle is drawn.
         </h3>
 
         <canvas class="section" id="triangleMidpoint_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="triangleMidpoint_mousemove(event)" onmousedown="triangleMidpoint_mousedown(event)" onmouseup="triangleMidpoint_mouseup(event)">Canvas Unsupported</canvas>
         <script type="application/javascript">
-        {
-        let can = $("#triangleMidpoint_canvas")[0];
-        let ctx = can.getContext("2d");
-        ctx.font = "bold 1.17em sans-serif";
-        let a = {x: 400, y: 20, name:"a"};
-        let b = {x: 200, y: 380, name: "b"};
-        let c = {x: 700, y: 220, name: "c"};
-        let mouseX = 0, mouseY = 0, pmouseX = 0, pmouseY = 0;
-        let selected = a, middle = c, lineMidpoint = 0, bottom = b, top = a;
-        let mouseDown = false;
+            {
+            let can = $("#triangleMidpoint_canvas")[0];
+            let ctx = can.getContext("2d");
+            ctx.font = "bold 1.17em sans-serif";
+            let a = {x: 400, y: 20, name:"a"};
+            let b = {x: 200, y: 380, name: "b"};
+            let c = {x: 700, y: 220, name: "c"};
+            let mouseX = 0, mouseY = 0, pmouseX = 0, pmouseY = 0;
+            let selected = a, middle = c, lineMidpoint = 0, bottom = b, top = a;
+            let mouseDown = false;
 
-        function findMiddle() {
-            if(a.y < b.y && a.y > c.y || a.y > b.y && a.y < c.y) {
-                middle = a;
-                lineMidpoint = b.x + (a.y - b.y) * (c.x - b.x) / (c.y - b.y);
-                if(c.y > a.y) {
-                    bottom = c;
-                    top = b;
-                } else {
-                    bottom = b;
-                    top = c;
-                }
-            } else if(b.y < a.y && b.y > c.y || b.y > a.y && b.y < c.y) {
-                middle = b;
-                lineMidpoint = a.x + (b.y - a.y) * (c.x - a.x) / (c.y - a.y);
+            function findMiddle() {
+                if(a.y < b.y && a.y > c.y || a.y > b.y && a.y < c.y) {
+                    middle = a;
+                    lineMidpoint = b.x + (a.y - b.y) * (c.x - b.x) / (c.y - b.y);
+                    if(c.y > a.y) {
+                        bottom = c;
+                        top = b;
+                    } else {
+                        bottom = b;
+                        top = c;
+                    }
+                } else if(b.y < a.y && b.y > c.y || b.y > a.y && b.y < c.y) {
+                    middle = b;
+                    lineMidpoint = a.x + (b.y - a.y) * (c.x - a.x) / (c.y - a.y);
 
-                if(c.y > b.y) {
-                    bottom = c;
-                    top = a;
-                } else {
-                    bottom = a;
-                    top = c;
-                }
-            } else if(c.y < b.y && c.y > a.y || c.y > b.y && c.y < a.y) {
-                middle = c;
-                lineMidpoint = b.x + (c.y - b.y) * (a.x - b.x) / (a.y - b.y);
+                    if(c.y > b.y) {
+                        bottom = c;
+                        top = a;
+                    } else {
+                        bottom = a;
+                        top = c;
+                    }
+                } else if(c.y < b.y && c.y > a.y || c.y > b.y && c.y < a.y) {
+                    middle = c;
+                    lineMidpoint = b.x + (c.y - b.y) * (a.x - b.x) / (a.y - b.y);
 
-                if(b.y > c.y) {
-                    bottom = b;
-                    top = a;
-                } else {
-                    bottom = a;
-                    top = b;
+                    if(b.y > c.y) {
+                        bottom = b;
+                        top = a;
+                    } else {
+                        bottom = a;
+                        top = b;
+                    }
                 }
             }
-        }
-        function triangleMidpoint_mousemove(evt) {
-            ctx.lineWidth = 1;
-            let rect = can.getBoundingClientRect();
-            pmouseX = mouseX;
-            pmouseY = mouseY;
-            mouseX = evt.clientX - rect.left;
-            mouseY = evt.clientY - rect.top;
+            function triangleMidpoint_mousemove(evt) {
+                ctx.lineWidth = 1;
+                let rect = can.getBoundingClientRect();
+                pmouseX = mouseX;
+                pmouseY = mouseY;
+                mouseX = evt.clientX - rect.left;
+                mouseY = evt.clientY - rect.top;
 
-            if(mouseDown && selected!=undefined) {
-                selected.x += mouseX - pmouseX;
-                selected.y += mouseY - pmouseY;
-            }
-            ctx.clearRect(0, 0, 800, 400);
+                if(mouseDown && selected!=undefined) {
+                    selected.x += mouseX - pmouseX;
+                    selected.y += mouseY - pmouseY;
+                }
+                ctx.clearRect(0, 0, 800, 400);
 
-            findMiddle();
+                findMiddle();
 
-            ctx.beginPath();
-            ctx.moveTo(bottom.x, bottom.y);
-            ctx.lineTo(middle.x, middle.y);
-            ctx.lineTo(lineMidpoint, middle.y);
-            ctx.closePath();
-            ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.moveTo(top.x, top.y);
-            ctx.lineTo(middle.x, middle.y);
-            ctx.lineTo(lineMidpoint, middle.y);
-            ctx.closePath();
-            ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.setLineDash([]);
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.lineTo(c.x, c.y);
-            ctx.strokeStyle = "black";
-            ctx.closePath();
-            ctx.stroke(); 
-
-            ctx.setLineDash([10,10]);
-            ctx.strokeStyle = "#ffff00";
-            ctx.beginPath();
-            ctx.moveTo(0, middle.y);
-            ctx.lineTo(800, middle.y);
-            ctx.stroke();
-
-            ctx.fillStyle = "#0000ff";
-            ctx.beginPath();
-            ctx.ellipse(a.x, a.y, 4, 4, 0, 0, 2*Math.PI);
-            ctx.fill();
-            ctx.fillText("a", a.x+10, a.y+10);
-
-            ctx.beginPath();
-            ctx.ellipse(b.x, b.y, 4, 4, 0, 0, 2*Math.PI);
-            ctx.fill();
-            ctx.fillText("b", b.x+10, b.y+10);
-
-            ctx.beginPath();
-            ctx.ellipse(c.x, c.y, 4, 4, 0, 0, 2*Math.PI);
-            ctx.fill();
-            ctx.fillText("c", c.x+10, c.y+10);
-
-            ctx.fillStyle = "#ffff00";
-            if(selected!=undefined) {
                 ctx.beginPath();
-                ctx.ellipse(selected.x, selected.y, 4, 4, 0, 0, 2*Math.PI);
+                ctx.moveTo(bottom.x, bottom.y);
+                ctx.lineTo(middle.x, middle.y);
+                ctx.lineTo(lineMidpoint, middle.y);
+                ctx.closePath();
+                ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
                 ctx.fill();
-                ctx.fillText(selected.name, selected.x+10, selected.y+10);
+
+                ctx.beginPath();
+                ctx.moveTo(top.x, top.y);
+                ctx.lineTo(middle.x, middle.y);
+                ctx.lineTo(lineMidpoint, middle.y);
+                ctx.closePath();
+                ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.setLineDash([]);
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
+                ctx.lineTo(c.x, c.y);
+                ctx.strokeStyle = "black";
+                ctx.closePath();
+                ctx.stroke(); 
+
+                ctx.setLineDash([10,10]);
+                ctx.strokeStyle = "#ffff00";
+                ctx.beginPath();
+                ctx.moveTo(0, middle.y);
+                ctx.lineTo(800, middle.y);
+                ctx.stroke();
+
+                ctx.fillStyle = "#0000ff";
+                ctx.beginPath();
+                ctx.ellipse(a.x, a.y, 4, 4, 0, 0, 2*Math.PI);
+                ctx.fill();
+                ctx.fillText("a", a.x+10, a.y+10);
+
+                ctx.beginPath();
+                ctx.ellipse(b.x, b.y, 4, 4, 0, 0, 2*Math.PI);
+                ctx.fill();
+                ctx.fillText("b", b.x+10, b.y+10);
+
+                ctx.beginPath();
+                ctx.ellipse(c.x, c.y, 4, 4, 0, 0, 2*Math.PI);
+                ctx.fill();
+                ctx.fillText("c", c.x+10, c.y+10);
+
+                ctx.fillStyle = "#ffff00";
+                if(selected!=undefined) {
+                    ctx.beginPath();
+                    ctx.ellipse(selected.x, selected.y, 4, 4, 0, 0, 2*Math.PI);
+                    ctx.fill();
+                    ctx.fillText(selected.name, selected.x+10, selected.y+10);
+                }
+                ctx.beginPath();
+                ctx.ellipse(lineMidpoint, middle.y, 4, 4, 0, 0, 2*Math.PI);
+                ctx.fill();
+                ctx.fillText("(x, y)", lineMidpoint + 10, middle.y + 10);
+
+                ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+                ctx.strokeStyle = "rgba(0,0,0,0.3)";
+                ctx.lineWidth = 4;
+                ctx.setLineDash([]);
+                ctx.strokeText(`y = ${middle.name}.y`, 10, 370);
+                ctx.fillText(`y = ${middle.name}.y`, 10, 370);
+                ctx.strokeText(`x = ${top.name}.x + (${middle.name}.y - ${top.name}.y) * (${bottom.name}.x - ${top.name}.x)/(${bottom.name}.y - ${top.name}.y)`, 10, 340);
+                ctx.fillText(`x = ${top.name}.x + (${middle.name}.y - ${top.name}.y) * (${bottom.name}.x - ${top.name}.x)/(${bottom.name}.y - ${top.name}.y)`, 10, 340);
+                ctx.strokeText(`x = ${top.name}.x + (y difference from ${middle.name} to ${top.name}) * inverse slope of ${bottom.name} to ${top.name}`, 10, 310);
+                ctx.fillText(`x = ${top.name}.x + (y difference from ${middle.name} to ${top.name}) * inverse slope of ${bottom.name} to ${top.name}`, 10, 310);
             }
-            ctx.beginPath();
-            ctx.ellipse(lineMidpoint, middle.y, 4, 4, 0, 0, 2*Math.PI);
-            ctx.fill();
-            ctx.fillText("(x, y)", lineMidpoint + 10, middle.y + 10);
+            function triangleMidpoint_mousedown(evt) {
+                if((mouseX-a.x)*(mouseX-a.x)+(mouseY-a.y)*(mouseY-a.y) < 32)
+                    selected = a;
+                else if((mouseX-b.x)*(mouseX-b.x)+(mouseY-b.y)*(mouseY-b.y) < 32)
+                    selected = b;
+                else if((mouseX-c.x)*(mouseX-c.x)+(mouseY-c.y)*(mouseY-c.y) < 32)
+                    selected = c;
+                else selected = undefined;
+                mouseDown = true;
+            }
 
-            ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-            ctx.strokeStyle = "rgba(0,0,0,0.3)";
-            ctx.lineWidth = 4;
-            ctx.setLineDash([]);
-            ctx.strokeText(`y = ${middle.name}.y`, 10, 370);
-            ctx.fillText(`y = ${middle.name}.y`, 10, 370);
-            ctx.strokeText(`x = ${top.name}.x + (${middle.name}.y - ${top.name}.y) * (${bottom.name}.x - ${top.name}.x)/(${bottom.name}.y - ${top.name}.y)`, 10, 340);
-            ctx.fillText(`x = ${top.name}.x + (${middle.name}.y - ${top.name}.y) * (${bottom.name}.x - ${top.name}.x)/(${bottom.name}.y - ${top.name}.y)`, 10, 340);
-            ctx.strokeText(`x = ${top.name}.x + (y difference from ${middle.name} to ${top.name}) * inverse slope of ${bottom.name} to ${top.name}`, 10, 310);
-            ctx.fillText(`x = ${top.name}.x + (y difference from ${middle.name} to ${top.name}) * inverse slope of ${bottom.name} to ${top.name}`, 10, 310);
-        }
-        function triangleMidpoint_mousedown(evt) {
-            if((mouseX-a.x)*(mouseX-a.x)+(mouseY-a.y)*(mouseY-a.y) < 32)
-                selected = a;
-            else if((mouseX-b.x)*(mouseX-b.x)+(mouseY-b.y)*(mouseY-b.y) < 32)
-                selected = b;
-            else if((mouseX-c.x)*(mouseX-c.x)+(mouseY-c.y)*(mouseY-c.y) < 32)
-                selected = c;
-            else selected = undefined;
-            mouseDown = true;
-        }
+            function triangleMidpoint_mouseup(evt) {
+                mouseDown = false;
+                selected = undefined;
+            }
 
-        function triangleMidpoint_mouseup(evt) {
-            mouseDown = false;
-            selected = undefined;
-        }
-
-        }
+            }
         </script>
         <h3 class="basictext outlinetext">Try moving points around, observe what calculations are used to find (x, y)</h3>
 
         <h3 class="basictext outlinetext" style="text-align: left">
         &emsp;Given all this, we can now draw any 2 dimensional triangle to the screen by splitting it into two flat-terminating triangles and drawing each of them with our flat-terminating triangle method.
+        Here is a code example with comments.
         </h3>
 
-        <div style="width: 800; border: inset 2px #A3C3A3; background-color: #A3C3A3">
-            <h3 class="basictext" style="text-align:left; margin:5px; color:#202030">
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2">
             Sub flat_triangle(x1, y1, x2, x3, term) <span style="color:#602060">A is (x1, y1), B is (x2, term), and C is (x3, term)<br></span>
             <span style="color:#602060">&emsp;Declare inverse slops from a to b, and a to c<br></span>
             &emsp;a_m = (x2 - x1) / (term - y1)<br>
             &emsp;b_m = (x3 - x1) / (term - y1)<br><br>
 
             <span style="color:#602060">&emsp;Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
-            &emsp;fty = term<br>
+            &emsp;y = term<br>
             <span style="color:#602060"><br>&emsp;Declare the two x values that walk the lines from the terminator to the origin<br></span>
             &emsp;lx = x2<br>
             &emsp;rx = x3<br>
             <span style="color:#602060">&emsp;Sign dictates whether rx is in the positive-x or negative-x direction from lx<br></span>
-            &emsp;sign = Sgn(rx-lx)<br>
+            &emsp;xsign = Sgn(rx-lx)<br>
             <span style="color:#602060">&emsp;Same with ysign and y1-terminator<br></span>
             &emsp;ysign = Sgn(y1-term)<br><br>
             &emsp;Do<br>
-            <span style="color:#602060">&emsp;&emsp;Increment y towards the origin<br></span>
-            &emsp;&emsp;fty = fty + ysign<br>
-            <span style="color:#602060">&emsp;&emsp;Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b<br></span>
-            &emsp;&emsp;lx = lx + a_m<br>
-            &emsp;&emsp;rx = rx + b_m<br>
             <span style="color:#602060">&emsp;&emsp;Declare the current x position that we will plot a pixel at<br></span>
-            &emsp;&emsp;ftx = lx<br>
+            &emsp;&emsp;x = lx<br>
             &emsp;&emsp;Do<br>
-            &emsp;&emsp;&emsp;PSet (ftx + xoff, fty + yoff) <span style="color:#602060">Set the pixel!</span><br>
-            <span style="color:#602060">&emsp;&emsp;&emsp;Increment ftx in the direction of rx<br></span>
-            &emsp;&emsp;&emsp;ftx = ftx + sign<br>
+            &emsp;&emsp;&emsp;PSet (x, y) <span style="color:#602060">Set the pixel! (QB64 method, requires 32 bit screen mode)</span><br>
+            <span style="color:#602060">&emsp;&emsp;&emsp;Increment x in the direction of rx<br></span>
+            &emsp;&emsp;&emsp;x = x + xsign<br>
             <span style="color:#602060">&emsp;&emsp;&emsp;Do this until the current x surpasses rx.<br>
-            &emsp;&emsp;&emsp;Sign is checked in order to tell if ftx surpasses rx when it's greater, or lower<br></span>
-            &emsp;&emsp;Loop While ((sign = 1 And ftx < rx) Or (sign = -1 And ftx > rx))<br>
-            &emsp;Loop While ((ysign = 1 And ftx < y1) Or (ysign = -1 And ftx > y1))<br>
+            &emsp;&emsp;&emsp;Sign is checked in order to tell if x surpasses rx when it's greater, or lower<br></span>
+            &emsp;&emsp;Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))<br>
+            <span style="color:#602060">&emsp;&emsp;Increment y towards the origin<br></span>
+            &emsp;&emsp;y = y + ysign<br>
+            <span style="color:#602060">&emsp;&emsp;Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b<br></span>
+            &emsp;&emsp;lx = lx + a_m * ysign<br>
+            &emsp;&emsp;rx = rx + b_m * ysign<br>
+            &emsp;Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))<br>
             End Sub
             </h3>
         </div>
-        <div style="width: 800; border: inset 2px #A3C3A3; background-color: #A3C3A3">
-            <h3 class="basictext" style="text-align:left; margin:5px; color:#202030">
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2">
             Sub triangle (x1, y1, x2, y2, x3, y3)<br>
             <span style="color:#602060">&emsp;If any two y coordinates are equal, then draw a flat triangle<br></span>
             &emsp;If y1 = y2 Then<br>
@@ -671,65 +781,62 @@ function pointer($fromtop, $length, $isfromleft) {
         
 
         <div class="section" style="position: absolute; left:900; top:100; width:250">
-            <h3 class="basictext outlinetext">The only time a triangle can't be split up this way, is if it already has a horizontally-flat edge; In the program we will test for these cases and use them to speed up our rasterization.</h3>
+            <h3 class="basictext outlinetext">The only time a triangle can't be split up this way, is if it already has a horizontally-flat edge; In the program we will test for these cases to avoid errors and unecessary computations.</h3>
             <?php pointer(50, 130, false)?>
         </div>
 
-        <div class="section" style="position: absolute; left:825; top:3300; width:350">
+        <div class="section" style="position: absolute; left:825; top:3500; width:350">
             <h3 class="basictext outlinetext" style="text-align: left; margin: 5px">If y1 < y2 and y1 > y3 Then<br>&emsp;y1 is middle<br>&emsp;y2 is bottom (y-positive is down)<br>&emsp;y3 is top<br><br>Etc.</h3>
-            <?php pointer(48, 340, false)?>
+            <?php pointer(65, 650, false)?>
         </div>
     </div>
 
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="barycentric">Barycentric Coordinates</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
         <h3 class="basictext outlinetext" style="text-align:left">
-        &emsp;Barycentric coordinates are a system of coordinates
-        that, for triangles, gives you the area of 3 sub-triangles in relation to the area of the original triangle given point P.
-        This is used to blend vertex attributes, such as color or depth. We will need barycentric coordinates for depth, but we can also use it to make our
-        triangles look a little more interesting, by binding point 1 of our triangle to the color red, point 2 to green, and point 3 to blue, and then
-        using barycentric coordinates to find the color of any given pixel in between.
+        &emsp;Barycentric coordinates are a system of coordinates that, given a triangle ΔABC and a point P inside that triangle, defines it's values as the areas of subtriangles ΔPBC, ΔAPC, and ΔABP all divided by the total area of ΔABC.
+        This is used to blend vertex attributes, attributes given each vertice of a triangle, such as color or depth. Barycentric coordinates are needed for depth, but as in the mention of color, we can use 
+        them to make our triangles look a little more interesting. Say that for point A of our triangle, we give it an attribute for color, and set it to red. Point B set to green, and point C to blue. 
+        Using barycentric coordinates, we can find the blended color for a point on the triangle. This creates the visual of a gradient where, as a point gets closer to point A, it appears more red. But closer to B or C,
+        it appears more green or blue.<br>
+        &emsp;The calculation of barycentric coordinates, notated as UV and W.<br>
+        &emsp;&emsp;$$\left(U, V, W\right) = \left(\frac{\mathrm{area of} ΔPBC}{\mathrm{area of} ΔABC}, \frac{\mathrm{area of} ΔAPC}{\mathrm{area of} ΔABC}, \frac{\mathrm{area of} ΔABP}{\mathrm{area of} ΔABC}\right).$$<br>
+        &emsp;And for our color mixing example,<br>
+        &emsp;&emsp;$$COLOR = RED * U + GREEN * V + BLUE * W$$
         </h3>
         <!-- <img src="assets/qb64 3d/barycentric.png" style="width:100%"> -->
         <video width="100%" height="auto" autoplay loop muted>
             <source src="assets/qb64 3d/UVWfromArea.mp4" type="video/mp4" />
         </video>
-        <h3 class="basictext outlinetext" style="text-align:left">
-        &emsp;Calculating the barycentric coordinates are just as they're defined. We take a point we wish to take the barycentric coordinates of, say P.
-        Then, with triangle, ΔABC, the barycentric coordinates would be denoted as
-        &emsp;&emsp;$$\left(\frac{\mathrm{area of} ΔPBC}{\mathrm{area of} ΔABC}, \frac{\mathrm{area of} ΔPAC}{\mathrm{area of} ΔABC}, \frac{\mathrm{area of} ΔPAB}{\mathrm{area of} ΔABC}\right).$$<br>
-        &emsp;As we are given our 3 triangle points during rendering, and we find our point P (the x and y of the pixel we're writing to), we just need to
-        solve for a few areas in order to gather the barycentric coordinates of our pixel.
-        </h3>
         <h2 class="basictext outlinetext">Triangle Area via Cross Product</h2>
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;The method we will use for solving the area of a triangle, will be the cross product. Note that the magnitude of the cross product
-            of 2 vectors is equal to the area of a parallelogram formed by those two vectors. Also take note that the area of a triangle is half of
-            that of a parallelogram formed by two of it's sides. Knowing this brings us to the conclusion that solving the area of a triangle given 3 points
-            is as simple as forming 2 vectors from it's 3 points, making one the origin, and cross multiplying. Taking the absolute value of the result,
-            and taking one half of it.  
+            &emsp;In order to solve barycentric coordinates of a point/pixel in a triangle, we need an efficient way to solve the area of a triangle. The method used for this is the cross product.
+            The cross product is an operation that takes in two vectors, and it returns a 3rd vector that is perpendicular to the input vectors. A result of the cross product is that the output vector
+            has a length (magnitude) equivelant to the area of a parallelogram formed by the two input vectors. Now what "parallelogram formed by the two input vectors" means is that if you picture a copy of
+            each vector placed at the tip of the other vector, it forms a parallelogram. And this is what we will get the area of.<br>
         </h3>
         <!-- <img src="assets/qb64 3d/acrossb.png" style="width:100%"> -->
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;The nature for this is enveloped in linear algebra, but the cross product takes two vectors and finds a vector perpendicular to both,
-            with said magnitude being the area of a parallelogram. This is convenient for us, as we are working with 2d triangles, meaning that the perpendicular
-            vector will be in either the positive or negative z direction, with x and y components being 0. Therefore, we just need to calculate the z component
-            of the cross product between two vectors made from our triangle.
+            &emsp;Working in 2 dimensions, the cross product is extremely easy to compute. Given that the computation returns a vector perpendicular to the two input vectors, and our input vectors only exist 
+            on the x-y plane, we can conclude that the cross product will only point in either z-direction, meaning that we only have to calculate the z-component of any 2d cross product. Furthermore, the area
+            of a triangle formed by the two input vectors is half the area of the parallelogram. This is easier seen visually, however it is evident that cutting a parallelogram diagonally across two of it's vertices
+            splits it in half. The triangles formed are similar as they have the same length sides, meaning that two times the area of one of the triangles gives you the area of the parallelogram.
         </h3>
         <video width="100%" height="auto" autoplay loop muted>
             <source src="assets/qb64 3d/areafromcross.mp4" type="video/mp4" />
         </video>
 
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;Calculating the z component of the cross product between two 2D vectors relies on linear algebra, but getting straight to the calculations we get;
-            $$a_x * b_y - a_y * b_x$$
+            &emsp;Calculating the z component of the cross product between two 2D vectors is as follows:
+            $$z = a_x * b_y - a_y * b_x$$
             Or, given 3 points;
             $$\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right) $$
-            Or, finding triangle area;
+            Thus the triangle area from three points;
             $$\frac{\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right)}{2}$$
             <br>
-            &emsp;Then, when taking the barycentric coordinates, (denoted u, v, and w), we replace \(x_1\) with our sample point's x, \(p_x\) and we replace
-            \(y_1\) with \(p_y\), then replacing \(x_2\) and \(y_2\) with our point, and finally \(x_3\) and \(y_3\), giving us:
+            &emsp;When taking the barycentric coordinates (u, v, w), we procedurally replace each point of the triangle with the point we want to sample inside the triangle.
+            In our process, that would be the x and y of the pixel we are setting; \(p_x\) and \(p_y\). The following gives us \(a\) as the full area of the triangle triangle, 
+            as well as \(u\), \(v\), and \(w\) as the barycentric coordinates.
             $$a = \frac{\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right)}{2}$$
             $$u = \frac{\left(x_2-p_x\right) * \left(y_3-p_y\right) - \left(y_2-p_y\right) * \left(x_3-p_x\right)}{2a}$$
             $$v = \frac{\left(p_x-x_1\right) * \left(y_3-y_1\right) - \left(p_y-y_1\right) * \left(x_3-x_1\right)}{2a}$$
@@ -738,60 +845,64 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
 
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;The resulting \(u\), \(v\), and \(w\) can be thought of as percentages that can be used to interpolate values between vertices. For instance,
-            if \(u\) is 1, then the pixel point lies at vertex 1, and the equivelent subtriangle for u is equal to the total area. But if \(u\) is 0, the pixel point
-            is as far away from \(u\) it can be, and should inherit no value from vertex 1. This makes points with \(u\) values of 0.5 inherit half of it's data
-            from vertex 1, and the rest of it's data from vertices 2 and 3.<br>
-            &emsp;If we assign color to points with \(u\) resulting in red, \(v\) in green, and \(w\) in blue, we can create a gradient of colors being more red near
-            vertex 1, green near vertex 2, and blue near vertex 3, and a mixture of all three throughout the triangle.
+            &emsp;The resulting \(u\), \(v\), and \(w\) can be thought of as percentages declaring how close a point is two the 3 vertices of a triangle. For instance,
+            if \(u = 1\), then the point lies at vertex \(a\), with the subtriangle for u being equal to the full triangle. But if \(u = 0\), the point
+            lies on the edge opposite to vertex \(a\), and should inherit none of \(a\)'s attributes.<br>
+            &emsp;Essentially, the attributes of any given point or pixel inside of a triangle is equal to the sum the attributes of each vertice, multiplied by their associated barycentric component. I.e;
+            $$pixel_{attribute} = a_{attribute} * u + b_{attribute} * v + c_{attribute} * w$$
+            &emsp;Here is a visual example, where vertex \(a\) has a color attribute of red, \(b\) with green, and \(c\) with blue.
         </h3>
         <video width="100%" height="auto" autoplay loop muted>
             <source src="assets/qb64 3d/usinguvw.mp4" type="video/mp4" />
         </video>
 
         <h3 class="basictext outlinetext" style="text-align: left">
-            &emsp;The same can be applied to texture coordinates. Say that each vertex lies at a certain point on an image, you can use barycentric coordinates to
-            figure out where each pixel lands on that given image.
+            &emsp;This allows us to step into the more modern territory of shading and triangle rasterization. For instance, if we give each vertice of a triangle coordinates that represent a point in an image,
+            it allows us to blend these coordinates across the triangle, and use them to grab data from an image. This is known as texture mapping. Here is an example of a rainbow pattern being mapped onto a triangle.
         </h3>
         <!-- <img src="assets/qb64 3d/rainbowtextureexample.png" style="width:50%; height: auto; display:block; margin: auto" /> -->
         <video autoplay loop muted style="display: block; margin: auto">
             <source src="assets/qb64 3d/uvtotexture.mp4" type="video/mp4" />
         </video>
 
-        <div class="section" style="position: absolute; left:-300; top:1350; width:250">
-            <h3 class="basictext outlinetext">To learn why that is, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products</a></h3>
-            <?php pointer(20, 20, true)?>
+        <div class="section" style="position: absolute; left:-300; top:985; width:250">
+            <h3 class="basictext outlinetext">For more visual explanations, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products.</a> For more on what vectors actually are and what they're used for, go down to <a href="#linear">Linear Algebra for the Faint of Heart</a></h3>
+            <?php pointer(110, 20, true)?>
         </div>
-        <div class="section" style="position: absolute; left:900; top:2150; width:250">
+        <!-- <div class="section" style="position: absolute; left:900; top:2150; width:250">
             <h3 class="basictext outlinetext">You may simplify \(\frac{...}{2a}\) with \(\frac{...}{a}\) by not dividing \(a\) by 2, however you will need to keep in mind that \(a\) is now twice the area of the triangle.</h3>
-            <?php pointer(40, 260, false)?>
-            <?php pointer(110, 260, false)?>
-        </div>
+            <?php //pointer(40, 260, false)?>
+            <?php //pointer(110, 260, false)?>
+        </div> -->
     </div>
     
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="linear">Linear Algebra for the Faint of Heart</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
-        <h3 class="basictext outlinetext">For a more in-depth and general approach, I recommend Grand Sanderson/3blue1brown's series:
+        <h3 class="basictext outlinetext">For a more in-depth and general purpose approach, I recommend Grand Sanderson/3blue1brown's series:
             <a href="https://youtu.be/fNk_zzaMoSs?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of Linear Algebra</a>
-            It goes through everything visually and can teach anyone with any amount of knowledge a general understanding of what Linear Algebra is.
+            It goes through everything visually and can teach anyone a general understanding of what Linear Algebra is.
         </h3>
         <h3 class="basictext outlinetext" style="text-align: left">
             &emsp;Our usage of Linear Algebra revolves around using Matrices to transform Vectors. But firstly, we shall define those terms.
-            A Matrix, (plural Matrices) is a # by # series of numbers, typically used to describe a transformation. For instance, a matrix might stretch/scale
-            all x values out by a factor of 2.
+            A Matrix, (plural Matrices) is a 2 dimensional series of numbers, with \(n\) number of columns and \(m\) number of rows. Matrices are typically used to describe a "transformation". 
+            For instance, a matrix might stretch/scale all x values out by a factor of 2. And it would look like this;
             $$\begin{bmatrix}2 & 0\\ 0 & 1\end{bmatrix}$$
-            <span style="text-align:center">Or</span>
+            <span style="text-align:center">With the computation looking like this.</span>
             $$x' = 2*x + 0*y$$
             $$y' = 0*x + 1*y$$
+            &emsp;This means that for any given x and y, the resulting x (\(x'\)) is two times the input x, and the resulting y \(y'\)) staying the same as the input y.
         </h3>
         <video width="100%" height="auto" autoplay loop muted>
             <source src="assets/qb64 3d/matrixExample.mp4"/>
         </video>
         <h3 class="basictext outlinetext" style="text-align: left">
-            &emsp;A vector, in the way we define it, is an arrow with the tail end sitting on the Origin, (the coordinates 0, 0), and the tip sitting at
-            a given coordinate. It is defined only by it's tip's coordinates, as the tail will never be anywhere besides the origin.<br>
-            &emsp;And so matrix multiplication can be thought of as a global transformer. You can plug any vector or coordinate in and get a resulting coordinate
-            that follows the rules. This is useful to us as we can then create a transformation that say, rotates all vectors. Or one that projects all vectors from 3d to 2d. 
+            &emsp;A vector, in the way we visualize it, is an arrow with the tail end sitting on the origin (the coordinates 0, 0), and the tip sitting at
+            a given coordinate. A vector is typically only defined by its tip's coordinates, as the tail will never be anywhere besides the origin. However, a vector can also be thought of as just a point existing
+            at its defining coordinates. It's just that with that definition, it is harder to visualize transformations happening to it. But still keep note that vectors in 3d graphics are often used to just store
+            coordinates, but the same transformations can be applied to them.<br>
+            &emsp;These transformations happen through matrix multiplication. You can plug any vector or coordinate in and get a resulting coordinate
+            that follows the rules defined by the matrix. This is extremely useful in 3d graphics as it allows for all sorts of transformations and even traslations. We could then create a matrix
+            that rotates all vectors, or one that projects all input 3d vectors into 2 dimension. This idea of projection is extremely important, and will be discussed again shortly.
         </h3>
         <video width="100%" height="auto" autoplay loop muted>
             <source src="assets/qb64 3d/vectormatrixexample.mp4"/>
@@ -836,24 +947,36 @@ function pointer($fromtop, $length, $isfromleft) {
             in scale, we must be specifically dividing by \(z\), or multiplying by \(1\over z\). This starts our illusion that we desire.-->
         </h3>
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;3D rendering of all sorts relies around transforming from one coordinate space to another. But what is a coordinate space?
-            You may recall that your screen is a series
-            of pixels given at a certain resolution. This can give you the coordinates for each pixel. Generally 2D integers coordinates, such as (100, 240) or
-            (145, 23). The coordinates we will be supplying our 3D projector is abstract units that could be integers or have decimals or whatever scale you,
-            the programmer and artist of this project, chooses. Our projector will then transform these coordinates into "screenspace coordinates", which are
-            2 dimensional coordinates ranging from (-1, -1) to (1, 1). And finally, we must convert this range of numbers to pixel coordinates in order to show
-            the image we desire.<br>
+            &emsp;Projection in 3d graphics is the idea of transforming a vector from the 3d coordinate space into the 2d coordinate space, in a way that retains visual information that shows depth,
+            such as foreshortening. You may recall that your screen is a series of pixels given at a certain resolution. This can give you the coordinates for each pixel. Generally 2D integers coordinates,
+            such as (100, 240) or (145, 23). The 3d vectors used as an input for a 3D projector can use any kind of units. These could be integers or decimals at any given scale.<br>
+
+            &emsp;Our projector will transform these coordinates into "screenspace coordinates", coordinates ranging from (-1, -1, -1) to (1, 1, 1), in a way that preserves the window's display ratio
+            (i.e. 16:9, 4:3, 2:1, etc.) After doing so, it can bring the coordinates from 3d into 2d in a way that shows foreshortening. From there it must convert this range of numbers to actual 
+            pixel coordinates in order to show the image we desire.<br>
             &emsp;The first transforming Matrix we will use, is;
             $$\begin{bmatrix}\color{red}F_x & 0 & 0 & 0\\0 & \color{red}F_y & 0 & 0\\0 & 0 & \color{yellow}Z_m & \color{yellow}Z_a \\ 0 & 0 & \color{blue}-1 & 0 \\\end{bmatrix}$$
-            &emsp;And the second one we will use is;
-            $$\begin{bmatrix}\color{red}1/z'&0&0&0\\0&\color{red}1/z'&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix}$$
+            &emsp;For foreshortening, we will use:
+            $$\begin{bmatrix}\color{red}1/z&0\\0&\color{red}1/z\end{bmatrix}$$
             &emsp;Or, simply:
-            $$x'' = x' / z'$$
-            $$y'' = y' / z'$$
-            &emsp;The first prepares for projection, and the second does the projection in scaling as the distance, (i.e. the z value) changes. But let's
-            discuss each operation as they're happening.
+            $$x' = x / z$$
+            $$y' = y / z$$
+            &emsp;And finally, transforming the coordinates into pixel coordinates; (The input z is required to be 1; \(S_w\) and \(S_h\) are the width and height of whatever is being displayed to.)
+            $$\begin{bmatrix}\color{red}\frac{1}{2}S_w & 0 & \color{yellow}\frac{1}{2}S_w \\ 0 & \color{red}\frac{1}{2}S_h & \color{yellow}\frac{1}{2}S_h \\ 0 & 0 & 1 \end{bmatrix}$$
+            &emsp;Or even more simply;
+            $$x' = \frac{S_w}{2}\left(x + 1\right)$$
+            $$y' = \frac{S_h}{2}\left(y + 1\right)$$
+            &emsp;If we expand each of these transformations, we may simplify things down into an easy-to-digest calculation.
         </h3>
         <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;Our first matrix takes in a 4 dimensional vector. We haven't suddenly switched from 3d rendering to 4d rendering, instead we are passing (x, y, z, 1) into the matrix. The 4th component, w
+            (not to be confused with barycentric's w), is typically 1 for many 3d transformation matrices. This allows for translation as, going through the computation, we end up adding 1 (or w) * some num
+            to every output component.<br>
+            &emsp;Our first matrix sets the output x to \(x * F_x\), and output y to \(y * F_y\). \(F_x\) and \(F_y\) scale the x and y values based on two factors.<br>
+            &emsp;&emsp;Firstly, the width-height ratio of the display.<br>
+            &emsp;&emsp;And second, the prefered field of view, or FOV.<br>
+
+
             &emsp;\(F_x\) and \(F_y\) each transform the x coordinates and the y coordinates based on a defined FOV and ratio between the width and height
             of the display. As, if scaled equally, the x and the y would appear squished if the width was greater than the height of the display, and
             stretched if the height is greater than the width. The FOV is calculated through \(\cot(\frac{\theta}{2})\)
@@ -887,7 +1010,7 @@ function pointer($fromtop, $length, $isfromleft) {
             ng. We've converted to 2 Dimensions, we still need to make sure things closer to the viewpoint are shown over things further from it.
         </h3>
 
-        <div class="section" style="position: absolute; left:110%; top:1600; width:250">
+        <div class="section" style="position: absolute; left:110%; top:1815; width:250">
             <h3 class="basictext outlinetext">
                 Simplifies to
                 $$\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}$$
@@ -911,10 +1034,10 @@ function pointer($fromtop, $length, $isfromleft) {
             $$\frac{1}{depth} = u\frac{1}{depth_u} + v\frac{1}{depth_v} + w\frac{1}{depth_w}$$
             &emsp;You'll find that by attempting to use the first equation over the latter to calculate depth will result in strange curves when geometry
             intersects eachother. The reasoning for this lies in how depth actually effects coordinates. Each x and y value are divided by their depth,
-            rather than simply translated. This ends in every x and y value not being transformed equally, the depth of a triangle per-pixel would appear
-            more like this, rather than this.
+            rather than simply translated. This ends in every x and y value not being transformed equally, graphing the depth of a triangle for every pixel would appear
+            more like this rather than a straight line.
         </h3>
-        <img src="assets/qb64 3d/triangledepth.png" alt="triangle depth 'graphs'"/>
+        <img src="assets/qb64 3d/triangledepth.png" style="width:100"/>
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;You can think about it as if a point is traveling an inch per every second along a triangle before it's projected. From the projection's perspective (pun intended)
             the point travels slower and slower as it gets further away, but we know it's still physically moving an inch per second. This shows us that
@@ -952,7 +1075,7 @@ function pointer($fromtop, $length, $isfromleft) {
             on unseen pixels.
         </h3>
     </div>
-    <h1 class="basictext outlinetext" id="correctionbarycentric">Correcting Barycentric Coordinates with Depth</h1>
+    <h1 class="basictext outlinetext" id="correctionbarycentric" style="margin:100px">Correcting Barycentric Coordinates with Depth</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;Now there is nothing wrong with our barycentric coordinates directly. I haven't lied to you about how we get barycetric coordinates.
@@ -970,7 +1093,8 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
         <img src="assets/qb64 3d/naivevscorrect.png" style="width:100%">
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;The answer lies simply in using the depths of each vertex in comparison to the current depth of the pixel.    
+            &emsp;The answer lies simply in using the depths of each vertex in comparison to the current depth of the pixel. What this means is that we take
+            each of our barycentric coordinates and divide them by the distance of the  
         </h3>
     </div>
 

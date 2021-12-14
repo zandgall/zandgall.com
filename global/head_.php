@@ -10,6 +10,12 @@
     <link rel="icon" href="assets/Icon.png">
     
     <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet" type="text/css">
+    <style>
+        @font-face {
+            font-family: basicbit2;
+            src: url("assets/basicbit2.ttf");
+        }
+    </style>
     
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../scroll.css">
