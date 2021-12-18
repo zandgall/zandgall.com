@@ -516,7 +516,7 @@ function pointer($fromtop, $length, $isfromleft) {
         </script>
 
         <div class="codeexample">
-        <h3 class="basictext" style="text-align:left; margin: 5px; color:d8d8d8; font-family:basicbit2">
+        <h3 class="basictext" style="text-align:left; margin: 5px; color:d8d8d8; font-family:basicbit2; font-weight: normal;">
             LEFT = ORIGIN_X<br>
             RIGHT = ORIGIN_X<br>
             <span style="color:#602060">' Left and Right inverse slopes</span><br>
@@ -706,34 +706,34 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
 
         <div class="codeexample">
-            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2">
-            Sub flat_triangle(x1, y1, x2, x3, term) <span style="color:#602060">A is (x1, y1), B is (x2, term), and C is (x3, term)<br></span>
-            <span style="color:#602060">&emsp;Declare inverse slops from a to b, and a to c<br></span>
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
+            Sub flat_triangle(x1, y1, x2, x3, term) <span style="color:#602060">'A is (x1, y1), B is (x2, term), and C is (x3, term)<br></span>
+            <span style="color:#602060">&emsp;'Declare inverse slops from a to b, and a to c<br></span>
             &emsp;a_m = (x2 - x1) / (term - y1)<br>
             &emsp;b_m = (x3 - x1) / (term - y1)<br><br>
 
-            <span style="color:#602060">&emsp;Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
+            <span style="color:#602060">&emsp;'Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
             &emsp;y = term<br>
-            <span style="color:#602060"><br>&emsp;Declare the two x values that walk the lines from the terminator to the origin<br></span>
+            <span style="color:#602060"><br>&emsp;'Declare the two x values that walk the lines from the terminator to the origin<br></span>
             &emsp;lx = x2<br>
             &emsp;rx = x3<br>
-            <span style="color:#602060">&emsp;Sign dictates whether rx is in the positive-x or negative-x direction from lx<br></span>
+            <span style="color:#602060">&emsp;'Sign dictates whether rx is in the positive-x or negative-x direction from lx<br></span>
             &emsp;xsign = Sgn(rx-lx)<br>
-            <span style="color:#602060">&emsp;Same with ysign and y1-terminator<br></span>
+            <span style="color:#602060">&emsp;'Same with ysign and y1-terminator<br></span>
             &emsp;ysign = Sgn(y1-term)<br><br>
             &emsp;Do<br>
-            <span style="color:#602060">&emsp;&emsp;Declare the current x position that we will plot a pixel at<br></span>
+            <span style="color:#602060">&emsp;&emsp;'Declare the current x position that we will plot a pixel at<br></span>
             &emsp;&emsp;x = lx<br>
             &emsp;&emsp;Do<br>
-            &emsp;&emsp;&emsp;PSet (x, y) <span style="color:#602060">Set the pixel! (QB64 method, requires 32 bit screen mode)</span><br>
-            <span style="color:#602060">&emsp;&emsp;&emsp;Increment x in the direction of rx<br></span>
+            &emsp;&emsp;&emsp;PSet (x, y) <span style="color:#602060">'Set the pixel! (QB64 method, requires 32 bit screen mode)</span><br>
+            <span style="color:#602060">&emsp;&emsp;&emsp;'Increment x in the direction of rx<br></span>
             &emsp;&emsp;&emsp;x = x + xsign<br>
-            <span style="color:#602060">&emsp;&emsp;&emsp;Do this until the current x surpasses rx.<br>
-            &emsp;&emsp;&emsp;Sign is checked in order to tell if x surpasses rx when it's greater, or lower<br></span>
+            <span style="color:#602060">&emsp;&emsp;&emsp;'Do this until the current x surpasses rx.<br>
+            &emsp;&emsp;&emsp;'Sign is checked in order to tell if x surpasses rx when it's greater, or lower<br></span>
             &emsp;&emsp;Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))<br>
-            <span style="color:#602060">&emsp;&emsp;Increment y towards the origin<br></span>
+            <span style="color:#602060">&emsp;&emsp;'Increment y towards the origin<br></span>
             &emsp;&emsp;y = y + ysign<br>
-            <span style="color:#602060">&emsp;&emsp;Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b<br></span>
+            <span style="color:#602060">&emsp;&emsp;'Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b<br></span>
             &emsp;&emsp;lx = lx + a_m * ysign<br>
             &emsp;&emsp;rx = rx + b_m * ysign<br>
             &emsp;Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))<br>
@@ -741,9 +741,9 @@ function pointer($fromtop, $length, $isfromleft) {
             </h3>
         </div>
         <div class="codeexample">
-            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
             Sub triangle (x1, y1, x2, y2, x3, y3)<br>
-            <span style="color:#602060">&emsp;If any two y coordinates are equal, then draw a flat triangle<br></span>
+            <span style="color:#602060">&emsp;'If any two y coordinates are equal, then draw a flat triangle<br></span>
             &emsp;If y1 = y2 Then<br>
             &emsp;&emsp;Call flat_triangle(x3, y3, x1, x2, y1): GoTo ft2dskip<br>
             &emsp;ElseIf y2 = y3 Then<br>
@@ -752,12 +752,12 @@ function pointer($fromtop, $length, $isfromleft) {
             &emsp;&emsp;Call flat_triangle(x2, y2, x1, x3, y1): GoTo ft2dskip<br>
             &emsp;End If<br><br>
 
-            <span style="color:#602060">&emsp;Find the middle y-coordinate and split the triangle into 2 flat triangles<br>
-            &emsp;And for each point, find the missing x value opposite of the middle<br>
-            &emsp;During the explanation, I used the top point to find the missing midpoint.<br>
-            &emsp;But it can be found even if we interchange the bottom and top point,<br>
-            &emsp;so we can avoid figuring out which is the top and find the midpoint directly from<br>
-            &emsp;one of the non-middle points<br><br></span>
+            <span style="color:#602060">&emsp;'Find the middle y-coordinate and split the triangle into 2 flat triangles<br>
+            &emsp;'And for each point, find the missing x value opposite of the middle<br>
+            &emsp;'During the explanation, I used the top point to find the missing midpoint.<br>
+            &emsp;'But it can be found even if we interchange the bottom and top point,<br>
+            &emsp;'so we can avoid figuring out which is the top and find the midpoint directly from<br>
+            &emsp;'one of the non-middle points<br><br></span>
             &emsp;If (y1 < y2 And y1 > y3) Or (y1 > y2 And y1 < y3) Then<br>
             &emsp;&emsp;m = x2 + (y1 - y2) * (x3 - x2) / (y3 - y2)<br>
             &emsp;&emsp;Call flat_triangle(x3, y3, x1, m, y1)<br>
@@ -834,13 +834,14 @@ function pointer($fromtop, $length, $isfromleft) {
             Thus the triangle area from three points;
             $$\frac{\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right)}{2}$$
             <br>
-            &emsp;When taking the barycentric coordinates (u, v, w), we procedurally replace each point of the triangle with the point we want to sample inside the triangle.
-            In our process, that would be the x and y of the pixel we are setting; \(p_x\) and \(p_y\). The following gives us \(a\) as the full area of the triangle triangle, 
-            as well as \(u\), \(v\), and \(w\) as the barycentric coordinates.
-            $$a = \frac{\left(x_2-x_1\right) * \left(y_3-y_1\right) - \left(y_2-y_1\right) * \left(x_3-x_1\right)}{2}$$
-            $$u = \frac{\left(x_2-p_x\right) * \left(y_3-p_y\right) - \left(y_2-p_y\right) * \left(x_3-p_x\right)}{2a}$$
-            $$v = \frac{\left(p_x-x_1\right) * \left(y_3-y_1\right) - \left(p_y-y_1\right) * \left(x_3-x_1\right)}{2a}$$
-            $$w = \frac{\left(x_2-x_1\right) * \left(p_y-y_1\right) - \left(y_2-y_1\right) * \left(p_x-x_1\right)}{2a}$$
+            &emsp;When taking the barycentric coordinates (u, v, w), we procedurally check new points of the triangle with the point we want to sample inside the triangle.
+            In our process, that would be the x and y of the pixel we are setting; \(p_x\) and \(p_y\). In order to preserve vertex order, we must write the calculations in the way specified below.
+            Think of it as, for every next barycentric coordinate, we increment every point we're subtracting p from; e.i. \(x_1 -> x_2; x_2 -> x_3; x_3 -> x_1\). The following gives us \(a\) as the
+            full area of the triangle triangle, as well as \(u\), \(v\), and \(w\) as the barycentric coordinates, in the range (0-1).
+            $$a = \frac{\left(x_3-x_1\right) * \left(y_2-y_1\right) - \left(y_3-y_1\right) * \left(x_2-x_1\right)}{2}$$
+            $$u = \frac{\left(x_3-p_x\right) * \left(y_2-p_y\right) - \left(y_3-p_y\right) * \left(x_2-p_x\right)}{2a}$$
+            $$v = \frac{\left(x_1-p_x\right) * \left(y_3-p_y\right) - \left(y_1-p_y\right) * \left(x_3-p_x\right)}{2a}$$
+            $$w = \frac{\left(x_2-p_x\right) * \left(y_1-p_y\right) - \left(y_2-p_y\right) * \left(x_1-p_x\right)}{2a}$$
             
         </h3>
 
@@ -864,6 +865,36 @@ function pointer($fromtop, $length, $isfromleft) {
         <video autoplay loop muted style="display: block; margin: auto">
             <source src="assets/qb64 3d/uvtotexture.mp4" type="video/mp4" />
         </video>
+
+        <h3 class="basictext outlinetext" style="text-align: left">
+            &emsp;If you do not have an understanding of how this would be put together, here is a code example of a function that takes in 3 points of a triangle, and a 4th point to get the Barycentric coordinates of.
+        </h3>
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
+            Sub getU(ax, ay, bx, by, cx, cy, px, py)<br>
+            &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5 ' Compute cross product divided by two<br>
+            &emsp;u = (cx - px) * (by - px) - (cy - pc) * (bx - px)<br>
+            &emsp;getU = u / 2*area<br>
+            End Sub<br><br>
+            Sub getV(ax, ay, bx, by, cx, cy, px, py)<br>
+            &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
+            &emsp;v = (ax - px) * (cy - px) - (ay - pc) * (cx - px)<br>
+            &emsp;getV = v / 2*area<br>
+            End Sub<br><br>
+            Sub getW(ax, ay, bx, by, cx, cy, px, py)<br>
+            &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
+            &emsp;w = (bx - px) * (ay - px) - (by - pc) * (ax - px)<br>
+            &emsp;getW = w / 2*area<br>
+            End Sub<br><br>
+            'For every pixel in triangle rasterizing...<br>
+            'x1-2-3 and y1-2-3 are the triangle's vertices, with x and y being the current pixel's coords<br>
+            &emsp;Color _RGB(255 * getU(x1, y1, x2, y2, x3, y3, x, y), <br>
+            &emsp;&emsp;255 * getV(x1, y1, x2, y2, x3, y3, x, y),<br>
+            &emsp;&emsp;255 * getW(x1, y1, x2, y2, x3, y3, x, y))<br>
+            &emsp;PSet(x, y)<br>
+            'Paints the pixels of a triangle Red, green, and blue based on the barycentric coords.
+            </h3>
+        </div>
 
         <div class="section" style="position: absolute; left:-300; top:985; width:250">
             <h3 class="basictext outlinetext">For more visual explanations, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products.</a> For more on what vectors actually are and what they're used for, go down to <a href="#linear">Linear Algebra for the Faint of Heart</a></h3>
@@ -970,45 +1001,88 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;Our first matrix takes in a 4 dimensional vector. We haven't suddenly switched from 3d rendering to 4d rendering, instead we are passing (x, y, z, 1) into the matrix. The 4th component, w
-            (not to be confused with barycentric's w), is typically 1 for many 3d transformation matrices. This allows for translation as, going through the computation, we end up adding 1 (or w) * some num
-            to every output component.<br>
+            (not to be confused with barycentric's w), is typically 1 for many 3d transformation matrices. This allows for translation as You'll see with further expansion.<br>
             &emsp;Our first matrix sets the output x to \(x * F_x\), and output y to \(y * F_y\). \(F_x\) and \(F_y\) scale the x and y values based on two factors.<br>
             &emsp;&emsp;Firstly, the width-height ratio of the display.<br>
-            &emsp;&emsp;And second, the prefered field of view, or FOV.<br>
-
-
-            &emsp;\(F_x\) and \(F_y\) each transform the x coordinates and the y coordinates based on a defined FOV and ratio between the width and height
-            of the display. As, if scaled equally, the x and the y would appear squished if the width was greater than the height of the display, and
-            stretched if the height is greater than the width. The FOV is calculated through \(\cot(\frac{\theta}{2})\)
-            And it represents the plane at which everything is projected onto being scaled up and down as the FOV of the "viewpoint" looking at it increases.
-            In order to take into account the display width-height ratio, we would scale \(\theta\) for \(F_x\) and \(F_y\) differently according to the width
-            height ratio.<br>
-            &emsp;So in conclusion, \(F_x\) and \(F_y\) scale the x and y coordinates based on a Field of View angle and width-height ratio.<br>
-            &emsp;\(Z_m\) and \(Z_a\) are more about setting a maximum and minimum z-value, otherwise known as the Far and Near Clipping Planes. We want a Z
-            that originally is equal to the Far plane, to stay equal to the far plane. And a Z that is equal to the near plane, to be equal to 0. For this we
-            can set.
+            &emsp;&emsp;And second, the prefered field of view, or FOV.<br><br>
+            &emsp;Since we are transforming a physical space into a screen space and then stretching it onto the screen, we need to be prepared for any squishing or stretching that happens
+            as our (-1,-1)-(1, 1) space transforms into a (0, 0)-(1920, 1080) or whatnot. If say, our display has a width-height ratio of 16:9, just like in one that's 1920 - 1080, the x values are being stretched out 16/9 times more
+            than the y is being stretched by. In order to combat this, we can either stretch the y by width/height, or stretch the x by height/width. E.i; \(F_x = \frac{h}{w}\) or \(F_y = \frac{w}{h}\) (But not both).<br><br>
+            &emsp;But there is more to add for \(F_x\) and \(F_y\). The FOV is a scalar that scales everything equally, and this scale is chosen rather than found. But that doesn't mean it can be any number,
+            it technically could but in order to create the effect of a "Field of View" you can calculate the FOV scalar from and angle through \(FOV = \cot(\frac{1}{2}\theta)\). Now we could combine this with the w/h ratio by directly multiplying,
+            but instead we will multiply the \(\theta\) angle instead.
+            Thus we can put this together to create our final \(F_x\) and \(F_y\) values.
+            $$F_x = \cot(\frac{1}{2}\theta_{FOV})$$
+            $$F_y = \cot(\frac{1}{2}\theta_{FOV} \times \frac{W}{H})$$
+            &emsp;Now we've transformed our x and y values, what more can we do? Well, \(Z_m\) and \(Z_a\) in the matrix are for setting a maximum and minimum z-value, otherwise known as the Far and Near Clipping Planes.
+            When transforming our z-coordinates, e.i. distance to the viewpoint, we want to map Z from a range of (near-clip, far-clip) to a range of (0, far-clip). Doing this just takes multiplication to stretch or squish
+            z-values to the right range of values. And an addition(/subtraction) to set the proper minimum value 0.
             $$ Z_m = \mp\frac{F}{F-N} $$ 
             $$ Z_a = -\frac{F \times N}{F-N} $$
             &emsp;Whether or not \(Z_m\) is positive or negative depends on which z-direction is forward. It's typically negative, as, following the right
-            hand coordinate system, Z-negative is "forward". \(Z_a\) is ultimately added to the input z (after multiplying it by \(Z_m\)) as z will be equal to
-            \(x \times 0 + y \times 0 + z \times Z_m + w \times Z_a\) where we've already established that w = 1.
+            hand coordinate system, Z-negative is "forward". \(Z_a\) is ultimately added to the input z (after multiplying it by \(Z_m\)) as, writing out the multiplication of our matrix, we get,
+            \(z' = x \times 0 + y \times 0 + z \times Z_m + w \times Z_a\) where we've already established that w = 1.
             And such, we have a final Matrix of
             $$\begin{bmatrix}cot(\frac{\theta}{2}) & 0 & 0 & 0 \\ 0 & cot(\frac{\theta}{2} \times \frac{W}{H}) & 0 & 0 \\ 0 & 0 & -\frac{F}{F-N} & -\frac{F \times N}{F-N} \\ 0 & 0 & -1 & 0 \end{bmatrix}$$
-            Where \(\theta\) is the angle of FOV, \(W\) and \(H\) are the dimensions of the display, and \(F\) and \(N\) being the Near and Far clipping planes respectively.<br>
-            &emsp;When programming in a high-maintenance environment like BASIC, it's important to pre-compute as much as possible. So it's helpful that we
-            should define all these numbers before any triangles have started rasterizing. With this in mind, lets step out of Matrix notation and show each
-            computation that needs to genuinely be done.
-            $$ z' = z \times Z_m + Z_a $$
-            $$ x' = \frac{x \times cot(\frac{\theta}{2})}{z'} $$
-            $$ y' = \frac{y \times cot(\frac{\theta}{2} \times \frac{W}{H})}{z'} $$ 
-            This gives us 2D x and y values \(x'\) and \(y'\) ranging from -1 to 1. We can translate these to pixel coordinates by simply
+            Where \(\theta\) is the angle of FOV, \(W\) and \(H\) are the dimensions of the display, and \(F\) and \(N\) being the Near and Far clipping planes respectively.<br><br>
+            &emsp;You'll notice that there's also a -1 in the \(w' = x \times 0 + y \times 0 + z * -1 + w \times 0\) spot. This is used to store distance, as z can be thought of the distance between a point and the viewpoint.
+            But the 'forward' direction, is z-negative, hence why we're multiplying z by -1 instead of just 1. In the end, w is the distance of a point to the viewpoint. If it's negative, it's behind the viewing area (z-positive direction), and thus shouldn't be drawn.<br><br>
+            &emsp;We have now created a selection of geometry to draw. Multiplying a vector with this matrix, it tells us whether a point will (or should) be drawn. That being, outputs with x and y values between -1 and 1, z-values between 0 and the far-clipping plane, and positive w values.<br><br>
+            &emsp;That is all the harder to grasp concepts out of the way. It also prepares us for foreshortening, as, in order to create this effect of foreshortening, we simply divide our x and y values by z.
+            This means that if a point has a small z value below 1, dividing by z will stretch it out, making an object seem to get bigger when really close. But as z increases, dividing by z will make x and y much smaller, making objects appear smaller as they are further.
+            With this in mind, we can write out our final computations. Check back earlier to matrix multiplication if you need to remember how to do this step.<br>
+            $$ z' = z \times Z_m + Z_a $$ Done first as we need to divide x and y by it.
+            $$ x' = \frac{x}{z'} \times cot(\frac{\theta}{2}) $$
+            $$ y' = \frac{y}{z'} \times cot(\frac{\theta}{2} \times \frac{W}{H}) $$ 
+            $$ w' = z * -1$$ Notice that this is z, not z'.<br>
+            These gives us 2D foreshortened x and y values \(x'\) and \(y'\). We can translate these to pixel coordinates simply, but through this method any
+            x or y outside of the (-1, 1) range will be off the screen, therefore we should check for these cases to make sure we do not attempt to wrongfully draw these cases.
             $$ x'' = (x' \times 0.5 + 0.5) \times W $$
             $$ y'' = (y' \times 0.5 + 0.5) \times H $$
-            But we've almost forgotten something. You see that -1 in row 4 column 3 of the perspective matrix? That means that after multiplying a vector with it,
-            \(w' = -z\). This is used to preserve the original Z coordinates. And since negative-z direction is 'forward', we make it negative in order to prime for
-            depth testi
-            ng. We've converted to 2 Dimensions, we still need to make sure things closer to the viewpoint are shown over things further from it.
+            And thus (x'', y'') are our final pixel coordinates, with w' being the point's distance from the viewpoint.<br><br>
+            Putting these concepts together, we can write code for a Function (Sub) that takes in the 3D coordinates of a point, and fills in the pixel of said point.
         </h3>
+
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
+            Dim Shared W as Integer, H as Integer<br>
+            W = 720<br>
+            H = 480<br>
+            screen = _NewImage(W, H, 32) <span style="color:#602060">'32 Bit color mode</span><br>
+            Screen screen<br><br>
+
+            theta = 90 * 3.14159265 / 180 <span style="color:#602060">' 90 is the FOV angle in degrees, theta is in radians</span><br>
+            FOV = cot(theta/2)<br>
+            Far = 100<br>
+            Near = 0.01<br>
+            Zm = -Far/(Far-Near)<br>
+            Za = -Far*Near<br><br>
+
+            Function projectZ(z As Double)<br>
+            &emsp;projectZ = z * Zm + Za<br>
+            End Function<br><br>
+
+
+            Function projectX(x As Double, z As Double)<br>
+            &emsp;projectX = (x/z * FOV * 0.5 + 0.5) * W<br>
+            End Function<br><br>
+
+            Function projectY(y As Double, z As Double)<br>
+            &emsp;projectY = y/z * FOV * W * 0.5 + 0.5 * H<br>
+            &emsp;<span style="color:#602060">'Originally, (y/z * FOV * W/H * 0.5 + 0.5)*H, but simplified a little to save a division</span><br>
+            End Function<br><br>
+
+            Sub plot3DPoint(x As Double, y As Double, z As Double)<br>
+            &emsp;If -z < 0 Then return <span style="color:#602060">' (-z) is w, checking if it is behind the camera</span><br>
+            &emsp;zPrime = projectZ(z)<br>
+            &emsp;xPrime = projectX(x, zPrime)<br>
+            &emsp;If xPrime < 0 || xPrime > W Then return <span style="color:#602060">'If x position is outside screen, don't draw</span><br>
+            &emsp;yPrime = projectY(y, zPrime)<br>
+            &emsp;If yPrime < 0 || yPrime > H Then return <span style="color:#602060">'If y position is outside screen, don't draw</span><br>
+            &emsp;PSet(xPrime, yPrime) <span style="color:#602060">'Requires QB64 Screen, like at the beginning of this program</span><br>
+            End Sub<br>
+            </h3>
+        </div>
 
         <div class="section" style="position: absolute; left:110%; top:1815; width:250">
             <h3 class="basictext outlinetext">
@@ -1022,79 +1096,236 @@ function pointer($fromtop, $length, $isfromleft) {
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="depth">Depth is Easier than it Seems</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;Even though we have managed to project 3d points into 2d ones, and use them to draw triangles, we still need to keep ahold of their distance
-            from the viewpoint, (or depth as it's called) otherwise pixels would be shown in whatever order the triangles are drawn. Making far away triangles
-            possibly show up in front of near-by triangles. This is actually quite simple, as we just need to test if the original z value is closer or further
-            to 0.<br>
-            &emsp;But if it didn't need any explanation, I wouldn't have dedicated a section to it. There's a bit of a trickiness to it. As it turns out, we
-            need to gather the depth of each pixel. And here's a hint, we can do this with barycentric coordinates.<br>
+            &emsp;If you were to take all the processes that have been given so far you could try to draw a cube. First by taking all the points of a cube and project them into 2d.
+            Then, using the 2d points to rasterize 2d triangles, you could form an image of a cube. However, something would be off. You might be able to get it right the first time, you'll probably notice that
+            some triangles are drawing themselves in front of triangles that they are supposed to be behind, breaking the effect and making the cube less recognizable.<br>
+            &emsp;In order to prevent triangles from being placed in front of trangles they're supposed to behind, we do something called depth testing. Depth Testing, as we will use it, will be
+            the storage of two arrays, with an element for every pixel. The first array will store the distance of a pixel from the viewpoint. The second, will store a number representing the last frame a pixel was updated.<br>
+            &emsp;I.e, our code for this should execute something along these lines; (W and H are display dimensions)
+        </h3>
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family: basicbit2; font-weight:normal">
+            depthArray = floating point array with size [W * H]<br>
+            timeArray = integer array with size [W * H]<br>
+            current frame = 0<br>
+            For every frame/every update<br>
+            &emsp;increment current frame<br>
+            &emsp;Draw triangles and whatnot<br>
+            For every pixel in a triangle<br>
+            &emsp;find index of current pixel<br>
+            &emsp;If depthArray[pixel index] < current depth or timeArray[pixel index] < current frame<br>
+            &emsp;&emsp;depthArray[pixel index] = current depth<br>
+            &emsp;&emsp;timeArray[pixel index] = current frame<br>
+            &emsp;&emsp;Draw pixel
+            </h3>
+        </div>
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;In order to execute the above, we need to find two values. The "index" of a pixel, and the depth of a pixel.<br>
+            &emsp;The index of a pixel is rather simple. We have arrays with room for every pixel. Width times height, area of a rectangle. Think about labeling every pixel from left to right
+            and top to bottom. When you start, you are labeling every pixel 0, 1, 2, 3, etc. and if you think about it, you are essentially labeling every pixel with its x position. When you have hit the end of the first line,
+            you wrap back around. The first element of the second line will have its index be the same as the Width of the display. That is because we started with index 0, so when we hit the pixel at the end of the first row, its index is Width - 1.
+            If we go another row, our pixel at (0, 2) will be 2 * Width. After another row it's 3 * width, and etc. With each pixel, we have a unique index equal to (x + y * Width). And this is how we find the index of a pixel.
+            <br>
+            &emsp;So pixel index = pixel x + pixel y * display width. What about pixel depth?<br><br>
+            &emsp;Well here's a hint, through our projection, we have the depth of the vertices of the triangle we want to draw, and we need to interpolate to find the depth per pixel. Think barycentric coordinates.<br>
             &emsp;Unfortunately, unlike colors and other linear vertex attributes, we can't just do
-            $$depth = depth_u * u + depth_v * v + depth_w * w$$
+            $$depth = depth_a * u + depth_b * v + depth_c * w$$
             We instead need to do
-            $$\frac{1}{depth} = u\frac{1}{depth_u} + v\frac{1}{depth_v} + w\frac{1}{depth_w}$$
+            $$\frac{1}{depth} = u\frac{1}{depth_a} + v\frac{1}{depth_b} + w\frac{1}{depth_c}$$
             &emsp;You'll find that by attempting to use the first equation over the latter to calculate depth will result in strange curves when geometry
             intersects eachother. The reasoning for this lies in how depth actually effects coordinates. Each x and y value are divided by their depth,
-            rather than simply translated. This ends in every x and y value not being transformed equally, graphing the depth of a triangle for every pixel would appear
-            more like this rather than a straight line.
+            this ends in every x and y value not being transformed equally. 
         </h3>
         <img src="assets/qb64 3d/triangledepth.png" style="width:100"/>
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;You can think about it as if a point is traveling an inch per every second along a triangle before it's projected. From the projection's perspective (pun intended)
-            the point travels slower and slower as it gets further away, but we know it's still physically moving an inch per second. This shows us that
-            although the pixels at which the point is projected to may change slower and slower over time, but it's still changing distance, and this is lost
-            with simple 2d barycentric coordinates.<br>
-            &emsp;We can see that using reciprocals fights that linear bias, and results in a more realistic interpolated depth. You can think about it as
-            when the Z value of a point increases, the reciprocal shrinks, but it doesn't shrink as fast when Z is changing from 9 to 10, than when it changes
-            from 1 to 2.
+            &emsp;Imagine an ant walking along a triangle, and viewing the projection of that triangle. From the projection's perspective (pun intended)
+            the ant travels slower and slower as it gets further away, even if it's physically moving the same speed. This shows us how depth is not linear, and thus why we need to find depth differently
+            than we would with normal vertex attributes.<br>
+            &emsp;Shouldn't this depth distortion affect other attributes? Well it does, and you can see the effects and solutions in the <a href="#correctionbarycentric">next section</a>
+            <br><br>
+            &emsp;We have the ability to take the depth of every pixel, it's time we should compare them. You may find the merging of pixel indexing and depth interpolation in this following code example.
         </h3>
-        <h3 class="basictext outlinetext" style="text-align: left">
-            &emsp;Now we have taken the depth of every pixel, it's time we should compare them. The method I have dedicated towards my program is by holding two seperate buffers
-            for each pixel, one dedicated to depth, and one to the time a pixel was last updated. And thus the method for every pixel will be this:<br>
-            &emsp;&emsp;For every pixel, determine it's depth, and take note of which frame it is being drawn on.<br>
-            &emsp;&emsp;Check the depth and time buffers. Draw the pixel if either it has a distance less than that in the depth buffer, or if it's time is greater (newer) than the time stored at that pixel in the time buffer<br>
-            &emsp;This allows pixels to be drawn in the correct order, and for older pixels to be ignored without having to clear any buffer.
-        </h3>
-        <h3 class="basictext outlinetext">
-            \[\begin{gather*}
-            depth[W*H]\\
-            times[W*H]\\
-            currenttime = 0\\
-            ...\\
-            every\ frame: currenttime = currenttime + 1\\
-            ...\\
-            for\ every\ triangle\ pixel\ p:\\
-            if\ \left(p_{depth} < depth[p_y * W + p_x]\; or\; currenttime < times[p_y * W + p_x]\right):\\
-                then \\
-                depth[p_y * W + p_x] = p_{depth}\\
-                times[p_y * W + p_x] = currenttime\\
-                draw\ pixel\ p.\\
-            \end{gather*}\]
-        </h3>
-        <h3 class="basictext outlinetext" style="text-align: left">
-            &emsp;It's reasonable then to check for depth as soon as we can in our final triangle rasterizer. As we don't want to waste any computational time
-            on unseen pixels.
-        </h3>
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+                depthArray = floating point array; size [W*H]<br>
+                timeArray = integer array; size [W*H]<br>
+                every frame<br>
+                &emsp;increment current frame<br>
+                &emsp;Draw triangles and whatnot<br>
+                For every pixel (x, y) in a triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)<br>
+                Where z1, z2, z3 are the depths of their respective vertex<br>
+                &emsp;u = getU(x1, y1, x2, y2, x3, y3, x, y)<br>
+                &emsp;v = getV(x1, y1, x2, y2, x3, y3, x, y)<br>
+                &emsp;w = getW(x1, y1, x2, y2, x3, y3, x, y)<br>
+                &emsp;depth = 1 / (u / z1 + v / z2 + w / z3) <br>
+                &emsp;index = y * W + x<br>
+                &emsp;If depthArray[index] < depth or timeArray[index] < current frame<br>
+                &emsp;&emsp;depthArray[index] = depth<br>
+                &emsp;&emsp;timeArray[index] = current frame<br>
+                &emsp;&emsp;Draw pixel (x, y)
+            </h3>
+        </div>
     </div>
     <h1 class="basictext outlinetext" id="correctionbarycentric" style="margin:100px">Correcting Barycentric Coordinates with Depth</h1>
     <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;Now there is nothing wrong with our barycentric coordinates directly. I haven't lied to you about how we get barycetric coordinates.
-            But you might find that as you plug in all these formulas that something seems off about the triangles. They all look 2D. This is a weird
-            claim to make but it makes sense with an explanation. With the barycentric coordinates we have now, the triangle uses the 2D center
-            of the triangle we have given it, when in reality, the center of a 3D triangle depends on the depth of each of its points.<br>
-            &emsp;This is showcased by Scratchapixel in this graphic displaying the difference between "naive" barycentric interpolation, and perspective
-            correct interpolation.
+            &emsp;We are not quite at the finish line, if we use all of these methods, we can draw 3d shapes with no problem. But if we attempt to draw anything on the faces using barycentric coordinates,
+            we will find that the triangles appear normal, but everything will look just off every so slightly. This graphic by scratchapixel will show what it would appear like.
         </h3>
         <img src="assets/qb64 3d/perspectivecorrection.png" style="width:100%">
         <h3 class="basictext outlinetext" style="text-align: left">
             &emsp;You'll see in the image that the triangle on the left appears 2 Dimensional and flat, whereas it's easier to gather the depth from the
             second triangle. This is how things will appear after depth correction of the vertex attributes.<br>
-            &emsp;This problem is more apparent when using textures as images will hold straight lines, whereas simple gradients might hide misteps.
-        </h3>
+            &emsp;This problem is more apparent when using textures because images will hold straight lines, whereas simple gradients might hide misteps.
+        </h3> 
         <img src="assets/qb64 3d/naivevscorrect.png" style="width:100%">
         <h3 class="basictext outlinetext" style="text-align:left">
-            &emsp;The answer lies simply in using the depths of each vertex in comparison to the current depth of the pixel. What this means is that we take
-            each of our barycentric coordinates and divide them by the distance of the  
+            &emsp;The reasoning for this distortion is the same as the reason for grabbing depth needing more than simple barycentric interpolation. Fortunately, after grabbing the new depth, 
+            we can compute the new attributes of each pixel rather easily. How we achieve this is by just dividing each vertex attribute by its vertex's depth, then we use barycentric coordinates
+            to interpolate the resulting values. Then, multiplying them by the current pixel's depth, we have our final attribute.<br>
+            &emsp;Equations that show what's going on here would look like this. Where d is the depth of each vertice and of the current pixel, and a is an attribute of a vertex like color or whatnot, and our barycentric coordinates, u, v, and w.
+            $$d_{pixel} = \frac{1}{\frac{u}{d_1} + \frac{v}{d_2} + \frac{w}{d_3}}$$ 
+            $$a_{pixel} = \left(u\frac{a_1}{d_1} + v\frac{a_2}{d_2} + w\frac{a_3}{d_3}\right)d_{pixel}$$
+            &emsp;This helps as the attribute not only relies on barycentric coordinates, but also depth. A pixel will not just appear like a vertice as it's barycentric coords approach it, but its depth needs to approach it as well.<br>
+            &emsp;The following hypothetical code will 
+        </h3>
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+                For every pixel (x, y) in triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)<br>
+                Where z1,z2,z3 are the depth of each vertex<br>
+                &emsp;u = getU(x1,y1,x2,y2,x3,y3,x,y)<br>
+                &emsp;v = getV(x1,y1,x2,y2,x3,y3,x,y)<br>
+                &emsp;w = getW(x1,y1,x2,y2,x3,y3,x,y)<br>
+                &emsp;depth = 1 / (u/z1 + v/z2 + w/z3)<br>
+                &emsp;color = depth * (RED * u/z1 + GREEN * v/z2 + BLUE * w/z3)<br>
+            </h3>
+        </div>
+    </div>
+    <h1 class="basictext outlinetext" id="altogether">Putting the Code All Together</h1>
+    <h3 class="basictext">The following code will work in QB64</h3>
+    <div class="codeexample">
+        <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+        Dim Shared W as Integer, H as Integer
+        W = 720
+        H = 480
+        screen = _NewImage(W, H, 32)
+        Screen screen<br><br>
+
+        Dim Shared pixelDepth(W*H) as Double<br>
+        Dim Shared pixelTime(W*H) as Double<br>
+        Dim Shared currentFrame as Integer<br>
+
+        Dim Shared FOV as Double, Zm as Double, Za as Double<br>
+        theta = 90 * 3.14159265 / 180 <span style="color:#602060">' 90 is the FOV angle in degrees, theta is in radians</span><br>
+        FOV = cot(theta/2)<br>
+        Far = 100<br>
+        Near = 0.01<br>
+        Zm = -Far/(Far-Near)<br>
+        Za = -Far*Near<br><br>
+
+        Function projectZ(z As Double)<br>
+        &emsp;projectZ = z * Zm + Za<br>
+        End Function<br><br>
+
+
+        Function projectX(x As Double, z As Double)<br>
+        &emsp;projectX = (x/z * FOV * 0.5 + 0.5) * W<br>
+        End Function<br><br>
+
+        Function projectY(y As Double, z As Double)<br>
+        &emsp;projectY = y/z * FOV * W * 0.5 + 0.5 * H<br>
+        &emsp;<span style="color:#602060">'Originally, (y/z * FOV * W/H * 0.5 + 0.5)*H, but simplified a little to save a division</span><br>
+        End Function<br><br>
+
+        Sub getU(ax, ay, bx, by, cx, cy, px, py)<br>
+        &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5 ' Compute cross product divided by two<br>
+        &emsp;u = (cx - px) * (by - px) - (cy - pc) * (bx - px)<br>
+        &emsp;getU = u / 2*area<br>
+        End Sub<br><br>
+        Sub getV(ax, ay, bx, by, cx, cy, px, py)<br>
+        &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
+        &emsp;v = (ax - px) * (cy - px) - (ay - pc) * (cx - px)<br>
+        &emsp;getV = v / 2*area<br>
+        End Sub<br><br>
+        Sub getW(ax, ay, bx, by, cx, cy, px, py)<br>
+        &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
+        &emsp;w = (bx - px) * (ay - px) - (by - pc) * (ax - px)<br>
+        &emsp;getW = w / 2*area<br>
+        End Sub<br><br>
+
+        Sub rasterFlatTriangle(x1, y1, x2, x3, term, z1, z2, z3)
+        <span style="color:#602060">&emsp;'z1, z2, and z3 are the depths of each point<br></span>
+        <span style="color:#602060">&emsp;'Declare inverse slops from a to b, and a to c<br></span>
+        &emsp;a_m = (x2 - x1) / (term - y1)<br>
+        &emsp;b_m = (x3 - x1) / (term - y1)<br><br>
+
+        <span style="color:#602060">&emsp;'Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
+        &emsp;y = term<br>
+        <span style="color:#602060"><br>&emsp;'Declare the two x values that walk the lines from the terminator to the origin<br></span>
+        &emsp;lx = x2<br>
+        &emsp;rx = x3<br>
+        <span style="color:#602060">&emsp;'Signs dictate which directions to increment in, +1 or -1<br></span>
+        &emsp;xsign = Sgn(rx-lx)<br>
+        &emsp;ysign = Sgn(y1-term)<br><br>
+        &emsp;Do<br>
+        &emsp;&emsp;x = lx<br>
+        &emsp;&emsp;Do<br>
+        &emsp;&emsp;&emsp;u = getU(x1,y1,x2,y2,x3,y3,x,y)<br>
+        &emsp;&emsp;&emsp;v = getV(x1,y1,x2,y2,x3,y3,x,y)<br>
+        &emsp;&emsp;&emsp;w = getW(x1,y1,x2,y2,x3,y3,x,y)<br>
+        &emsp;&emsp;&emsp;depth = 1 / (u/z1 + v/z2 + w/z3)<br>
+        &emsp;&emsp;&emsp;index = y * W + x
+        &emsp;&emsp;&emsp;if pixelDepth(index) < depth Or pixelTime(index) < currentFrame Then<br>
+        &emsp;&emsp;&emsp;&emsp;pixelDepth(index) = depth<br>
+        &emsp;&emsp;&emsp;&emsp;pixelTime(index) = currentFrame<br>
+        &emsp;&emsp;&emsp;&emsp;Color _RGB(255 * u/z1 * depth, 255 * v/z2 * depth, 255 * w/z3 * depth)<br>
+        &emsp;&emsp;&emsp;&emsp;PSet (x, y) <span style="color:#602060">'Set the pixel! (QB64 method, requires 32 bit screen mode)</span><br>
+        &emsp;&emsp;&emsp;End If<br>
+        &emsp;&emsp;&emsp;x = x + xsign<br>
+        &emsp;&emsp;Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))<br>
+        &emsp;&emsp;y = y + ysign<br>
+        &emsp;&emsp;lx = lx + a_m * ysign<br>
+        &emsp;&emsp;rx = rx + b_m * ysign<br>
+        &emsp;Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))<br>
+        End Sub<br><br>
+        Sub triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)<br>
+            <span style="color:#602060">&emsp;'Find 2d coordinates + depth from original coordinates<br></span>
+            _x1 = projectX(x1, z1)<br>
+            _y1 = projectY(y1, z1)<br>
+            _z1 = -z1;<br>
+            _x1 = projectX(x2, z2)<br>
+            _y1 = projectY(y2, z2)<br>
+            _z1 = -z2;<br>
+            _x3 = projectX(x3, z3)<br>
+            _y3 = projectY(y3, z3)<br>
+            _z3 = -z3;<br><br>
+            <span style="color:#602060">&emsp;'If any two y coordinates are equal, then draw a flat triangle<br></span>
+            &emsp;If _y1 = _y2 Then<br>
+            &emsp;&emsp;Call flat_triangle(_x3, _y3, _x1, _x2, _y1): GoTo ft2dskip<br>
+            &emsp;ElseIf _y2 = _y3 Then<br>
+            &emsp;&emsp;Call flat_triangle(_x1, _y1, _x2, _x3, _y2): GoTo ft2dskip<br>
+            &emsp;ElseIf _y3 = _y1 Then<br>
+            &emsp;&emsp;Call flat_triangle(_x2, _y2, _x1, _x3, _y1): GoTo ft2dskip<br>
+            &emsp;End If<br><br>
+
+            <span style="color:#602060">&emsp;'Find the middle y-coordinate and split the triangle into 2 flat triangles<br>
+            &emsp;If (_y1 < _y2 And _y1 > _y3) Or (_y1 > _y2 And _y1 < _y3) Then<br>
+            &emsp;&emsp;m = _x2 + (_y1 - _y2) * (_x3 - _x2) / (_y3 - _y2)<br>
+            &emsp;&emsp;Call flat_triangle(_x3, _y3, _x1, m, _y1)<br>
+            &emsp;&emsp;Call flat_triangle(_x2, _y2, _x1, m, _y1)<br>
+            &emsp;&emsp;GoTo ft2dskip<br>
+            &emsp;ElseIf (_y2 < _y1 And _y2 > _y3) Or (_y2 > _y1 And _y2 < _y3) Then<br>
+            &emsp;&emsp;m = _x1 + (_y2 - _y1) * (_x3 - _x1) / (_y3 - _y1)<br>
+            &emsp;&emsp;Call flat_triangle(_x3, _y3, _x2, m, _y2)<br>
+            &emsp;&emsp;Call flat_triangle(_x1, _y1, _x2, m, _y2)<br>
+            &emsp;&emsp;GoTo ft2dskip<br>
+            &emsp;ElseIf (_y3 < _y1 And _y3 > _y2) Or (_y3 > _y1 And _y3 < _y2) Then<br>
+            &emsp;&emsp;m = _x1 + (_y3 - _y1) * (_x2 - _x1) / (_y2 - _y1)<br>
+            &emsp;&emsp;Call flat_triangle(_x2, _y2, _x3, m, _y3)<br>
+            &emsp;&emsp;Call flat_triangle(_x1, _y1, _x3, m, _y3)<br>
+            &emsp;End If<br><br>
+            &emsp;ft2dskip:<br>
+            End Sub<br>
         </h3>
     </div>
 
