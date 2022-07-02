@@ -1,20 +1,23 @@
-
 html {
     --scrollbarBG: rgba(156, 156, 156, 0.7);
     --thumbBG: rgb(100, 100, 100);
-  }
+}
+
 div::-webkit-scrollbar {
     width: 14px;
-  }
+}
+
 div {
     scrollbar-width: thin;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-  }
+}
+
 div::-webkit-scrollbar-track {
     background: var(--scrollbarBG);
-  }
+}
+
 div::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG) ;
+    background-color: var(--thumbBG);
     border-radius: 6px;
     border: 0px solid var(--scrollbarBG);
-  }
+}

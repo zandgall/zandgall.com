@@ -1,0 +1,144 @@
+Dim Shared W As Integer, H As Integer
+
+W = 720
+H = 480
+bscreen = _NewImage(W, H, 32)
+Screen bscreen
+
+Dim Shared pixelDepth(W * H) As Double
+Dim Shared pixelTime(W * H) As Double
+Dim Shared currentFrame As Integer
+currentFrame = 0
+Dim Shared FOV As Double, Zm As Double, Za As Double
+
+theta# = 90 * 3.14159265 / 180.0 ' 90 is the FOV angle in degrees, theta is in radians
+FOV = 1 / Tan(theta# * 0.5)
+Far = 10000
+Near = 0.01
+Zm = -Far / (Far - Near)
+Za = -(Far * Near) / (Far - Near)
+
+'Declare variables for numbers used in multiple Functions and Subs
+Dim Shared triX1, triY1, triZ1, triX2, triY2, triZ2, triX3, triY3, triZ3
+
+Do
+    Cls
+    currentFrame = currentFrame + 1
+    Call triangle(-50, -50, -100, 50, 50, -100, 100, -75, -200)
+    _Display
+Loop
+
+Function projectZ (z As Double)
+    projectZ = z * Zm + Za
+End Function
+
+Function projectX (x As Double, z As Double)
+    projectX = ((x / z) * FOV * 0.5 + 0.5) * W
+End Function
+
+Function projectY (y As Double, z As Double)
+    projectY = (y / z) * FOV * W * 0.5 + 0.5 * H
+End Function
+
+Function getU (px, py)
+    ' Compute cross product divided by two
+    area = ((triX3 - triX1) * (triY2 - triY1) - (triY3 - triY1) * (triX2 - triX1)) * 0.5
+    getU = ((triX3 - px) * (triY2 - py) - (triY3 - py) * (triX2 - px)) / 2 * area
+End Function
+
+Function getV (px, py)
+    area = ((triX3 - triX1) * (triY2 - triY1) - (triY3 - triY1) * (triX2 - triX1)) * 0.5
+    getV = ((triX1 - px) * (triY3 - py) - (triY1 - py) * (triX3 - px)) / 2 * area
+End Function
+
+Function getW (px, py)
+    area = ((triX3 - triX1) * (triY2 - triY1) - (triY3 - triY1) * (triX2 - triX1)) * 0.5
+    getW = ((triX2 - px) * (triY1 - py) - (triY2 - py) * (triX1 - px)) / 2 * area
+End Function
+
+Sub rasterFlatTriangle (x1, y1, x2, x3, term) 'z1, z2, and z3 are the depths of each point
+    'Declare inverse slops from a to b, and a to c
+    Dim y As Integer, x As Integer
+    Dim a_m, b_m, lx, rx, xsign, ysign, bu, bv, bw, depth, index
+    a_m = (x2 - x1) / (term - y1)
+    b_m = (x3 - x1) / (term - y1)
+    'Declare the y "scanline", set it to the terminator and work up to the origin
+    y = term
+
+    'Declare the two x values that walk the lines from the terminator to the origin
+    lx = x2
+    rx = x3
+    'Signs dictate which directions to increment in, +1 or -1
+    xsign = Sgn(rx - lx)
+    ysign = Sgn(y1 - term)
+    Do
+        x = lx
+        If y < 0 Or y >= H Then
+            GoTo skipy
+        End If
+
+        Do
+            bu = getU(x, y)
+            bv = getV(x, y)
+            bw = getW(x, y)
+            depth = 1 / (bu / triZ1 + bv / triZ2 + bw / triZ3)
+            index = (y * W) + x
+            If x < 0 Or x >= W Then
+                GoTo skipx
+            End If
+            If pixelDepth(index) < depth Or pixelTime(index) < currentFrame Then
+                pixelDepth(index) = depth
+                pixelTime(index) = currentFrame
+                Color _RGB(255 * bu / triZ1 * depth, 255 * bv / triZ2 * depth, 255 * bw / triZ3 * depth)
+                'Color _RGB(255, 255, 0)
+                PSet (x, y) 'Set the pixel! (QB64 method, requires 32 bit screen mode)
+            End If
+            skipx:
+            x = x + xsign
+        Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))
+        skipy:
+        y = y + ysign
+        lx = lx + a_m * ysign
+        rx = rx + b_m * ysign
+    Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))
+End Sub
+
+Sub triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)
+    'Find 2d coordinates + depth from original coordinates
+    Dim m
+    triZ1 = projectZ(z1)
+    triX1 = projectX(x1, triZ1)
+    triY1 = projectY(y1, triZ1)
+    triZ2 = projectZ(z2)
+    triX2 = projectX(x2, triZ2)
+    triY2 = projectY(y2, triZ2)
+    triZ3 = projectZ(z3)
+    triX3 = projectX(x3, triZ3)
+    triY3 = projectY(y3, triZ3)
+
+    'If any two y coordinates are equal, then draw a flat triangle
+    If triY1 = triY2 Then
+        Call rasterFlatTriangle(triX3, triY3, triX1, triX2, triY1): GoTo triangleskip
+    ElseIf triY2 = triY3 Then
+        Call rasterFlatTriangle(triX1, triY1, triX2, triX3, triY2): GoTo triangleskip
+    ElseIf triY3 = triY1 Then
+        Call rasterFlatTriangle(triX2, triY2, triX1, triX3, triY1): GoTo triangleskip
+    End If
+    'Find the middle y-coordinate and split the triangle into 2 flat triangles
+    If (triY1 < triY2 And triY1 > triY3) Or (triY1 > triY2 And triY1 < triY3) Then
+        m = triX2 + (triY1 - triY2) * (triX3 - triX2) / (triY3 - triY2)
+        Call rasterFlatTriangle(triX3, triY3, triX1, m, triY1)
+        Call rasterFlatTriangle(triX2, triY2, triX1, m, triY1)
+        GoTo triangleskip
+    ElseIf (triY2 < triY1 And triY2 > triY3) Or (triY2 > triY1 And triY2 < triY3) Then
+        m = triX1 + (triY2 - triY1) * (triX3 - triX1) / (triY3 - triY1)
+        Call rasterFlatTriangle(triX3, triY3, triX2, m, triY2)
+        Call rasterFlatTriangle(triX1, triY1, triX2, m, triY2)
+        GoTo triangleskip
+    ElseIf (triY3 < triY1 And triY3 > triY2) Or (triY3 > triY1 And triY3 < triY2) Then
+        m = triX1 + (triY3 - triY1) * (triX2 - triX1) / (triY2 - triY1)
+        Call rasterFlatTriangle(triX2, triY2, triX3, m, triY3)
+        Call rasterFlatTriangle(triX1, triY1, triX3, m, triY3)
+    End If
+    triangleskip:
+End Sub

@@ -1,0 +1,17 @@
+depthArray = floating point array; size [W*H]
+timeArray = integer array; size [W*H]
+Do every frame
+increment current frame
+Draw triangles and whatnot
+Loop
+For every pixel (x, y) in a triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)
+Where z1, z2, z3 are the depths of their respective vertex
+u = getU(x1, y1, x2, y2, x3, y3, x, y)
+v = getV(x1, y1, x2, y2, x3, y3, x, y)
+w = getW(x1, y1, x2, y2, x3, y3, x, y)
+depth = 1 / (u / z1 + v / z2 + w / z3)
+index = y * W + x
+If depthArray[index] < depth or timeArray[index] < current frame
+depthArray[index] = depth
+timeArray[index] = current frame
+Draw pixel (x, y)

@@ -59,7 +59,8 @@ img.night {
     z-index: 8;
     font-size: 2em;
     filter: drop-shadow(0px 0px 4px #596a99);
-    color: #8db6f3
+    color: #8db6f3;
+    height: 2em;
 }
 
 .btopic.selected {
@@ -83,11 +84,12 @@ img.night {
     /* visibility: hidden; */
     position: absolute;
     right: 0px;
-    left: 600px;
+    left: 750px;
     float: right;
     animation-timing-function: ease-out;
     z-index: 11;
     filter: drop-shadow(0px 0px 4px #596a99);
+    overflow: hidden;
 }
 
 .burger {
@@ -174,6 +176,10 @@ h3.linkpages {
     background-color: rgb(149, 177, 222);
 }
 
+#universal {
+    scroll-behavior: smooth;
+}
+
 .section {
     background: linear-gradient(rgb(124, 182, 229), rgb(114, 142, 224));
     border-radius: 15px;
@@ -236,6 +242,7 @@ h3.linkpages {
 
 html,
 body {
+    scroll-behavior: smooth;
     margin: 0px;
     border: 0;
     display: block;
@@ -353,7 +360,7 @@ h4.night {
 }
 
 a {
-    color: #9696e9;
+    color: rgb(23, 92, 202);
     text-decoration: none;
 }
 

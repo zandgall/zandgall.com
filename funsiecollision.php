@@ -1,66 +1,27 @@
 <html lang="en">
+    <?php 
+$pagetitle = "Zandgall - Funsie Collision";
+$pagedesc = "A set of miscellaenous math and collision JS algorithm";
+include "global/header.php"?>
+
 <script src="Funsies/NOISE/PATH.js"></script>
 <script src="Funsies/PublicMath/PublicMath.js"></script>
+
 <?php 
-$pagetitle = "Zandgall - Funsie Collision";
-$pagedesc = "A set of miscellaneous math and collision JS algorithns";
-include "global/head_.php"?>
+$title = "Shhhh!";
+$subtitle = "This page was a temporary small project";
+include "global/begin.php"?>
 
-<body>
-    <?php 
-    $title = "Flowfield!";
-    $subtitle = "A predecessor to <a href=\"vectorfield\">Vector Field!</a>";
-    include "global/head.php"?>
-        
-            <div style="margin:auto; width: 766; height: 60"> 
-                <canvas class="section" id="Canvas" width=766 height=766 style="position:relative; margin: auto; margin-top:100; margin-bottom: 100; width:766; height:766">CANVAS NOT SUPPORTED</canvas>
-            </div>
-         
-            <script type="text/javascript" src="Funsies/Collision.js">
-            </script>
-        </div>
+<!-- <div style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: min(800px, 80vw); margin-bottom: 2cm"> -->
+    <!-- Parent has no display style, so give it one here, but with a lower opacity. Not applied to parent so that other children won't have a default opacity of 0.92 -->
+    <!-- <div class="section" style="position:absolute; width:100%; height:100%; margin-top: 0; opacity: 0.92"></div> -->
+    <!--STUFF HERE-->
+    <div style="margin:auto; width: 766; height: 60"> 
+        <canvas class="section" id="Canvas" width=766 height=766 style="position:relative; margin: auto; margin-top:100; margin-bottom: 100; width:766; height:766">CANVAS NOT SUPPORTED</canvas>
     </div>
-    
-</body>
+
+    <script type="text/javascript" src="Funsies/Collision.js">
+    </script>
+<!-- </div> -->
+<?php include "global/end.php"?>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

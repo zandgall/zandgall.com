@@ -1,67 +1,20 @@
-
 <html lang="en">
+    <?php 
+$pagetitle = "Zandgall - Boids";
+$pagedesc = "See a classic boids simulation";
+include "global/header.php"?>
+
 <script src="Funsies/victor.js"></script>
 <script src="Funsies/boids/boid.js"></script>
-<?php 
-$pagetitle = "Zandgall - Boids";
-$pagedesc = "See a classic boids simulation!";
-include "global/head_.php"?>
-
 <body>
     <canvas id="Canvas" class="bg" style="z-index: 1; pointer-events: none">Canvas is not supported</canvas>
 
-    <!--    Split everything into a universal div-->
-    <?php 
-    $title = "Boids!";
-    $subtitle = "A classic Bird-Object Simulation!";
-    include "global/head.php"?>
+<?php 
+$title = "Boids!";
+$subtitle = "A classic Bird-Object Simulation!";
+include "global/begin.php"?>
 
-            <script src="Funsies/boids/main.js"></script>
-        </div>
-    </div>
+<script src="Funsies/boids/main.js"></script>
 
-
-</body>
+<?php include "global/end.php"?>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,47 @@
+Dim Shared W As Integer, H As Integer
+W = 720
+H = 480
+bscreen = _NewImage(W, H, 32) '32 Bit color mode
+Screen bscreen
+
+Dim Shared Zm As Double, Za As Double, FOV As Double
+theta = 90 * 3.14159265 / 180 ' 90 is the FOV angle in degrees, theta is in radians
+FOV = 1 / Tan(theta / 2)
+Far = 100
+Near = 0.01
+Zm = -Far / (Far - Near)
+Za = -(Far * Near) / (Far - Near)
+
+currentTime# = 0
+
+Do
+'Cls
+Color _RGB(Cos(currentTime#) * 127 + 127, Sin(currentTime#) * 127 + 127, 127 + 127 * Cos(currentTime# * 2.718281828459 + 0.5))
+Call plot3DPoint(Cos(currentTime#) * 50, Sin(currentTime#) * 50, -100 + 50 * Cos(currentTime# * 2.718281828459 + 0.5))
+currentTime# = currentTime# + 0.001
+_Display
+Loop
+
+Function projectZ (z As Double)
+projectZ = z * Zm + Za
+End Function
+
+Function projectX (x As Double, z As Double)
+projectX = ((x / z) * FOV * 0.5 + 0.5) * W
+End Function
+
+Function projectY (y As Double, z As Double)
+projectY = (y / z) * FOV * W * 0.5 + 0.5 * H
+'Originally, (y/z * FOV * W/H * 0.5 + 0.5)*H, but simplified a little to save a division
+End Function
+
+Sub plot3DPoint (x As Double, y As Double, z As Double)
+If -z < 0 Then GoTo skip ' (-z) is w, checking if it is behind the camera
+zPrime = projectZ(z)
+xPrime = projectX(x, zPrime)
+If xPrime < 0 Or xPrime > W Then GoTo skip 'If x position is outside screen, don't draw
+yPrime = projectY(y, zPrime)
+If yPrime < 0 Or yPrime > H Then GoTo skip 'If y position is outside screen, don't draw
+PSet (xPrime, yPrime) 'Requires QB64 Screen, like at the beginning of this program
+skip:
+End Sub

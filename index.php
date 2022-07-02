@@ -1,18 +1,14 @@
-<!-- <!DOCTYPE html> -->
-<html>
+<html lang="en">
 <?php 
 $pagetitle = "Zandgall - Home";
-$pagedesc = "A website designated for projects created by Zandgall";
-include "global/head_.php"?>
+$pagedesc = "A website dedicated to projects created by Zandgall";
+include "global/header.php"?>
 
-<body data-gr-c-s-loaded="true" style="height:100%; width:100%;">
-
-    <?php 
-    $title = "Welcome to the site!";
-    $subtitle = "A resource for Arvopia and other projects";
-    include "global/head.php"?>
-
-    <h1 class="section basictext" style="width:600px; margin: auto; margin-bottom: 20px">Project Directory</h1>
+<?php 
+$title = "Welcome to the site!";
+$subtitle = "A resource for Arvopia and other projects";
+include "global/begin.php"?>
+<h1 class="section basictext" style="width:600px; margin: auto; margin-bottom: 20px">Project Directory</h1>
     <div class="section" id="projects" style="position: relative; width:900px; height:800px; margin:auto">
         <a href="arvopia">
             <div class="proj" style="width: 33.33%; height:200px;float:left;position:absolute;">
@@ -22,8 +18,7 @@ include "global/head_.php"?>
                 <h1 class="basictext projtitle outlinetext" ,
                     style="font-size:32; margin-top:0;width:100%; height:inherit; position:absolute;">Arvopia</h1>
                 <h1 class="basictext projsubtitle outlinetext" ,
-                    style="font-size:16; margin-top:42; width:100%; height:inherit; position:absolute;">Probably what
-                    you're here for, my longest standing biggest project</h1>
+                    style="font-size:16; margin-top:42; width:100%; height:inherit; position:absolute;">My longest standing project, a little misc platformer game with NPCs, crafting, and combat.</h1>
                 <div class="projoverlay" , style="width:100%; height:inherit; position:absolute;"></div>
             </div>
         </a>
@@ -180,7 +175,27 @@ include "global/head_.php"?>
 
     <div class="section" style="width: 800px; margin: 40px auto 10px auto; position: relative">
         <img width="960"
-            style="image-rendering: pixelated; width: 120%; margin-top: -10%; margin-left: -10%; margin-bottom: 10; position relative"
+            style="image-rendering: pixelated; width: 120%; margin-top: -10%; margin-left: -10%; margin-bottom: 10; position: relative"
+            src="assets/nbtthumb.png" alt="QB64 Cube rasterizer">
+
+        <h1 class="basictext" style="font-size: 48; margin-bottom: -10;">NBT - Lost in the Shadows</h1>
+        <h2 class="basictext">Video essay on a lesser-known file format, and the general principals of File formats in general!</h2>
+
+        <h3 class="basictext">
+            We have many different types of files with many different ways to store data. Some types of files try to be very general in the data you can store. One very popular general-data format is "JSON." However, I believe there are alternatives that do a better job of storing data for programs and devices, and one of these types is "NBT."
+        </h3>
+
+        <a class="section" href="https://youtu.be/12PAtF2Ih_c"
+        style="text-decoration: none; width: 400px; height:100px;  ">
+        <div class="section" style="width:50%; margin-left:25%; height: 90px; position: relative">
+                <h1 class="basictext" style="text-align:center; margin: auto; margin-top: 30px">Watch video</h1>
+        </div>
+        </a>
+    </div>
+
+    <div class="section" style="width: 800px; margin: 40px auto 10px auto; position: relative">
+        <img width="960"
+            style="image-rendering: pixelated; width: 120%; margin-top: -10%; margin-left: -10%; margin-bottom: 10; position: relative"
             src="assets/qb64 3d/thumb.png" alt="QB64 Cube rasterizer">
 
         <h1 class="basictext" style="font-size: 48; margin-bottom: -10;">QBasic 64 3D renderer</h1>
@@ -211,7 +226,7 @@ include "global/head_.php"?>
     <div class="section"
         style="width: 800px; margin: 120px auto 10px 40%; transform: translateX(-50%); position: relative; ">
         <img width=960
-            style="margin-top: -10%; margin-left: -10%; margin-bottom: 10; position: relative; width 120%; height: auto; filter: none;"
+            style="margin-top: -10%; margin-left: -10%; margin-bottom: 10; position: relative; width: 120%; height: auto; filter: none;"
             src="assets/solarglyphs/splash.png" alt="Solar Glyphs">
 
         <h1 class="basictext" style="font-size: 48; font-weight: bold; margin-bottom: -10;">Solar Glyphs</h1>
@@ -245,7 +260,7 @@ include "global/head_.php"?>
     <div class="section"
         style="width: 800px; margin: 120px auto 40px 60%; transform: translateX(-50%); position: relative; ">
         <img width=960
-            style="image-rendering: pixelated; margin-top:-80px; margin-left: -10%; margin-bottom: 10; position: relative; width 120%; height: auto;"
+            style="image-rendering: pixelated; margin-top:-80px; margin-left: -10%; margin-bottom: 10; position: relative; width: 120%; height: auto;"
             src="assets/lants/splash.png" alt="Lants">
 
         <h1 class="basictext" style="font-size: 48; font-weight: bold; margin-bottom: -10;">Lants</h1>
@@ -400,10 +415,6 @@ include "global/head_.php"?>
                 data-show-screen-name="false" data-show-count="false">Follow @zandgall</a>
         </p>
     </div>
-
-    </div>
-    </div>
-
-</body>
-
+</div>
+<?php include "global/end.php"?>
 </html>

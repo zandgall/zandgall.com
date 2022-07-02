@@ -18,7 +18,8 @@
 <?php 
 $pagetitle = "Zandgall - QB64 3D Rasterizer";
 $pagedesc = "Overview of a program that can rasterize 3d graphics, written in QB64, a close recreation of BASIC";
-include "global/head_.php";
+include "global/header.php";
+include "assets/qb64 3d/code/codereader.php";
 function pointer($fromtop, $length, $isfromleft) {
     if($isfromleft) {
         echo "<hr style=\"left:255px; width:",$length,"px; top:",$fromtop,"\"/>";
@@ -45,8 +46,8 @@ function pointer($fromtop, $length, $isfromleft) {
     box-shadow: 0 0 8px 0px #22222c;
 }
 .codeexample {
-    width: 800; 
-    margin: 10px auto 10px auto; 
+    width: 1000; 
+    margin: 10px auto 10px -100px; 
     border: inset 2px #000027; 
     background-color: #000027
 }
@@ -55,11 +56,11 @@ function pointer($fromtop, $length, $isfromleft) {
 }
 </style>
 
-<body>
-    <?php 
-    $title = "Welcome to the site!";
-    $subtitle = "A resource for Arvopia and other projects";
-    include "global/head.php"?>
+
+<?php 
+$title = "Welcome to the site!";
+$subtitle = "A resource for Arvopia and other projects";
+include "global/begin.php"?>
 
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto; font-size: 48">3D Rasterizing in QB64</h1>
     <img src="assets/qb64 3d/thumb.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; float: center; image-rendering: pixelated">
@@ -74,8 +75,9 @@ function pointer($fromtop, $length, $isfromleft) {
         <a class="link basictext" href="#linear">Linear Algebra for the Faint of Heart</a><br>
         <a class="link basictext" href="#depth">Depth is Easier than it Seems</a><br>
         <a class="link basictext" href="#correctionbarycentric">Correcting Barycentric Coordinates with Depth</a><br>
-        <a class="link basictext" href="#extra">Extra Little Detail</a><br>
-        <a class="link basictext" href="#gallery">Gallery</a><br>
+        <a class="link basictext" href="#alltogether">Putting the Code All Together</a><br>
+        <a class="link basictext" href="#optimization">Rotation with Optimization</a><br>
+        <a class="link basictext" href="#extra">Going Forward with Graphics</a><br>
         <a class="link basictext" href="#resources">Further Resources</a><br>
     </h3>
 
@@ -94,20 +96,20 @@ function pointer($fromtop, $length, $isfromleft) {
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;Rasterization in general is the practice of mapping vector graphics to a raster. A raster, like a screen, tends to be a list of colors, or 'pixels'.
         In 3D rasterization, these vector graphics are 3D objects projected onto a 2D plane, usually triangles onto a cross section of a virtual camera's viewport.
-        That is, given a list of 3d objects and attributes of each of those objects, 3d rasterizing is a method that takes in said list and returns an image with
+        That is, given a list of 3d objects and attributes of each of those objects, 3d rasterizing is a method that takes in that information and results in an image with
         a finite resolution.</h3>
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;Projecting and Rasterizing 3D objects is complicated to learn, but becomes simple to execute when understood.
-        There are numerous paths to achieve the desired result, but the paths this project took will be the only ones discussed here.
+        There are numerous paths to achieve the desired result, and the paths this project took will be the only ones discussed here.
         This project, like many others, relies on triangles for their efficiency in rasterization, use of vertex attributes,
         and ability to form any other flat-faced 3d shape. There is a great deal of research and mathematical use behind triangles that makes them an
-        extremely powerful and versitile shape, while still being very efficient.</h3>
+        extremely powerful and versitile shape, while being very efficient to draw to a screen.</h3>
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;But before the project can display a full triangle, it needs to know how to project individual 3d points. It all comes down to some basic calculations,
-        but the origins of which are fascinating. The process will be simplified by cutting out any movement or rotation of the viewport, this will result in a less
-        interactive scene, but it cuts out many intermediate computations that would otherwise be necessary.</h3>
+        but the origins and explanations behind which are fascinating. The process will be simplified by cutting out any unnecessary details and features, this will result in a less
+        interactive scene, but it cuts out many intermediate computations.</h3>
         <h3 class="basictext outlinetext" style="text-align:left">
-        &emsp;After the process knows how to transform and project triangles, it needs to know how to avoid drawing any objects or triangles on top of something that's
+        &emsp;After the process knows how to transform and project triangles, it needs to know how to avoid drawing anything on top of something that's
         supposed to be appear in front of it. Fortunately, it is an extremely simple process to include once the project is already drawing everything pixel-by-pixel.</h3>
         <div class="section" style="position: absolute; left:-300; top:0; width:250">
             <h3 class="basictext outlinetext">Vector graphics consist of shapes and perfect lines, they are infinitely scalable and don't conform to a resolution, unlike images</h3>
@@ -516,19 +518,8 @@ function pointer($fromtop, $length, $isfromleft) {
         </script>
 
         <div class="codeexample">
-        <h3 class="basictext" style="text-align:left; margin: 5px; color:d8d8d8; font-family:basicbit2; font-weight: normal;">
-            LEFT = ORIGIN_X<br>
-            RIGHT = ORIGIN_X<br>
-            <span style="color:#602060">' Left and Right inverse slopes</span><br>
-            LINVSLOPE = (TERMINATOR_LEFT - ORIGIN_X) / (TERMINATOR_Y - ORIGIN_Y)<br>
-            RINVSLOPE = (TERMINATOR_RIGHT - ORIGIN_X) / (TERMINATOR_Y - ORIGIN_Y)<br><br>
-            For Y = ORIGIN_Y To TERMINATOR_Y<br>
-            &emsp;LEFT += LINVSLOPE<br>
-            &emsp;RIGHT += RINVSLOPE<br>
-            &emsp;For X = LEFT To RIGHT<br>
-            &emsp;&emsp;Set Pixel (X, Y)<br>
-            &emsp;NEXT<br>
-            NEXT<br>
+            <h3 class="basictext" style="text-align:left; margin: 5px; color:d8d8d8; font-family:basicbit2; font-weight: normal;">
+                <?php basicCode("assets/qb64 3d/code/triangleEdgeRiding.txt", array("LEFT", "RIGHT", "ORIGIN_X", "ORIGIN_Y")) ?>
             </h3>
         </div>
 
@@ -707,74 +698,12 @@ function pointer($fromtop, $length, $isfromleft) {
 
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
-            Sub flat_triangle(x1, y1, x2, x3, term) <span style="color:#602060">'A is (x1, y1), B is (x2, term), and C is (x3, term)<br></span>
-            <span style="color:#602060">&emsp;'Declare inverse slops from a to b, and a to c<br></span>
-            &emsp;a_m = (x2 - x1) / (term - y1)<br>
-            &emsp;b_m = (x3 - x1) / (term - y1)<br><br>
-
-            <span style="color:#602060">&emsp;'Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
-            &emsp;y = term<br>
-            <span style="color:#602060"><br>&emsp;'Declare the two x values that walk the lines from the terminator to the origin<br></span>
-            &emsp;lx = x2<br>
-            &emsp;rx = x3<br>
-            <span style="color:#602060">&emsp;'Sign dictates whether rx is in the positive-x or negative-x direction from lx<br></span>
-            &emsp;xsign = Sgn(rx-lx)<br>
-            <span style="color:#602060">&emsp;'Same with ysign and y1-terminator<br></span>
-            &emsp;ysign = Sgn(y1-term)<br><br>
-            &emsp;Do<br>
-            <span style="color:#602060">&emsp;&emsp;'Declare the current x position that we will plot a pixel at<br></span>
-            &emsp;&emsp;x = lx<br>
-            &emsp;&emsp;Do<br>
-            &emsp;&emsp;&emsp;PSet (x, y) <span style="color:#602060">'Set the pixel! (QB64 method, requires 32 bit screen mode)</span><br>
-            <span style="color:#602060">&emsp;&emsp;&emsp;'Increment x in the direction of rx<br></span>
-            &emsp;&emsp;&emsp;x = x + xsign<br>
-            <span style="color:#602060">&emsp;&emsp;&emsp;'Do this until the current x surpasses rx.<br>
-            &emsp;&emsp;&emsp;'Sign is checked in order to tell if x surpasses rx when it's greater, or lower<br></span>
-            &emsp;&emsp;Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))<br>
-            <span style="color:#602060">&emsp;&emsp;'Increment y towards the origin<br></span>
-            &emsp;&emsp;y = y + ysign<br>
-            <span style="color:#602060">&emsp;&emsp;'Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b<br></span>
-            &emsp;&emsp;lx = lx + a_m * ysign<br>
-            &emsp;&emsp;rx = rx + b_m * ysign<br>
-            &emsp;Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))<br>
-            End Sub
+                <?php basicCode("assets/qb64 3d/code/flatTriangle.txt", array()) ?>
             </h3>
         </div>
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
-            Sub triangle (x1, y1, x2, y2, x3, y3)<br>
-            <span style="color:#602060">&emsp;'If any two y coordinates are equal, then draw a flat triangle<br></span>
-            &emsp;If y1 = y2 Then<br>
-            &emsp;&emsp;Call flat_triangle(x3, y3, x1, x2, y1): GoTo ft2dskip<br>
-            &emsp;ElseIf y2 = y3 Then<br>
-            &emsp;&emsp;Call flat_triangle(x1, y1, x2, x3, y2): GoTo ft2dskip<br>
-            &emsp;ElseIf y3 = y1 Then<br>
-            &emsp;&emsp;Call flat_triangle(x2, y2, x1, x3, y1): GoTo ft2dskip<br>
-            &emsp;End If<br><br>
-
-            <span style="color:#602060">&emsp;'Find the middle y-coordinate and split the triangle into 2 flat triangles<br>
-            &emsp;'And for each point, find the missing x value opposite of the middle<br>
-            &emsp;'During the explanation, I used the top point to find the missing midpoint.<br>
-            &emsp;'But it can be found even if we interchange the bottom and top point,<br>
-            &emsp;'so we can avoid figuring out which is the top and find the midpoint directly from<br>
-            &emsp;'one of the non-middle points<br><br></span>
-            &emsp;If (y1 < y2 And y1 > y3) Or (y1 > y2 And y1 < y3) Then<br>
-            &emsp;&emsp;m = x2 + (y1 - y2) * (x3 - x2) / (y3 - y2)<br>
-            &emsp;&emsp;Call flat_triangle(x3, y3, x1, m, y1)<br>
-            &emsp;&emsp;Call flat_triangle(x2, y2, x1, m, y1)<br>
-            &emsp;&emsp;GoTo ft2dskip<br>
-            &emsp;ElseIf (y2 < y1 And y2 > y3) Or (y2 > y1 And y2 < y3) Then<br>
-            &emsp;&emsp;m = x1 + (y2 - y1) * (x3 - x1) / (y3 - y1)<br>
-            &emsp;&emsp;Call flat_triangle(x3, y3, x2, m, y2)<br>
-            &emsp;&emsp;Call flat_triangle(x1, y1, x2, m, y2)<br>
-            &emsp;&emsp;GoTo ft2dskip<br>
-            &emsp;ElseIf (y3 < y1 And y3 > y2) Or (y3 > y1 And y3 < y2) Then<br>
-            &emsp;&emsp;m = x1 + (y3 - y1) * (x2 - x1) / (y2 - y1)<br>
-            &emsp;&emsp;Call flat_triangle(x2, y2, x3, m, y3)<br>
-            &emsp;&emsp;Call flat_triangle(x1, y1, x3, m, y3)<br>
-            &emsp;End If<br><br>
-            &emsp;ft2dskip:<br>
-            End Sub<br>
+                <?php basicCode("assets/qb64 3d/code/triangleSub.txt", array("flat_triangle")) ?>
             </h3>
         </div>
 
@@ -871,28 +800,7 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
-            Sub getU(ax, ay, bx, by, cx, cy, px, py)<br>
-            &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5 ' Compute cross product divided by two<br>
-            &emsp;u = (cx - px) * (by - px) - (cy - pc) * (bx - px)<br>
-            &emsp;getU = u / 2*area<br>
-            End Sub<br><br>
-            Sub getV(ax, ay, bx, by, cx, cy, px, py)<br>
-            &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
-            &emsp;v = (ax - px) * (cy - px) - (ay - pc) * (cx - px)<br>
-            &emsp;getV = v / 2*area<br>
-            End Sub<br><br>
-            Sub getW(ax, ay, bx, by, cx, cy, px, py)<br>
-            &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
-            &emsp;w = (bx - px) * (ay - px) - (by - pc) * (ax - px)<br>
-            &emsp;getW = w / 2*area<br>
-            End Sub<br><br>
-            'For every pixel in triangle rasterizing...<br>
-            'x1-2-3 and y1-2-3 are the triangle's vertices, with x and y being the current pixel's coords<br>
-            &emsp;Color _RGB(255 * getU(x1, y1, x2, y2, x3, y3, x, y), <br>
-            &emsp;&emsp;255 * getV(x1, y1, x2, y2, x3, y3, x, y),<br>
-            &emsp;&emsp;255 * getW(x1, y1, x2, y2, x3, y3, x, y))<br>
-            &emsp;PSet(x, y)<br>
-            'Paints the pixels of a triangle Red, green, and blue based on the barycentric coords.
+                <?php basicCode("assets/qb64 3d/code/uvw.txt", array()) ?>
             </h3>
         </div>
 
@@ -1045,42 +953,7 @@ function pointer($fromtop, $length, $isfromleft) {
 
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
-            Dim Shared W as Integer, H as Integer<br>
-            W = 720<br>
-            H = 480<br>
-            screen = _NewImage(W, H, 32) <span style="color:#602060">'32 Bit color mode</span><br>
-            Screen screen<br><br>
-
-            theta = 90 * 3.14159265 / 180 <span style="color:#602060">' 90 is the FOV angle in degrees, theta is in radians</span><br>
-            FOV = cot(theta/2)<br>
-            Far = 100<br>
-            Near = 0.01<br>
-            Zm = -Far/(Far-Near)<br>
-            Za = -Far*Near<br><br>
-
-            Function projectZ(z As Double)<br>
-            &emsp;projectZ = z * Zm + Za<br>
-            End Function<br><br>
-
-
-            Function projectX(x As Double, z As Double)<br>
-            &emsp;projectX = (x/z * FOV * 0.5 + 0.5) * W<br>
-            End Function<br><br>
-
-            Function projectY(y As Double, z As Double)<br>
-            &emsp;projectY = y/z * FOV * W * 0.5 + 0.5 * H<br>
-            &emsp;<span style="color:#602060">'Originally, (y/z * FOV * W/H * 0.5 + 0.5)*H, but simplified a little to save a division</span><br>
-            End Function<br><br>
-
-            Sub plot3DPoint(x As Double, y As Double, z As Double)<br>
-            &emsp;If -z < 0 Then return <span style="color:#602060">' (-z) is w, checking if it is behind the camera</span><br>
-            &emsp;zPrime = projectZ(z)<br>
-            &emsp;xPrime = projectX(x, zPrime)<br>
-            &emsp;If xPrime < 0 || xPrime > W Then return <span style="color:#602060">'If x position is outside screen, don't draw</span><br>
-            &emsp;yPrime = projectY(y, zPrime)<br>
-            &emsp;If yPrime < 0 || yPrime > H Then return <span style="color:#602060">'If y position is outside screen, don't draw</span><br>
-            &emsp;PSet(xPrime, yPrime) <span style="color:#602060">'Requires QB64 Screen, like at the beginning of this program</span><br>
-            End Sub<br>
+                <?php basicCode("assets/qb64 3d/code/projectXYZ.txt", array()) ?>
             </h3>
         </div>
 
@@ -1105,18 +978,7 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin:5px; color:#d8d8d8; font-family: basicbit2; font-weight:normal">
-            depthArray = floating point array with size [W * H]<br>
-            timeArray = integer array with size [W * H]<br>
-            current frame = 0<br>
-            For every frame/every update<br>
-            &emsp;increment current frame<br>
-            &emsp;Draw triangles and whatnot<br>
-            For every pixel in a triangle<br>
-            &emsp;find index of current pixel<br>
-            &emsp;If depthArray[pixel index] < current depth or timeArray[pixel index] < current frame<br>
-            &emsp;&emsp;depthArray[pixel index] = current depth<br>
-            &emsp;&emsp;timeArray[pixel index] = current frame<br>
-            &emsp;&emsp;Draw pixel
+                <?php basicCode("assets/qb64 3d/code/depthFramework.txt", array()) ?>
             </h3>
         </div>
         <h3 class="basictext outlinetext" style="text-align:left">
@@ -1136,7 +998,7 @@ function pointer($fromtop, $length, $isfromleft) {
             intersects eachother. The reasoning for this lies in how depth actually effects coordinates. Each x and y value are divided by their depth,
             this ends in every x and y value not being transformed equally. 
         </h3>
-        <img src="assets/qb64 3d/triangledepth.png" style="width:100"/>
+        <img src="assets/qb64 3d/triangledepth.png" style="width:100%"/>
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;Imagine an ant walking along a triangle, and viewing the projection of that triangle. From the projection's perspective (pun intended)
             the ant travels slower and slower as it gets further away, even if it's physically moving the same speed. This shows us how depth is not linear, and thus why we need to find depth differently
@@ -1145,24 +1007,12 @@ function pointer($fromtop, $length, $isfromleft) {
             <br><br>
             &emsp;We have the ability to take the depth of every pixel, it's time we should compare them. You may find the merging of pixel indexing and depth interpolation in this following code example.
         </h3>
+        <video width="100%" height="auto" autoplay loop muted>
+            <source src="assets/qb64 3d/depth example.mp4"/>
+        </video>
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
-                depthArray = floating point array; size [W*H]<br>
-                timeArray = integer array; size [W*H]<br>
-                every frame<br>
-                &emsp;increment current frame<br>
-                &emsp;Draw triangles and whatnot<br>
-                For every pixel (x, y) in a triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)<br>
-                Where z1, z2, z3 are the depths of their respective vertex<br>
-                &emsp;u = getU(x1, y1, x2, y2, x3, y3, x, y)<br>
-                &emsp;v = getV(x1, y1, x2, y2, x3, y3, x, y)<br>
-                &emsp;w = getW(x1, y1, x2, y2, x3, y3, x, y)<br>
-                &emsp;depth = 1 / (u / z1 + v / z2 + w / z3) <br>
-                &emsp;index = y * W + x<br>
-                &emsp;If depthArray[index] < depth or timeArray[index] < current frame<br>
-                &emsp;&emsp;depthArray[index] = depth<br>
-                &emsp;&emsp;timeArray[index] = current frame<br>
-                &emsp;&emsp;Draw pixel (x, y)
+                <?php basicCode("assets/qb64 3d/code/depthDetail.txt", array()) ?>
             </h3>
         </div>
     </div>
@@ -1191,144 +1041,166 @@ function pointer($fromtop, $length, $isfromleft) {
         </h3>
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
-                For every pixel (x, y) in triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)<br>
-                Where z1,z2,z3 are the depth of each vertex<br>
-                &emsp;u = getU(x1,y1,x2,y2,x3,y3,x,y)<br>
-                &emsp;v = getV(x1,y1,x2,y2,x3,y3,x,y)<br>
-                &emsp;w = getW(x1,y1,x2,y2,x3,y3,x,y)<br>
-                &emsp;depth = 1 / (u/z1 + v/z2 + w/z3)<br>
-                &emsp;color = depth * (RED * u/z1 + GREEN * v/z2 + BLUE * w/z3)<br>
+                <?php basicCode("assets/qb64 3d/code/depthMore.txt", array()) ?>
             </h3>
         </div>
     </div>
-    <h1 class="basictext outlinetext" id="altogether">Putting the Code All Together</h1>
+    <h1 class="basictext outlinetext" id="alltogether">Putting the Code All Together</h1>
     <h3 class="basictext">The following code will work in QB64</h3>
-    <div class="codeexample">
-        <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
-        Dim Shared W as Integer, H as Integer
-        W = 720
-        H = 480
-        screen = _NewImage(W, H, 32)
-        Screen screen<br><br>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+            <?php basicCode("assets/qb64 3d/code/full.txt", array())?>
+            </h3>
+            
+            <h3 class="basictext outlinetext"><a href="assets/qb64 3d/code/full.txt" download>Download Code</a></h3>
+    </div>
+    </div>
+    <div class="" style="position: relative; margin: 10px auto auto auto; width: 800">
+        <img src="assets/qb64 3d/full example output.png" style="width:100%; margin:auto">
+    </div>
+    <h1 class="basictext outlinetext" id="optimization">Rotation and Optimization</h1>
 
-        Dim Shared pixelDepth(W*H) as Double<br>
-        Dim Shared pixelTime(W*H) as Double<br>
-        Dim Shared currentFrame as Integer<br>
-
-        Dim Shared FOV as Double, Zm as Double, Za as Double<br>
-        theta = 90 * 3.14159265 / 180 <span style="color:#602060">' 90 is the FOV angle in degrees, theta is in radians</span><br>
-        FOV = cot(theta/2)<br>
-        Far = 100<br>
-        Near = 0.01<br>
-        Zm = -Far/(Far-Near)<br>
-        Za = -Far*Near<br><br>
-
-        Function projectZ(z As Double)<br>
-        &emsp;projectZ = z * Zm + Za<br>
-        End Function<br><br>
-
-
-        Function projectX(x As Double, z As Double)<br>
-        &emsp;projectX = (x/z * FOV * 0.5 + 0.5) * W<br>
-        End Function<br><br>
-
-        Function projectY(y As Double, z As Double)<br>
-        &emsp;projectY = y/z * FOV * W * 0.5 + 0.5 * H<br>
-        &emsp;<span style="color:#602060">'Originally, (y/z * FOV * W/H * 0.5 + 0.5)*H, but simplified a little to save a division</span><br>
-        End Function<br><br>
-
-        Sub getU(ax, ay, bx, by, cx, cy, px, py)<br>
-        &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5 ' Compute cross product divided by two<br>
-        &emsp;u = (cx - px) * (by - px) - (cy - pc) * (bx - px)<br>
-        &emsp;getU = u / 2*area<br>
-        End Sub<br><br>
-        Sub getV(ax, ay, bx, by, cx, cy, px, py)<br>
-        &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
-        &emsp;v = (ax - px) * (cy - px) - (ay - pc) * (cx - px)<br>
-        &emsp;getV = v / 2*area<br>
-        End Sub<br><br>
-        Sub getW(ax, ay, bx, by, cx, cy, px, py)<br>
-        &emsp;area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5<br>
-        &emsp;w = (bx - px) * (ay - px) - (by - pc) * (ax - px)<br>
-        &emsp;getW = w / 2*area<br>
-        End Sub<br><br>
-
-        Sub rasterFlatTriangle(x1, y1, x2, x3, term, z1, z2, z3)
-        <span style="color:#602060">&emsp;'z1, z2, and z3 are the depths of each point<br></span>
-        <span style="color:#602060">&emsp;'Declare inverse slops from a to b, and a to c<br></span>
-        &emsp;a_m = (x2 - x1) / (term - y1)<br>
-        &emsp;b_m = (x3 - x1) / (term - y1)<br><br>
-
-        <span style="color:#602060">&emsp;'Declare the y "scanline", set it to the terminator and work up to the origin<br></span>
-        &emsp;y = term<br>
-        <span style="color:#602060"><br>&emsp;'Declare the two x values that walk the lines from the terminator to the origin<br></span>
-        &emsp;lx = x2<br>
-        &emsp;rx = x3<br>
-        <span style="color:#602060">&emsp;'Signs dictate which directions to increment in, +1 or -1<br></span>
-        &emsp;xsign = Sgn(rx-lx)<br>
-        &emsp;ysign = Sgn(y1-term)<br><br>
-        &emsp;Do<br>
-        &emsp;&emsp;x = lx<br>
-        &emsp;&emsp;Do<br>
-        &emsp;&emsp;&emsp;u = getU(x1,y1,x2,y2,x3,y3,x,y)<br>
-        &emsp;&emsp;&emsp;v = getV(x1,y1,x2,y2,x3,y3,x,y)<br>
-        &emsp;&emsp;&emsp;w = getW(x1,y1,x2,y2,x3,y3,x,y)<br>
-        &emsp;&emsp;&emsp;depth = 1 / (u/z1 + v/z2 + w/z3)<br>
-        &emsp;&emsp;&emsp;index = y * W + x
-        &emsp;&emsp;&emsp;if pixelDepth(index) < depth Or pixelTime(index) < currentFrame Then<br>
-        &emsp;&emsp;&emsp;&emsp;pixelDepth(index) = depth<br>
-        &emsp;&emsp;&emsp;&emsp;pixelTime(index) = currentFrame<br>
-        &emsp;&emsp;&emsp;&emsp;Color _RGB(255 * u/z1 * depth, 255 * v/z2 * depth, 255 * w/z3 * depth)<br>
-        &emsp;&emsp;&emsp;&emsp;PSet (x, y) <span style="color:#602060">'Set the pixel! (QB64 method, requires 32 bit screen mode)</span><br>
-        &emsp;&emsp;&emsp;End If<br>
-        &emsp;&emsp;&emsp;x = x + xsign<br>
-        &emsp;&emsp;Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))<br>
-        &emsp;&emsp;y = y + ysign<br>
-        &emsp;&emsp;lx = lx + a_m * ysign<br>
-        &emsp;&emsp;rx = rx + b_m * ysign<br>
-        &emsp;Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))<br>
-        End Sub<br><br>
-        Sub triangle (x1, y1, z1, x2, y2, z2, x3, y3, z3)<br>
-            <span style="color:#602060">&emsp;'Find 2d coordinates + depth from original coordinates<br></span>
-            _x1 = projectX(x1, z1)<br>
-            _y1 = projectY(y1, z1)<br>
-            _z1 = -z1;<br>
-            _x1 = projectX(x2, z2)<br>
-            _y1 = projectY(y2, z2)<br>
-            _z1 = -z2;<br>
-            _x3 = projectX(x3, z3)<br>
-            _y3 = projectY(y3, z3)<br>
-            _z3 = -z3;<br><br>
-            <span style="color:#602060">&emsp;'If any two y coordinates are equal, then draw a flat triangle<br></span>
-            &emsp;If _y1 = _y2 Then<br>
-            &emsp;&emsp;Call flat_triangle(_x3, _y3, _x1, _x2, _y1): GoTo ft2dskip<br>
-            &emsp;ElseIf _y2 = _y3 Then<br>
-            &emsp;&emsp;Call flat_triangle(_x1, _y1, _x2, _x3, _y2): GoTo ft2dskip<br>
-            &emsp;ElseIf _y3 = _y1 Then<br>
-            &emsp;&emsp;Call flat_triangle(_x2, _y2, _x1, _x3, _y1): GoTo ft2dskip<br>
-            &emsp;End If<br><br>
-
-            <span style="color:#602060">&emsp;'Find the middle y-coordinate and split the triangle into 2 flat triangles<br>
-            &emsp;If (_y1 < _y2 And _y1 > _y3) Or (_y1 > _y2 And _y1 < _y3) Then<br>
-            &emsp;&emsp;m = _x2 + (_y1 - _y2) * (_x3 - _x2) / (_y3 - _y2)<br>
-            &emsp;&emsp;Call flat_triangle(_x3, _y3, _x1, m, _y1)<br>
-            &emsp;&emsp;Call flat_triangle(_x2, _y2, _x1, m, _y1)<br>
-            &emsp;&emsp;GoTo ft2dskip<br>
-            &emsp;ElseIf (_y2 < _y1 And _y2 > _y3) Or (_y2 > _y1 And _y2 < _y3) Then<br>
-            &emsp;&emsp;m = _x1 + (_y2 - _y1) * (_x3 - _x1) / (_y3 - _y1)<br>
-            &emsp;&emsp;Call flat_triangle(_x3, _y3, _x2, m, _y2)<br>
-            &emsp;&emsp;Call flat_triangle(_x1, _y1, _x2, m, _y2)<br>
-            &emsp;&emsp;GoTo ft2dskip<br>
-            &emsp;ElseIf (_y3 < _y1 And _y3 > _y2) Or (_y3 > _y1 And _y3 < _y2) Then<br>
-            &emsp;&emsp;m = _x1 + (_y3 - _y1) * (_x2 - _x1) / (_y2 - _y1)<br>
-            &emsp;&emsp;Call flat_triangle(_x2, _y2, _x3, m, _y3)<br>
-            &emsp;&emsp;Call flat_triangle(_x1, _y1, _x3, m, _y3)<br>
-            &emsp;End If<br><br>
-            &emsp;ft2dskip:<br>
-            End Sub<br>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;While the given code above will run, it isn't that exciting. There are many adjustments we can make to give more to look at, as well as adjustments we can make to 
+            speed up rendering quite substantially.<br><br>
+            &emsp;Firstly, one of the biggest changes you can make to improve the look of a 3d program is to introduce rotation. Without it you would be stuck moving a still shape across the screen. Rotation is mathematically tedius,
+            but it's much easier to understand with Matrix Transformation. If you take a vector as a point in 3d space, you can rotate it around the origin (0, 0, 0) with the following (column vector) matrices.
+            $$R_x(\theta) = \begin{bmatrix}1 & 0 & 0\\0 & cos\theta & sin\theta\\0 & -sin\theta & cos\theta\end{bmatrix}$$
+            $$R_y(\theta) = \begin{bmatrix}cos\theta & 0 & -sin\theta\\0 & 1 & 0\\sin\theta & 0 & cos\theta\end{bmatrix}$$
+            $$R_z(\theta) = \begin{bmatrix}cos\theta & sin\theta & 0\\-sin\theta & cos\theta & 0\\0 & 0 & 1\end{bmatrix}$$
+            What each of these mean is that, say for \(R_x(\theta)\), given angle \(\theta\), the transformation will rotate a vector around the X axis by this angle. Thus there are 3 axes of rotation, each around
+            their respective 3D axis.<br>
+            <video width="30%" height="auto" autoplay loop muted>
+                <source src="assets/qb64 3d/xrotation.mp4" type="video/mp4" />
+            </video>
+            <video width="30%" height="auto" autoplay loop muted>
+                <source src="assets/qb64 3d/yrotation.mp4" type="video/mp4" />
+            </video>
+            <video width="30%" height="auto" autoplay loop muted>
+                <source src="assets/qb64 3d/zrotation.mp4" type="video/mp4" />
+            </video><br>
+            (In order left-to-right: X-rotation; Y-rotation; Z-rotation)<br><br>
+            <!-- There are 6 ways to "combine" 3 matrices, however this seems to be the most accepted way to combine the three rotational matrices. 
+            Combining matrices is just multiplying them together, however matrix * matrix multiplication is a thick branch on the same tree as vector * matrix multiplication.
+            But if you would like to learn more detail about it, you can check out the 3Blue1Brown video on it <a href="https://youtu.be/XkY2DOUCWMU">here</a>, 
+            or if you'd like to read instead, you can check out <a href="https://en.wikipedia.org/wiki/Matrix_multiplication">the wikipedia page</a>
+            or this <a href="https://www.mathsisfun.com/algebra/matrix-multiplying.html">Math is Fun page</a><-->
+            &emsp;Combining these matrices, you end up with one matrix you can use to rotate any vector in all 3 axes at the same time;
+            $$R_{xyz}(\alpha, \beta, \gamma) = \begin{bmatrix}\cos\alpha \cos\beta & \sin\alpha \cos\beta &  -\sin\beta \\ \cos\alpha \sin\beta \sin\gamma - \sin\alpha \cos\gamma & \sin\alpha \sin\beta \sin\gamma + \cos\alpha \cos\gamma & \cos\beta \sin\gamma \\ \cos\alpha \sin\beta \cos\gamma + \sin\alpha \sin\gamma & \sin\alpha \sin\beta \cos\gamma - \cos\alpha \sin\gamma & \cos\beta \cos\gamma \end{bmatrix}$$
+            &emsp;Where \(\alpha\) is the angle around the Z axis, \(\beta\) around the Y axis, and \(\gamma\) around the X axis. Implementing this into BASIC is rather easy, but it is also rather tedious as there
+            is no easy way to simplify the computations. However, we can make our code a little neater and clean using a <a href="https://www.qbasic.net/en/reference/qb11/Statement/TYPE.htm">User Defined Type (UDT)</a>. Like a struct or class for QBASIC.
+            We will create a UDT called "vector". It will store 4 numbers, for an x, y, z and w coordinate.<br>
+            And as we cannot return more than one number per function, (i.e, we cannot return a UDT in QB64, we can only return a built-in type, like a number or string), we will set a universal vector the be the set "output"
+            of some functions. Given all that, let me show you what our rotation function will look like, with a vector UDT defined.
         </h3>
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+                <?php basicCode("assets/qb64 3d/code/rotation.bas", array("vector")) ?>
+            </h3>
+        </div>
+        <h3 class="basictext outlinetext" style="text-align:left">
+            &emsp;In order to substantially speed up the program, we can think about all the computations happening in our program, and thinking about their necessity and how it
+            might be possible to cut things down. If we look at an outline of the program so far, we can see some critical points where computation is heavy.<br><br>
+            For every triangle:<br>
+            Call projection for every coordinate of all 3 points<br>
+            Find flat triangles<br><br>
+            For each flat triangle:<br>
+            Calculate the slopes of the sides of the flat triangle<br>
+            For every y value in the triangle's y value range:<br>
+            Increment ends of x range by their slopes<br><br>
+            For every pixel in the triangle:<br>
+            Calculate u, v, and w barycentric coordinates<br>
+            Calculate depth (and index) of current pixel<br>
+            Compare to depth and time array<br>
+            Draw pixel<br><br>
+            &emsp;Through this we can see that the heaviest load is during the pixel drawing process. As those calculations are repeated the most often: For every pixel in every triangle.
+            But it seems as though we can't clean it up any further without sacrificing depth testing and barycentric coordinates. However, we can still simplify it using derivatives.<br>
+            &emsp;Take our barycentric coordinate calculations. They seem pretty complicated, however note that the only thing changing in them is the x and the y position of the pixel. And each time the values change, they change by exactly 1.
+            If we use the derivative of these equations in respect to x and y, and depending on what we're incrementing at that current moment, add them to running barycentric coordinate variables.<br>
+            Given our UVW calculations:<br>
+            $$u = \frac{\left(x_3-p_x\right) * \left(y_2-p_y\right) - \left(y_3-p_y\right) * \left(x_2-p_x\right)}{2a}$$
+            $$v = \frac{\left(x_1-p_x\right) * \left(y_3-p_y\right) - \left(y_1-p_y\right) * \left(x_3-p_x\right)}{2a}$$
+            $$w = \frac{\left(x_2-p_x\right) * \left(y_1-p_y\right) - \left(y_2-p_y\right) * \left(x_1-p_x\right)}{2a}$$<br>
+            We find that the derivatives of such in respect to x and y are as follows:<br>
+            $$\frac{du}{dx} = \frac{y_3-y_2}{2a}$$
+            $$\frac{dv}{dx} = \frac{y_1-y_3}{2a}$$
+            $$\frac{dw}{dx} = \frac{y_2-y_1}{2a}$$
+            $$\frac{du}{dy} = \frac{x_2-x_3}{2a}$$
+            $$\frac{dv}{dy} = \frac{x_3-x_1}{2a}$$
+            $$\frac{dw}{dy} = \frac{x_1-x_2}{2a}$$
+            Given that these computations only rely on the positions of the three vertices of the triangle, they can be calculated once per triangle.
+            Whenever we increment x, we must increment u by 'du/dx' times what our change in x is, typically 1, and the same goes for increments in y with 'du/dy'.<br>
+            &emsp;It is possible to take and use the derivative of the depth calculation, however it would be more trouble than it's worth.<br><br>
+            &emsp;Given rotation and our optimization, below you'll find yet another fully working version of this project. Using arrow keys to control rotation.
+        </h3>
+        <div class="codeexample">
+            <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+                <?php basicCode("assets/qb64 3d/code/optimized.bas", array("vector")) ?>
+            </h3>
+            <h3 class="basictext outlinetext"><a href="assets/qb64 3d/code/optimized.bat" download>Download Code</a></h3>
+        </div>
     </div>
 
+    <h1 class="basictext outlinetext" id="extra">Going Forward with Graphics</h1>
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <h3 class="basictext outlinetext" style="text-align:left">
+        &emsp;It's great having a real-time example of 3d graphics built in BASIC, but what if we wanted to do more? If we had no regard for speed, what could we accomplish with what we've made?<br>
+        &emsp;You might recall earlier in this paper when I provided images of cubes displaying textures. How exactly do we make this possible, and what more does that allow us to do?
+        More often than not, barycentric coordinates are used to interpolate between texture coordinates. Unhelpfully denoted with U and V. (Sometimes even W.) This coordinate
+        system is used to represent points on an image, typically spanning from 0 to 1.<br>
+        &emsp;If we give our barycentric coordinates texture coordinates to interpolate, we can take the resulting texture coordinate and use it to grab a color from an image.
+        We can then draw this color directly to the screen, or we can do more processing with it.<br>
+        &emsp;A lot of modern graphics rely on clever usage of textures in order to create different lighting conditions and produce a pixel based on a combination of
+        factors. And this is most commonly done through shaders.<br><br>
+        &emsp;A shader is a routine that is used to transform a set of input values to output values for the sake of 3d rendering. There are different types of shaders:
+        vertex shaders which take in vertex attributes and tells the computer where it should lie on the screen or raster, geometry shaders which take in as much as whole
+        3d shapes and is able to transform existing and create new geometry, and finally fragment shaders, which take in anything given to them and output a color that
+        is pushed to the raster. We have already done the work of the vertex shader, don't really need geometry shaders in our example, and pushing the barycentric 
+        coordinates to the screen is enough to constitute as a fragment shader, but lets push it further.<br>
+        &emsp;Fragment shaders can do as little as giving the same color to every pixel it's assigned to, or as complicated as simulating virtual light to immitate
+        realistic lighting as best it can. All the abilities are covered quite in depth elsewhere, so I won't be digging deeper into lighting. However, take note
+        that QB64 allows you to load textures and access their colors, and these colors can be used to manipulate normal vectors and control how strong lighting effects are.
+        So take this last piece of BASIC code with you, and go learn more about the concepts of 3D rendering.
+    </h3>
+    <div class="codeexample">
+        <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
+            <?php basicCode("assets/qb64 3d/code/full3dEngine.bas", array()) ?>
+        </h3>
+        
+        <h3 class="basictext outlinetext"><a href="assets/qb64 3d/code/full3dEngine.bas" download>Download Code</a></h3>
+    </div>
+    <h3 class="basictext outlinetext" style="text-align: left">The output of the above code, sped up for your viewing pleasure.</h3>
+    <video width="100%" height="auto" autoplay loop muted>
+        <source src="assets/qb64 3d/qb64 3d.mp4" type="video/mp4" />
+    </video>
+    </div>
+
+    <h1 class="basictext outlinetext" id="resources">Reources</h1>
+    <h2 class="basictext outlinetext">
+        For more on the math behind matrices:<br>
+        <a href="https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw">3blue1brown</a><br>
+        <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">A very visual approach to linear algebra</a><br>
+        
+        <br>
+        For more on the math behind 3D Computer graphics:<br>
+        <a href="https://www.scratchapixel.com">Scratchapixel</a><br>
+        <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix
+">An explanation of perspective matrices</a><br>
+        <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/visibility-problem-depth-buffer-depth-interpolation
+">An explanation of correct depth interpolation</a><br>
+        <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/perspective-correct-interpolation-vertex-attributes
+">An explanation of Barycentric coordinate correction based on depth</a><br><br>
+        
+        For more on shading, from simple to complex 3D lighting:<br>
+        <a href="https://learnopengl.com">LearnOpenGL</a><br>
+        While centered on OpenGL, LearnOpenGL provides a lot more details behind plenty of shading techniques<br>
+        <a href="https://learnopengl.com/Lighting/Basic-Lighting">Basic lighting</a><br>
+        <a href="https://learnopengl.com/Lighting/Lighting-maps">Lighting maps</a><br>
+        <a href="https://learnopengl.com/Advanced-Lighting/Normal-Mapping">Normal Mapping</a><br><br>
+        
+    </h2>
     <!--
         Resources:
         3blue1brown cross product: relation to the area of a parallelogram
@@ -1342,10 +1214,11 @@ function pointer($fromtop, $length, $isfromleft) {
 
         Scratchapixel overview for projection matrices
         https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix
+
+        LearnOpengl:
+        A Great resource for learning about shading and 3d graphics. While mainly useful for OpenGL of course, you can adapt a lot of the concepts to make good looking
+        BASIC 3d rendering
+        https://learnopengl.com/
     -->
     <!-- Required to end Universal and "cut" divs -->
-    </div>
-    </div>
-</body>
-
-</html>
+<?php include "global/end.php"?>

@@ -1,29 +1,29 @@
 function createUpgrade(id, name, value, functionPath, img, unlock, locks) {
     var unlockFunc = "";
-    for(let i = 0; i < unlock.length; i++) {
-        // unlockFunc+="$('#"+unlock[i]+"').css('visibility', 'visible'); $('#"+unlock[i]+"').insertAfter('#begin'); ";
-        unlockFunc += "makeVisible('"+unlock[i]+"'); ";
+    for (let i = 0; i < unlock.length; i++) {
+        // unlockFunc+="$('#"+unlock[i]+"').css('display', 'block'); $('#"+unlock[i]+"').insertAfter('#begin'); ";
+        unlockFunc += "makeVisible('" + unlock[i] + "'); ";
     }
-    for(let i = 0; i < locks.length; i++) {
-        unlockFunc+="$('#"+locks[i]+"').remove(); ";
+    for (let i = 0; i < locks.length; i++) {
+        unlockFunc += "$('#" + locks[i] + "').remove(); ";
     }
-    var link = "<a href=\"javascript:if(money>=" + value + "){"+functionPath + "; money-=" + value + "; prm-=" + value+"; $('#"+id+"').remove(); " + unlockFunc + "}\" id = " + id + " style=\"positive:relative;\"><img style=\"position:relative; filter: brightness(1)\" src=\"Funsies/BubbleCannons/upg/"+img+"\" title=\""+name+"\"></a>";
+    var link = "<a href=\"javascript:if(money>=" + value + "){" + functionPath + "; money-=" + value + "; prm-=" + value + "; $('#" + id + "').remove(); " + unlockFunc + "}\" id = " + id + " style=\"positive:relative;\"><img style=\"position:relative; filter: brightness(1)\" src=\"Funsies/BubbleCannons/upg/" + img + "\" title=\"" + name + "\"></a>";
     // @ts-ignore
     $("#upgrade").append(link);
     // @ts-ignore
-    $("#"+id).css("visibility", "hidden");
+    $("#" + id).css("display", "none");
 }
 
 function createPlayerUpgrade(name, description, value, unlock, locks) {
-    createUpgrade(name, description, value, "player.upgrade('"+name+"')", name+".png", unlock, locks);
+    createUpgrade(name, description, value, "player.upgrade('" + name + "')", name + ".png", unlock, locks);
 }
 
 function makeVisible(id) {
-    $("#"+id).css("visibility", "visible");
+    $("#" + id).css("display", "block");
     let children = $("#upgrade").children();
-    for(var i = 0 ; i < children.length; i++) {
-        if($(children[i]).css("visibility")==='hidden') {
-            $(children[i]).before($("#"+id));
+    for (var i = 0; i < children.length; i++) {
+        if ($(children[i]).css("dislay") === 'none') {
+            $(children[i]).before($("#" + id));
             return;
         }
     }
@@ -31,7 +31,7 @@ function makeVisible(id) {
 
 // @ts-ignore
 $(document).ready(function() {
-    createUpgrade("barrel100", "Reloads 25% faster", 100, "player.upgrade('barrel100')", "fasterbarrel.png", ["barrel400", "sharpbullets"], ["fatbarrel", "daredevil", "bomblauncher"]);   
+    createUpgrade("barrel100", "Reloads 25% faster", 100, "player.upgrade('barrel100')", "fasterbarrel.png", ["barrel400", "sharpbullets"], ["fatbarrel", "daredevil", "bomblauncher"]);
     createUpgrade("fatbarrel", "Shoots Cannonballs that can hit through two different tanks", 200, "player.upgrade('fatbarrel')", "fatbarrel.png", ["heavyduty", "highvelocity"], ["barrel100", "daredevil", "bomblauncher"]);
     createUpgrade("bomblauncher", "Spits out bombs instead of bullets", 250, "player.upgrade('bomblauncher')", "bomblauncher.png", ["rockets", "bombtrio"], ["daredevil", "barrel100", "fatbarrel"]);
     createUpgrade("sharpbullets", "Flies faster and pierces 2 health from each tanks", 300, "player.upgrade('sharpbullets')", "sharpbullets.png", ["sharperbullets"], ["fatbarrel", "daredevil", "bomblauncher"]);
@@ -52,7 +52,7 @@ $(document).ready(function() {
     createPlayerUpgrade("thickskin", "Increases health by 10!", 250, [], ["daredevil"]);
     createPlayerUpgrade("fasttreads", "Increases speed by 30%", 150, [], ["daredevil"]);
     createUpgrade("daredevil", "...?", 1610, "player.upgrade('daredevil')", "daredevil.png", [], ["fatbarrel", "barrel100", "sharpbullets", "bomblauncher", "thickskin", "fasttreads"]);
-    
+
     makeVisible("barrel100");
     makeVisible("fatbarrel");
     makeVisible("bomblauncher");

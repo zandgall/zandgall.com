@@ -1,0 +1,12 @@
+depthArray = floating point array with size [W * H]
+timeArray = integer array with size [W * H]
+current frame = 0
+For every frame/every update
+increment current frame
+Draw triangles and whatnot
+For every pixel in a triangle
+find index of current pixel
+If depthArray[pixel index] < current depth or timeArray[pixel index] < current frame
+depthArray[pixel index] = current depth
+timeArray[pixel index] = current frame
+Draw pixel

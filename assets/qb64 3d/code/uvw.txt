@@ -1,0 +1,23 @@
+Function getU(ax, ay, bx, by, cx, cy, px, py)
+area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5 ' Compute cross product divided by two
+u = (cx - px) * (by - px) - (cy - pc) * (bx - px)
+getU = u / 2*area
+End Function
+
+Function getV(ax, ay, bx, by, cx, cy, px, py)
+area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5
+v = (ax - px) * (cy - px) - (ay - pc) * (cx - px)
+getV = v / 2*area
+End Function
+
+Function getW(ax, ay, bx, by, cx, cy, px, py)
+area = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) * 0.5
+w = (bx - px) * (ay - px) - (by - pc) * (ax - px)
+getW = w / 2*area
+End Function
+
+'For every pixel in triangle rasterizing...
+'x1-2-3 and y1-2-3 are the triangle's vertices, with x and y being the current pixel's coords
+Color _RGB(255 * getU(x1, y1, x2, y2, x3, y3, x, y),255 * getV(x1, y1, x2, y2, x3, y3, x, y),255 * getW(x1, y1, x2, y2, x3, y3, x, y))
+PSet(x, y)
+'Paints the pixels of a triangle Red, green, and blue based on the barycentric coords.

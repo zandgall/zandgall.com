@@ -1,0 +1,33 @@
+Sub flat_triangle(x1, y1, x2, x3, term) 'A is (x1, y1), B is (x2, term), and C is (x3, term)
+'Declare inverse slops from a to b, and a to c
+a_m = (x2 - x1) / (term - y1)
+b_m = (x3 - x1) / (term - y1)
+
+'Declare the y "scanline", set it to the terminator and work up to the origin
+y = term
+
+'Declare the two x values that walk the lines from the terminator to the origin
+lx = x2
+rx = x3
+'Sign dictates whether rx is in the positive-x or negative-x direction from lx
+xsign = Sgn(rx-lx)
+'Same with ysign and y1-terminator
+ysign = Sgn(y1-term)
+
+Do
+'Declare the current x position that we will plot a pixel at
+x = lx
+Do
+PSet (x, y) 'Set the pixel! (QB64 method, requires 32 bit screen mode)
+'Increment x in the direction of rx
+x = x + xsign
+'Do this until the current x surpasses rx.
+'Sign is checked in order to tell if x surpasses rx when it's greater, or lower
+Loop While ((xsign = 1 And x < rx) Or (xsign = -1 And x > rx))
+'Increment y towards the origin
+y = y + ysign
+'Travel lx down line a, (x2, bottom)->(x1, y1), and rx down line b
+lx = lx + a_m * ysign
+rx = rx + b_m * ysign
+Loop While ((ysign = 1 And y < y1) Or (ysign = -1 And y > y1))
+End Sub

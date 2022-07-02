@@ -1,14 +1,35 @@
-<div id = "cut" style="height: 100vh; width: 100%; top: 0; left: 0; overflow: hidden;">
-<div id="universal" class = "parallax">
+<!-- <div class="p-container">
+    
+</div> -->
 
-<div style="left: 128px; top: 100px; position: absolute; width: 100; height: 100; visibility: visibe; overflow: hidden; -webkit-transform-style: preserve-3d; transform-style: preserve-3d; -webkit-transform: translateZ(10px); transform: translateZ(10px); z-index: 9;">
+<div id = "cut" style="height:100vh; top: 0; left: 0; overflow: hidden;">
+<div id="universal" class = "p-container" style="height: 100vh; overflow-y: scroll;">
+<div id="actual hider hehe" style="height:4000px; width:100vw; transform-style: preserve-3d; display: none">
+    <div id="parallax-hider" style="height:0; transform-style: preserve-3d; visibility: visible">
+        <div class="p-section back" id="one" style="max-height: 2000px; width: 100vw; overflow-y: visible; visibility: visible">
+            <img class="bg" style="transform: translateZ(-40px) translateY(80vh) translateX(-810px) scale(3); height: 1161px; width:auto; visibility: visible" src = "assets/background/bg2.png">
+        </div> <!-- filter: blur(2px) brightness(0.5) saturate(1.5) hue-rotate(-20deg) -->
+        <!-- <div class="p-section back" id="two" style="max-height: 1000px; top:0">
+            <img class="bg" style="transform: translateZ(-20px) translateY(90vh) scale(3); filter: blur(1px); height: 1161px; width:3240px" src = "assets/background/bg1.png">
+        </div>
+        <div class="p-section back" id="three" style="max-height: 1000px; top:0">
+            <img class="bg" style="transform: translateZ(-10px) translateY(100vh) scale(3); filter: brightness(1.1) saturate(1.0) hue-rotate(10deg) contrast(0.9); height: 522px; width:3240px" src = "assets/background/bg0.png">
+        </div>
+        <div class="p-section back" id="three" style="max-height: 1000px; top:0">
+            <img class="bg" style="transform: translateZ(-10px) translateY(5701px) scale(3); filter: brightness(1.1) saturate(1.0) hue-rotate(10deg) contrast(0.9); width:3570px; height:auto" src = "assets/background/BGImg - orig.png">
+        </div> -->
+    </div>
+</div>
+<!-- <script -->
+<div style="left: 128px; top: 100px; position: absolute; width: 100; height: 100; visibility: visible; overflow: hidden; z-index: 9;">
     <img class="sunmoon" style="height:32px; width: 32px; left:32px; top:32px; filter: drop-shadow(0px 0px 10px rgba(255, 255, 200, 0.5))" value="sun" onclick="togglenight()" src="assets/background/Sun.png" alt="Sun">
 </div>
 
-<div class = "parallax__group" style="margin: 0; position: absolute; width: inherit;">
-    <div class = "parallax__layer parallax__layer--deep" style="top: -1080px; left:-100vw; width:inherit; height: inherit">
+<!-- <div class = "" style="perspective:10px; height:100vh; margin: 0; position: relative; width: inherit;">
+    <div class = "" style="transform-style: preserve-3d; height: 100vh; width: 100%;">
         <div class = "parallaxgradient"></div>
-        <img class = "parallaximg parallax__layer--deep" src = "assets/background/bg2.png" alt="hills" style="top:240px; position:absolute; image-rendering: pixelated; object-fit: cover; height: 4644; object-position: -100vw 0">
+        <img class = "parallaximg" src = "assets/background/bg2.png" alt="hills" style="top:240px; position:relative; image-rendering: pixelated; object-fit: cover; height: 4644; object-position: -100vw 0">
+        <img class = "parallaximg" src = "assets/background/bg2.png" alt="hills" style="position:absolute; image-rendering: pixelated; transform: translateZ(10px) scale(2)">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud1.png' style="height: 144" alt="cloud">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud2.png' style="height: 144" alt="cloud">
         <img class = 'paracloud pacl0' src = 'assets/background/Cloud3.png' style="height: 144" alt="cloud">
@@ -46,7 +67,7 @@
         <div class = "parallaxgradient"></div>
     </div>
     <div class = "parallax__layer parallax__layer--deep nightoverlay" style="left: -100vw; top: -100vh; z-index: 6;"></div>
-</div>
+</div> -->
 
 <script type="application/javascript">
     function f(x) {
@@ -258,14 +279,16 @@
     }
 </script>
 
-<h1 class="title" style="text-align: center; margin: auto; position:relative;"><a href=".." class="title"style="text-decoration: none; text-align: center; margin: auto">Zandgall.com</a></h1>
 
-<!-- <div class = "splitter"></div> -->
+<div class = "splitter"></div>
 
+<div id="move everything back up?" style="margin-top:0vh; height: auto">
+    <h1 class="title" style="text-align: center; margin: auto; position:relative;"><a href=".." class="title"style="text-decoration: none; text-align: center; margin: auto">Zandgall.com</a></h1>
 <?php
     echo "<h1 style='font-family: monospace;margin: 0;text-align: center;position: relative;'>" . $title . "</h1>";
     echo "<h1 style='font-family: monospace;margin: 0;text-align: center;font-style: italic;font-size: 14;position: relative;'>" . $subtitle . "</h1>";
 ?>
+
 
 <div style="position: relative;margin: auto; margin-top:-110px; width: 800px; height:200px; float: right">
     <a href="#" class="burger" onclick="openmenu()"><div id="hamburger" style="width:50px; height:50px; position: absolute; top:25px; left: 725px">
@@ -317,7 +340,7 @@
         <a class="linkpages" href="arvopiadownload"><h3 class="basictext link linkpages">Arvopia Downloads</h3></a>
         <a class="linkpages" href="arvopiabuilddownload"><h3 class="basictext link linkpages">Beta Downloads</h3></a>
         <a class="linkpages" href="music"><h3 class="basictext link linkpages">Music</h3></a>
-        <!-- <a class="linkpages" href="resume"><h3 class="basictext link linkpages">Resume</h3></a> -->
+        <!-- <a class="linkpages" href="resume"><h3 class="basictext link linkpages">Resume</h3></a>  -->
     </div>
     <div class="bmenu bholder">
         <a class="linkpages" href="#" onclick="killclouds()"><h3 class="basictext link linkpages">Toggle Clouds</h3></a>

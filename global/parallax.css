@@ -1,11 +1,22 @@
 .parallax {
     overflow-x: hidden;
     overflow-y: auto;
-    -webkit-perspective: 100px;
-    perspective: 100px;
-    width: 100%;
-    height: 100vh;
+    transform-style: preserve-3d;
+    /* -webkit-perspective: 10px; */
+    /* perspective: 10px; */
+    /* width: 100%; */
+    /* height: 100vh; */
     /* overflow: hidden; */
+}
+
+.p {
+    transform: translateZ(-10px) scale(2);
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .parallax__group {
@@ -14,11 +25,14 @@
     height: 100vh; */
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .parallax__layer {
     position: absolute;
+    perspective: inherit;
+    transform-style: preserve-3d;
     top: 0;
     left: 0;
     right: 0;
@@ -27,7 +41,7 @@
 
 .parallax__layer--fore {
     -webkit-transform: translateZ(10px);
-    transform: translateZ(10px);
+    transform: translateZ(10px) scale(0.5);
     z-index: 5;
 }
 
@@ -37,13 +51,13 @@
 
 .parallax__layer--back {
     -webkit-transform: translateZ(-100px);
-    transform: translateZ(-100px);
+    transform: translateZ(-100px) scale(2);
     z-index: 3;
 }
 
 .parallax__layer--deep {
     -webkit-transform: translateZ(-200px);
-    transform: translateZ(-200px);
+    transform: translateZ(-200px) scale(4);
     z-index: 2;
 }
 
@@ -63,8 +77,8 @@
 
 .parallaximg {
     opacity: 1;
-    -webkit-transform: translate(-33.33%, 0);
-    transform: translate(-33.33%, 0);
+    /* -webkit-transform: translate(-33.33%, 0); */
+    /* transform: translate(-33.33%, 0); */
 }
 
 img.paracloud {
@@ -78,7 +92,22 @@ img.paracloud {
     opacity: 0.5;
 }
 
+img.cloud {
+    filter: none;
+    object-fit: cover;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    image-rendering: pixelated;
+    height: 54;
+    opacity: 0.5;
+}
+
 img.paracloud.night {
+    opacity: 0.3
+}
+
+img.cloud.night {
     opacity: 0.3
 }
 

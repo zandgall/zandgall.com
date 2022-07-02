@@ -1,0 +1,36 @@
+Sub triangle (x1, y1, x2, y2, x3, y3)
+Dim m As Double
+'If any two y coordinates are equal, then draw a flat triangle
+If y1 = y2 Then
+Call flat_triangle(x3, y3, x1, x2, y1): GoTo ft2dskip
+ElseIf y2 = y3 Then
+Call flat_triangle(x1, y1, x2, x3, y2): GoTo ft2dskip
+ElseIf y3 = y1 Then
+Call flat_triangle(x2, y2, x1, x3, y1): GoTo ft2dskip
+End If
+
+'Find the middle y-coordinate and split the triangle into 2 flat triangles
+'And for each point, find the missing x value opposite of the middle
+'During the explanation, I used the top point to find the missing midpoint.
+'But it can be found even if we interchange the bottom and top point,
+'so we can avoid figuring out which is the top and find the midpoint directly from
+'one of the non-middle points
+
+If (y1 < y2 And y1 > y3) Or (y1 > y2 And y1 < y3) Then
+m = x2 + (y1 - y2) * (x3 - x2) / (y3 - y2)
+Call flat_triangle(x3, y3, x1, m, y1)
+Call flat_triangle(x2, y2, x1, m, y1)
+GoTo ft2dskip
+ElseIf (y2 < y1 And y2 > y3) Or (y2 > y1 And y2 < y3) Then
+m = x1 + (y2 - y1) * (x3 - x1) / (y3 - y1)
+Call flat_triangle(x3, y3, x2, m, y2)
+Call flat_triangle(x1, y1, x2, m, y2)
+GoTo ft2dskip
+ElseIf (y3 < y1 And y3 > y2) Or (y3 > y1 And y3 < y2) Then
+m = x1 + (y3 - y1) * (x2 - x1) / (y2 - y1)
+Call flat_triangle(x2, y2, x3, m, y3)
+Call flat_triangle(x1, y1, x3, m, y3)
+End If
+
+ft2dskip:
+End Sub
