@@ -98,11 +98,11 @@ function move(ev) {
     x = ev.pageX-can.offsetLeft;
     y = ev.pageY-can.offsetTop;
     
-    mouseX=x;
-    mouseY=y;
+    bc_mouseX=x;
+    bc_mouseY=y;
 }
 function click(e) {
-    console.log(mouseX, mouseY, e.button);
+    console.log(bc_mouseX, bc_mouseY, e.button);
     
     mouseClicked=true;
 }   

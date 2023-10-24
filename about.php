@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <?php 
 $pagetitle = "Zandgall - About";
@@ -14,12 +15,12 @@ include "global/begin.php"?>
     <div class="section" style="position:absolute; width:100%; height:100%; margin-top: 0; opacity: 0.92"></div>
     <!--STUFF HERE-->
     <!-- General questions, who what when how why? -->
-    <h1 class="basictext outlinetext" style="font-size: 44">General</h1>
+    <h1 class="basictext outlinetext" style="font-size: 32pt">General</h1>
     <h1 class="basictext">Who are you?</h1>
     <h3 class="basictext">I'm Zander Gall, a young-yet-aging tech nerd who's focused on programming. I have a whole host of projects that anyone can take a look at.</h3>
     <h1 class="basictext">What do you do?</h1>
     <h3 class="basictext">
-        Like I said above, I spend my time programming, but I also make <a href="music">music</a>.
+        Like I said above, I spend my time programming, but I also make <a href="music">music</a> and should be making <a href="https://www.youtube.com/channel/UCYsx5ufS_hoJlfYH9pQKK9A">video essays</a>.
     </h3>
     <h1 class="basictext">How do you do that?</h1>
     <h3 class="basictext">
@@ -37,7 +38,7 @@ include "global/begin.php"?>
         make something big. So I started work on a little game called "Arvopia."
     </h3>
     <!-- Arvopia -->
-    <h1 class="basictext outlinetext" style="font-size: 44">Arvopia</h1>
+    <h1 class="basictext outlinetext" style="font-size: 32pt">Arvopia</h1>
     <h1 class="basictext">What's Arvopia?</h1>
     <h3 class="basictext">
         Arvopia was my first big project way back in November 2017. It was a little sandbox-esque game, with some
@@ -55,7 +56,7 @@ include "global/begin.php"?>
         completely rewrite it from scratch anyways.
     </h3>
     <!-- Project managing -->
-    <h1 class="basictext outlinetext" style="font-size: 44">Other projects</h1>
+    <h1 class="basictext outlinetext" style="font-size: 32pt">Other projects</h1>
     <h1 class="basictext">What else do you work on?</h1>
     <h3 class="basictext">
         I have a whole host of projects available to look at from my <a href="index">homepage</a> as well as by looking through the list of projects and resources you can find in the menu that you can open at the top-right corner.
@@ -64,7 +65,7 @@ include "global/begin.php"?>
     <h1 class="basictext">Which is your best project?</h1>
     <h3 class="basictext">
         I'm working on a lot of projects every once in a while, and I'm proud of most of them. But out of all the projects I've posted on this website, I'd say that 
-        Arvopia and Schute! are the two most worth checking out. And although it isn't really a published game or even tool, my recent <a href="qb64 3d">interactive paper on 3D rendering
+        Arvopia and Schute! are the two most worth checking out. And although it isn't really a published game or even tool, my recent <a href="qb64%203d">interactive paper on 3D rendering
         in BASIC</a> is definitely one of my best pieces of work.
     </h3>
     <h1 class="basictext">Which is the worst?</h1>
@@ -75,7 +76,7 @@ include "global/begin.php"?>
         as I call them, that aren't really worth playing around with. They were intended to evolve to become sort of a modding toolset, but as Arvopia was dropped they don't really serve a purpose.
     </h3>
     <!-- Resources -->
-    <h1 class="basictext outlinetext" style="font-size: 44">Elsewhere</h1>
+    <h1 class="basictext outlinetext" style="font-size: 32pt">Elsewhere</h1>
     <h1 class="basictext">Where else can you be found?</h1>
     <h3 class="basictext">
         I am semi-active on twitter: @Zandgall, very active on Discord: zandgall#4007, and you can hear my music on

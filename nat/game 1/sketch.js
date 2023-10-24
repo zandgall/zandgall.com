@@ -74,7 +74,7 @@ function draw() {
     line(100, 500, 700, 700);
     line(700, 700, 0, 700);
 
-    mouseAngle = Math.atan2(y - mouseY, x - mouseX);
+    mouseAngle = Math.atan2(y - bc_mouseY, x - bc_mouseX);
 
 
     strokeWeight(1);

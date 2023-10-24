@@ -1,5 +1,5 @@
 // @ts-nocheck
-var perlin = document.getElementById("Perlin");
+var perlin_canvas = document.getElementById("Perlin");
 
 var zOff = 0;
 var cols = 50, rows = 50, scl = 10;
@@ -12,7 +12,7 @@ var PARTICLEALPHA=0.002, PARTICLERED=0, PARTICLEGREEN=150, PARTICLEBLUE=205, PAR
 var field = [];
 
 function initFlow() {
-    window.setInterval(drawFlow, 100);
+    window.setInterval(drawFlow, 13);
     window.setInterval(displayTracers, 500/PARTICLESPEED);
     console.log("INITIATE");
     
@@ -20,23 +20,23 @@ function initFlow() {
     field = new Array(cols*rows);
     
     
-    cols = Math.floor(perlin.width/scl);
-    rows = Math.floor(perlin.height/scl);
+    cols = Math.floor(perlin_canvas.width/scl);
+    rows = Math.floor(perlin_canvas.height/scl);
     
     for(var i = 0; i < numParticles; i++) {
         tracers[i]=new Particle(Math.random()*cols*scl, Math.random()*rows*scl);
     }
     
     
-    var c = perlin.getContext("2d");
-    c.clearRect(0, 0, perlin.width, perlin.height);
+    var c = perlin_canvas.getContext("2d");
+    c.clearRect(0, 0, perlin_canvas.width, perlin_canvas.height);
     c.fillStyle=rgb((PARTICLERED)/10, (PARTICLEGREEN)/10, (PARTICLEBLUE)/10);
-    c.fillRect(0, 0, perlin.width, perlin.height);
+    c.fillRect(0, 0, perlin_canvas.width, perlin_canvas.height);
 }
 
 function drawFlow(){
     
-    var c = perlin.getContext("2d");
+    var c = perlin_canvas.getContext("2d");
     c.globalAlpha=PARTICLEALPHA/10;
     c.imageSmoothingEnabled=true;
      
@@ -61,7 +61,7 @@ function drawFlow(){
 }
 
 function displayTracers() {
-    var c = perlin.getContext("2d");
+    var c = perlin_canvas.getContext("2d");
     c.globalAlpha=PARTICLEALPHA;
     c.imageSmoothingEnabled=true;
     c.lineWidth=COVERAGE;
@@ -73,7 +73,7 @@ function displayTracers() {
 }
 
 function drawPerlin() {
-    var c = perlin.getContext("2d");
+    var c = perlin_canvas.getContext("2d");
     
     c.clearRect(0, 0, can.width, can.height);
 }

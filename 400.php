@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <?php 
 $pagetitle = "Zandgall - 400";
@@ -15,5 +16,5 @@ include "global/begin.php"?>
     <h2 class="basictext outlinetext">The browser (or proxy) sent an invalid request, if you think that's a mistake then please contact zandgall@zandgall.com.</h2>
 
 </div>
-<?php include "global/end.php"?>
+<?php include "global/end.php"?> 
 </html>

@@ -332,11 +332,11 @@
         <a class="linkpages" href="fallingmine"><h3 class="basictext link linkpages">Falling Mine</h3></a>
         <a class="linkpages" href="mapdecoder"><h3 class="basictext link linkpages">Map decoder </h3></a>
         <a class="linkpages" href="normalbuddy"><h3 class="basictext link linkpages">Normal Buddy</h3></a>
-        <a class="linkpages" href="miscarvopiatools"><h3 class="basictext link linkpages">Misc Arvopia Tools</h3></a>
+        <a class="linkpages" href="arvopia/misctools"><h3 class="basictext link linkpages">Misc Arvopia Tools</h3></a>
     </div>
     <div class="bmenu bholder">
         <a class="linkpages" href="funstuff"><h3 class="basictext link linkpages">Fun stuff</h3></a>
-        <a class="linkpages" href="otherdownload"><h3 class="basictext link linkpages">Project Downloads</h3></a>
+        <a class="linkpages" href="download"><h3 class="basictext link linkpages">Project Downloads</h3></a>
         <a class="linkpages" href="arvopiadownload"><h3 class="basictext link linkpages">Arvopia Downloads</h3></a>
         <a class="linkpages" href="arvopiabuilddownload"><h3 class="basictext link linkpages">Beta Downloads</h3></a>
         <a class="linkpages" href="music"><h3 class="basictext link linkpages">Music</h3></a>

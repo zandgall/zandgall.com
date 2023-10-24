@@ -17,12 +17,26 @@ img.night {
     opacity: 0.7;
 }
 
-.projimg[hovered="false"] {
-    filter: none;
+.section > h1 {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
 }
-
-.projimg[hovered="true"] {
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.7));
+.section > h2 {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
+}
+.section > h3 {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
+}
+.section > h4 {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
+}
+.section > h5 {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
+}
+.section > h6 {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
+}
+.section > p {
+    text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
 }
 
 .bline {
@@ -36,7 +50,7 @@ img.night {
     margin: auto;
     height: auto;
     position: relative;
-    top: 10;
+    top: 10px;
     z-index: 2;
     color: rgb(149, 177, 222);
     filter: drop-shadow(0px 0px 4px #596a99);
@@ -55,7 +69,7 @@ img.night {
     position: relative;
     margin: auto;
     height: auto;
-    top: 10;
+    top: 10px;
     z-index: 8;
     font-size: 2em;
     filter: drop-shadow(0px 0px 4px #596a99);
@@ -111,7 +125,7 @@ a.linkpages {
 }
 
 h3.linkpages {
-    z-index: 11;
+    z-index: 110;
     float: right;
     text-align: right;
     font-size: 1.5em;
@@ -124,22 +138,23 @@ h3.linkpages {
     height: 0px;
     float: right;
     overflow: hidden;
+    z-index: 20;
 }
 
 .title {
     font-family: 'Signika', serif;
-    font-size: 48;
+    font-size: 32pt;
     color: #00d8ff;
     text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000;
 }
 
 .title.night {
-    color: #e3e3e6
+    color: rgb(234, 232, 248)
 }
 
 .splitter {
-    width: 600;
-    height: 2;
+    width: 600px;
+    height: 2px;
     position: relative;
     margin-left: auto;
     margin-right: auto;
@@ -147,7 +162,7 @@ h3.linkpages {
 }
 
 .linktop {
-    width: 600;
+    width: 600px;
     height: 3;
     position: relative;
     margin-left: auto;
@@ -162,7 +177,7 @@ h3.linkpages {
 }
 
 .linkbottom {
-    width: 600;
+    width: 600px;
     height: 3;
     position: relative;
     margin-left: auto;
@@ -181,14 +196,14 @@ h3.linkpages {
 }
 
 .section {
-    background: linear-gradient(rgb(124, 182, 229), rgb(114, 142, 224));
+    background: linear-gradient(rgba(174, 212, 243, 0.8), rgba(177, 194, 243, 0.9));
     border-radius: 15px;
     border: 2px solid rgba(59, 99, 163, 0.5);
     box-shadow: 0 0 8px 0px #22222c;
 }
 
 .section.night {
-    background: linear-gradient(rgb(56, 56, 78), rgb(44, 46, 64));
+    background: linear-gradient(rgba(56, 56, 78, 0.8), rgba(44, 46, 64, 0.9));
     border-radius: 15px;
     border: 2px solid rgba(3, 9, 52, 0.5);
     box-shadow: 0 0 8px 0px #22222c;
@@ -196,6 +211,8 @@ h3.linkpages {
 
 .bg {
     position: fixed;
+    top:0;
+    left:0;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -212,32 +229,23 @@ h3.linkpages {
 
 .linkpages {
     text-decoration: none;
-    position: relative;
+    /* position: relative; */
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 18;
+    font-size: 12pt;
     text-align: center;
     margin: auto;
     display: flex;
 }
 
-.outlinetext {
-    color: rgb(244, 242, 255);
-    text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000
-}
 
 .outlinetext {
-    color: rgb(234, 232, 248)
+    color: #eae8f8;
+    text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000 !important
 }
 
 .outlinedtext {
     text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000;
-}
-
-.projsubtitle {
-    color: rgb(234, 232, 248);
-    text-shadow: -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 2.5px 2.5px 0 #000, 0px -2.5px 0 #000, 0px 2.5px 0 #000, -2.5px 0px 0 #000, 2.5px 0px 0 #000;
-    /* text-shadow: 0px 0px -4px black; */
 }
 
 html,
@@ -251,6 +259,10 @@ body {
     width: 100%;
     background: linear-gradient(rgb(47, 180, 255), rgb(164, 229, 255));
     background-repeat: no-repeat;
+}
+
+html {
+    height:100%;
 }
 
 body.night {
@@ -340,7 +352,7 @@ h2 {
 }
 
 h2.night {
-    color: #e3e3e6;
+    color: rgb(234, 232, 248);
 }
 
 h3 {
@@ -348,7 +360,7 @@ h3 {
 }
 
 h3.night {
-    color: #e3e3e6;
+    color: rgb(234, 232, 248);
 }
 
 h4 {
@@ -356,7 +368,7 @@ h4 {
 }
 
 h4.night {
-    color: #e3e3e6
+    color: rgb(234, 232, 248)
 }
 
 a {
@@ -384,5 +396,43 @@ a.night {
     color: rgb(190, 220, 255)
 }
 
+.projimg {
+    width:inherit; 
+    height:inherit; 
+    position:absolute; 
+    object-fit: cover
+}
+
+.projimg[hovered="false"] {
+    filter: none;
+}
+
+.projimg[hovered="true"] {
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.7));
+}
+
+.projtitle {
+    font-size:24pt; 
+    margin-top:0;
+    width:inherit; 
+    height:inherit; 
+    position:absolute;
+}
+
+.projsubtitle{ 
+    font-size:12pt;
+    margin-top:30pt; 
+    width:inherit; 
+    height:inherit; 
+    position:absolute;
+    color: rgb(234, 232, 248);
+    text-shadow: -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 2.5px 2.5px 0 #000, 0px -2.5px 0 #000, 0px 2.5px 0 #000, -2.5px 0px 0 #000, 2.5px 0px 0 #000;
+}
+
+.projoverlay {
+    width:inherit; 
+    height:inherit; 
+    position:absolute;
+}
 
 /* </style> */

@@ -76,7 +76,7 @@ class insect {
   }
 
   runAiMove() {
-    this.angle = Math.atan2(mouseY - this.y, mouseX - this.x)+Math.PI;
+    this.angle = Math.atan2(bc_mouseY - this.y, bc_mouseX - this.x)+Math.PI;
     // Move in the angle you're facing
     this.xv+=Math.cos(this.angle);
     this.yv+=Math.sin(this.angle);
@@ -91,7 +91,7 @@ class insect {
    * @param {insect[]} insects 
    */
   tick(insects) {
-    if((mouseX-this.x)*(mouseX-this.x)+(mouseY-this.y)*(mouseY-this.y)<(this.chased ? 10000 : 2500)){
+    if((bc_mouseX-this.x)*(bc_mouseX-this.x)+(bc_mouseY-this.y)*(bc_mouseY-this.y)<(this.chased ? 10000 : 2500)){
       this.chased = true;
       this.flying = true;
       this.runAiMove();

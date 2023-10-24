@@ -156,16 +156,18 @@ function draw(){
     
     //DO STUFF HERE
     kode.set();
+
+    console.log(scale);
     
     if(kode.arrowup||kode.w){
         if(kode.ctrl){
-            scaleVel+=Math.min(1/scale, 1);
+            scaleVel+=Math.min(0.001*scale, 1);
         }else{
             offYVel+=scale/10;
         }
     } else if(kode.arrowdown||kode.s){
         if(kode.ctrl){
-            scaleVel-=1/scale;
+            scaleVel-=Math.min(0.001*scale, 1);
         }else{
             offYVel-=scale/10;
         }

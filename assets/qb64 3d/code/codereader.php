@@ -65,6 +65,7 @@ function basicCode($filepath, $keywords){
                         array_push($variables, strip($words[$i]));
                 }
             }
+            $words[$i] = str_replace("<", "&lt;", $words[$i]);
             if(in_array(strip($words[$i]), $keywords)) {
                 echo "<span style=\"color: #00d0ff\">".$words[$i]." </span>";
             } else if(substr($words[$i], 0, 1) == "'" || $isComment) {
@@ -84,7 +85,7 @@ function basicCode($filepath, $keywords){
                 echo "<span style=\"color: #e6c467\">".$words[$i]." </span>";
             } else if(is_numeric(strip($words[$i]))) {
                 echo "<span style=\"color: #d8624e\">".$words[$i]." </span>";
-            } else {
+            } else if ($words[$i]!="<") {
                 if($functionLine && strip($words[$i])==$words[$i]) {
                     array_push($functionParameters, strip($words[$i]));
                     echo "<span style=\"color: #e6c467\">".$words[$i]." </span>";

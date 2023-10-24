@@ -1,5 +1,5 @@
 // @ts-nocheck
-var perlin = document.getElementById("Perlin");
+var perlin_canvas = document.getElementById("Perlin");
 
 var zOff = 0;
 var cols = 400, rows = 400, scl = 2;
@@ -14,33 +14,32 @@ var coolant = 0.06, coolantOffset = 0.01, bufferStart = 2;
 //"rgb(255, 137, 205)"
 
 function initFire() {
-    
-    window.setInterval(drawFire, 100);
-    console.log("INITIATE");
-    
     initBuffers();
     coolingMap = [];
     updateCoolingMap();
+
+    window.setInterval(drawFire, 13);
+    console.log("INITIATE");
 }
 
 function initBuffers() {
     buffer1 = [];
-    for(var x = 0; x<perlin.width; x++) {
+    for(var x = 0; x<perlin_canvas.width; x++) {
         buffer1[x] = [];
-        for(var y = 0; y<perlin.height; y++) {
+        for(var y = 0; y<perlin_canvas.height; y++) {
             buffer1[x][y] = 0;
-            if(y>=perlin.height-bufferStart){
+            if(y>=perlin_canvas.height-bufferStart){
                 buffer1[x][y] = 1;
             }
         }
     }
     
     buffer2 = [];
-    for(var x = 0; x<perlin.width; x++) {
+    for(var x = 0; x<perlin_canvas.width; x++) {
         buffer2[x] = [];
-        for(var y = 0; y<perlin.height; y++) {
+        for(var y = 0; y<perlin_canvas.height; y++) {
             buffer2[x][y] = 0;
-            if(y==perlin.height-1){
+            if(y==perlin_canvas.height-1){
                 buffer2[x][y] = 1;
             }
         }
@@ -48,26 +47,23 @@ function initBuffers() {
 }
 
 function updateCoolingMap() {
-    for(var x = 0; x<perlin.width; x++) {
+    for(var x = 0; x<perlin_canvas.width; x++) {
         coolingMap[x] = [];
-        for(var y = 0; y<perlin.height; y++) {
+        for(var y = 0; y<perlin_canvas.height; y++) {
             coolingMap[x][y] = noise3(x / 8, y / 10, zOff) * coolant/2 + coolantOffset/2
             + 0.1 * (noise3(x / 2, y / 2, zOff) * coolant/2 + coolantOffset/2);
-        //    + 0.25 * noise3(x / 8, y / 8, zOff) * coolant/2 + coolantOffset/2
-        //    + 0.1 * noise3(x / 4, y / 4, zOff) * coolant/2 + coolantOffset/2;
         }
     }
 }
 
 function drawFire(){
     
-    var c = perlin.getContext("2d");
-//    c.globalAlpha=PARTICLEALPHA/10;
-    c.imageSmoothingEnabled=true;
-    c.strokeStyle = rgb(PARTICLERED, PARTICLEGREEN, PARTICLEBLUE);
-    c.fillStyle=rgb((PARTICLERED)/10, (PARTICLEGREEN)/10, (PARTICLEBLUE)/10);
-    c.fillRect(0, 0, perlin.width, perlin.height);
-    c.fillStyle = rgb(PARTICLERED, PARTICLEGREEN, PARTICLEBLUE);
+    var c = perlin_canvas.getContext("2d");
+    // c.imageSmoothingEnabled=true;
+    c.strokeStyle = `rgb(${PARTICLERED}, ${PARTICLEGREEN}, ${PARTICLEBLUE})`;
+    c.fillStyle=`rgb(${PARTICLERED/10}, ${PARTICLEGREEN/10}, ${PARTICLEBLUE/10})`;
+    c.fillRect(0, 0, perlin_canvas.width, perlin_canvas.height);
+    c.fillStyle = `rgb(${PARTICLERED}, ${PARTICLEGREEN}, ${PARTICLEBLUE})`;
     
     updateCoolingMap();
     
@@ -89,7 +85,6 @@ function drawFire(){
             
             var o = buffer2[x][y]; 
             c.fillStyle=rgba(PARTICLERED - (50*o)+(y/coolingMap.length)*10, PARTICLEGREEN-(150*o)-(y/coolingMap.length)*10, PARTICLEBLUE-(255*o)-(y/coolingMap.length)*10, o*PARTICLEALPHA);
-            // c.fillStyle=rgba(255 - 255*(1-(o/(coolant+coolantOffset))), 500-500*(o/(coolant+coolantOffset)), 0, 1);
             c.fillRect(x, y, 1, 1);  
         }
     }
@@ -100,7 +95,7 @@ function drawFire(){
 }
 
 function drawPerlin() {
-    var c = perlin.getContext("2d");
+    var c = perlin_canvas.getContext("2d");
     
     c.clearRect(0, 0, can.width, can.height);
 }

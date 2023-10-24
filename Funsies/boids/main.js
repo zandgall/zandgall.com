@@ -10,8 +10,8 @@ function init() {
     }
 
     window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        bc_mouseX = e.clientX;
+        bc_mouseY = e.clientY;
     });
 
     window.setInterval(draw, 13);

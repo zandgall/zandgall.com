@@ -1,5 +1,23 @@
+<!DOCTYPE html>
 <html lang="en">
-    <style>
+<?php 
+$pagetitle = "Zandgall - QB64 3D Rasterizer";
+$pagedesc = "Overview of a program that can rasterize 3d graphics, written in QB64, a close recreation of BASIC";
+include "global/header.php";
+include "assets/qb64 3d/code/codereader.php";
+function pointer($fromtop, $length, $isfromleft) {
+    if($isfromleft) {
+        echo "<hr style=\"left:255px; width:",$length,"px; top:",$fromtop,"px\">";
+        echo "<div class=\"round\" style=\"left:",(255 + $length),"px; top:",$fromtop+4,"px;\"></div>";
+    } else {
+        echo "<hr style=\"left:-",$length,"px; width:",($length-5),"px; top:",$fromtop,"px\">";
+        echo "<div class=\"round\" style=\"left:-",($length+10),"px; top:",$fromtop+4,"px;\"></div>";
+    }
+}
+
+?>
+
+<style>
         hr{
             border:none; border-top: 2px dashed rgba(255, 255, 255, 0.5); position: absolute;
         }
@@ -12,25 +30,10 @@
 
     </style>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
+<script id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
-<?php 
-$pagetitle = "Zandgall - QB64 3D Rasterizer";
-$pagedesc = "Overview of a program that can rasterize 3d graphics, written in QB64, a close recreation of BASIC";
-include "global/header.php";
-include "assets/qb64 3d/code/codereader.php";
-function pointer($fromtop, $length, $isfromleft) {
-    if($isfromleft) {
-        echo "<hr style=\"left:255px; width:",$length,"px; top:",$fromtop,"\"/>";
-        echo "<div class=\"round\" style=\"left:",(255 + $length),"px; top:",$fromtop+4,";\"></div>";
-    } else {
-        echo "<hr style=\"left:-",$length,"px; width:",($length-5),"px; top:",$fromtop,"\"/>";
-        echo "<div class=\"round\" style=\"left:-",($length+10),"; top:",$fromtop+4,";\"></div>";
-    }
-}
 
-?>
 <style>
 .section {
     background: linear-gradient(rgba(124, 182, 229, 0.5), rgba(114, 142, 224, 0.5));
@@ -46,7 +49,7 @@ function pointer($fromtop, $length, $isfromleft) {
     box-shadow: 0 0 8px 0px #22222c;
 }
 .codeexample {
-    width: 1000; 
+    width: 1000px; 
     margin: 10px auto 10px -100px; 
     border: inset 2px #000027; 
     background-color: #000027
@@ -62,13 +65,12 @@ $title = "Welcome to the site!";
 $subtitle = "A resource for Arvopia and other projects";
 include "global/begin.php"?>
 
-    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto; font-size: 48">3D Rasterizing in QB64</h1>
-    <img src="assets/qb64 3d/thumb.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; float: center; image-rendering: pixelated">
-    <h3 class="basictext outline"></h3>
+    <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto; font-size: 32pt">3D Rasterizing in QB64</h1>
+    <img src="assets/qb64%203d/thumb.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; image-rendering: pixelated" alt="QB64 3D Thumbnail">
 
     <h3 class="basictext outlinetext" style="font-size: 24px; margin: auto auto 100px auto">
-        <span style="text-decoration:underline; font-size:32">Contents</span><br>
-        <a class="link basictext" href="#qb64">What is QB64?<a><br>
+        <span style="text-decoration:underline; font-size:24pt">Contents</span><br>
+        <a class="link basictext" href="#qb64">What is QB64?</a><br>
         <a class="link basictext" href="#raster">What is 3D Rasterizing?</a><br>
         <a class="link basictext" href="#triangles">Triangles 101</a><br>
         <a class="link basictext" href="#barycentric">Barycentric Coordinates</a><br>
@@ -82,16 +84,16 @@ include "global/begin.php"?>
     </h3>
 
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="qb64">What is QB64?</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800;">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px;">
         <h2 class="basictext outlinetext">In order to understand QB64, you must first know what BASIC is</h2>
 
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;BASIC is a programming language developed in the late 60s and early 70s, becoming a mainstay as one of, if not the most influential programming languages of all time during the 80s. It was created to be a simple programming language that could be extremely easy to learn, but still really powerful as we'll soon see. During it's reign, an IDE called "Quick BASIC", or QBasic for short was created for DOS, accelerating BASIC's popularity and accessibility. Decades later, QBasic became the influence for QB64, a BASIC IDE for the 2000s. This became my IDE of choice, due to the modern OS compiling it brings, and it's simple project setup.</h3>
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;Although being built for 64 bit systems, QB64 doesn't give you many more capabilities that BASIC would have given you back in the day. However, it does bring benefits in the realm of graphics, but this did not impede the project or learning experience.</h3>
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;More information about QB64 and it's capabilities can be found at the <a href="https://www.qb64.org" style="text-decoration: none">QB64 homepage</a></h3>
-        <img src="assets/qb64 3d/uiexample.png" style="display: block; width: 800; height: auto; margin: auto">
+        <img src="assets/qb64%203d/uiexample.png" style="display: block; width: 800px; height: auto; margin: auto" alt="QB64 UI Example">
     </div>
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="raster">What is 3D Rasterization?</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800;">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px;">
         <h2 class="basictext outlinetext">3D Rasterization is a technique for drawing 3D scenes to a raster</h2>
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;Rasterization in general is the practice of mapping vector graphics to a raster. A raster, like a screen, tends to be a list of colors, or 'pixels'.
@@ -111,46 +113,46 @@ include "global/begin.php"?>
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;After the process knows how to transform and project triangles, it needs to know how to avoid drawing anything on top of something that's
         supposed to be appear in front of it. Fortunately, it is an extremely simple process to include once the project is already drawing everything pixel-by-pixel.</h3>
-        <div class="section" style="position: absolute; left:-300; top:0; width:250">
+        <div class="section" style="position: absolute; left:-300px; top:0; width:250px">
             <h3 class="basictext outlinetext">Vector graphics consist of shapes and perfect lines, they are infinitely scalable and don't conform to a resolution, unlike images</h3>
             <?php pointer(48, 50, true)?>
         </div>
-        <div class="section" style="position: absolute; left:850; top:250; width:250">
+        <div class="section" style="position: absolute; left:850px; top:250px; width:250px">
             <h3 class="basictext outlinetext"><a href="#triangles">Triangles 101</a></h3>
             <?php pointer(15, 45, false)?>
         </div>
-        <div class="section" style="position: absolute; left:-300; top:343; width:250">
+        <div class="section" style="position: absolute; left:-300px; top:343px; width:250px">
             <h3 class="basictext outlinetext"><a href="#linear">Linear Algebra for the Faint of Heart</a></h3>
             <?php pointer(28, 50, true)?>
         </div>
-        <div class="section" style="position: absolute; left:850; top:475; width:250">
+        <div class="section" style="position: absolute; left:850px; top:475px; width:250px">
             <h3 class="basictext outlinetext"><a href="#depth">Depth is Easier than it Seems</a></h3>
             <?php pointer(25, 50, false)?>
         </div>
     </div>
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="triangles">Triangles 101</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <h2 class="basictext outlinetext">Before trying to understand the exact math and programming behind rasterizing a triangle, it's important to define triangles in these three ways.</h2>
         <h3 class="basictext outlinetext" style="text-align:left">&emsp;1: A set of 3 points, with lines connecting points 1 - 2, 2 - 3, and 3 - 1.<br>&emsp;2: A single point with two lines jetting out from it, being filled until a terminating line.<br>&emsp;3: A set of two triangles. With each of their terminating lines being horizontally flat.</h3>
-        <img src="assets/qb64 3d/aspointswithlines.png" style="display:block; width: 300px;height:auto; margin-left:-50px; float:left">
-        <img src="assets/qb64 3d/asoriginterminator.png" style="display:block; width: 300px;height:auto; float:left; position:relative; z-index:14">
-        <img src="assets/qb64 3d/as2terminatingtriangles.png" style="display:block; width: 300px;height:auto;margin-right:-50px; float:left">
-        <h3 class="basictext outlinetext" style="text-align:left; margin-top:350;">
+        <img src="assets/qb64%203d/aspointswithlines.png" style="display:block; width: 300px;height:auto; margin-left:-50px; float:left" alt="As points with lines">
+        <img src="assets/qb64%203d/asoriginterminator.png" style="display:block; width: 300px;height:auto; float:left; position:relative; z-index:14" alt="As Origin with Terminator">
+        <img src="assets/qb64%203d/as2terminatingtriangles.png" style="display:block; width: 300px;height:auto;margin-right:-50px; float:left" alt="As 2 Terminating Triangles">
+        <h3 class="basictext outlinetext" style="text-align:left; margin-top:350px;">
         &emsp;With these three manners, we can split up the process of drawing a triangle into simple steps.
         Firstly, drawing a triangle with a flat terminating line is much easier than one with a slanted terminating line.
         That is because, given a triangle of this manner, we can loop through every y position from the terminating line to the source.
         And given a y-value in a triangle, we can find the range of x values that form a horizontal slice of the triangle.
         Knowing this, we can write the processes for a flat-terminating triangle and be able to draw any triangle
         given that we can split it into it's top-triangle and bottom triangle as defined by definition #3.</h3>
-        <img src="assets/qb64 3d/yrangeoftri.png" style="display:block; width:800px; height:auto">
+        <img src="assets/qb64%203d/yrangeoftri.png" style="display:block; width:800px; height:auto" alt="Y Range of Tri">
         <h3 class="basictext outlinetext" style="text-align:left;">
         &emsp;To know each x value, we can consider the two lines that run through the origin, as defined by definition #2.
         Note that a line is given by the equation: "y = mx + b", and rewritten, we can find x when given y, using "x = (y - b)/m". 
         With this in mind, we can solve for the x-values of either line running through the origin when given the y position.
         Which can come straigh from our loop between the two y-limits of our triangles. We can simplify this however. We do not know b in our example, so let's replace this equation with
         "x = (y-offset.y)/m  + offset.x". This equation means that we are using the difference in y to find the difference in x, since we know that both x and y start at our offset.</h3>
-        <canvas class="section" id="lineExample_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="lineExample_mouseMove(event);">Canvas Unsupported</canvas>
-        <script type="application/javascript">
+        <canvas class="section" id="lineExample_canvas" width=800 height=400 style="width:800px; height:400px;" onmousemove="lineExample_mouseMove(event);">Canvas Unsupported</canvas>
+        <script>
             {
                 let can = $("#lineExample_canvas")[0];
                 let ctx = can.getContext("2d");
@@ -222,8 +224,8 @@ include "global/begin.php"?>
         &emsp;This also makes calculating the x range much simpler. As we can set an initial x value to the x coordinate of the origin, and every time we increment the y value, we add 1/m to our x value. 
         We use 1/m as it is the derivative of "x = (y - origin.x)/m + origin.x" (more specifically the dx/dy). Essentially, the difference between "x = (y - origin.x)/m + origin.x" and "x = (y + 1 - origin.x)/m + origin.x"
         is just 1/m.</h3>
-        <canvas class="section" id="lineWalkExample_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
-        <script type="application/javascript">
+        <canvas class="section" id="lineWalkExample_canvas" width=800 height=400 style="width:800px; height:400px;">Canvas Unsupported</canvas>
+        <script>
             {
             let can = $("#lineWalkExample_canvas")[0];
             let ctx = can.getContext("2d");
@@ -390,7 +392,7 @@ include "global/begin.php"?>
         &emsp;Given that, we simply loop through y values, finding the left and right x values along the way, and then loop between the left and right x in order
         to get or set every pixel inside of the flat-terminating triangle.</h3>
 
-        <canvas class="section" id="flatTriangle_canvas" width=800 height=400 style="width:800; height:400;">Canvas Unsupported</canvas>
+        <canvas class="section" id="flatTriangle_canvas" width=800 height=400 style="width:800px; height:400px;">Canvas Unsupported</canvas>
         <script>
             {
             let can = $("#flatTriangle_canvas")[0];
@@ -518,7 +520,7 @@ include "global/begin.php"?>
         </script>
 
         <div class="codeexample">
-            <h3 class="basictext" style="text-align:left; margin: 5px; color:d8d8d8; font-family:basicbit2; font-weight: normal;">
+            <h3 class="basictext" style="text-align:left; margin: 5px; color:#d8d8d8; font-family:basicbit2; font-weight: normal;">
                 <?php basicCode("assets/qb64 3d/code/triangleEdgeRiding.txt", array("LEFT", "RIGHT", "ORIGIN_X", "ORIGIN_Y")) ?>
             </h3>
         </div>
@@ -536,8 +538,8 @@ include "global/begin.php"?>
         it is only needed at maximum once for every time a triangle is drawn.
         </h3>
 
-        <canvas class="section" id="triangleMidpoint_canvas" width=800 height=400 style="width:800; height:400;" onmousemove="triangleMidpoint_mousemove(event)" onmousedown="triangleMidpoint_mousedown(event)" onmouseup="triangleMidpoint_mouseup(event)">Canvas Unsupported</canvas>
-        <script type="application/javascript">
+        <canvas class="section" id="triangleMidpoint_canvas" width=800 height=400 style="width:800px; height:400px;" onmousemove="triangleMidpoint_mousemove(event)" onmousedown="triangleMidpoint_mousedown(event)" onmouseup="triangleMidpoint_mouseup(event)">Canvas Unsupported</canvas>
+        <script>
             {
             let can = $("#triangleMidpoint_canvas")[0];
             let ctx = can.getContext("2d");
@@ -709,19 +711,19 @@ include "global/begin.php"?>
 
         
 
-        <div class="section" style="position: absolute; left:900; top:100; width:250">
+        <div class="section" style="position: absolute; left:900px; top:100px; width:250px">
             <h3 class="basictext outlinetext">The only time a triangle can't be split up this way, is if it already has a horizontally-flat edge; In the program we will test for these cases to avoid errors and unecessary computations.</h3>
             <?php pointer(50, 130, false)?>
         </div>
 
-        <div class="section" style="position: absolute; left:825; top:3500; width:350">
-            <h3 class="basictext outlinetext" style="text-align: left; margin: 5px">If y1 < y2 and y1 > y3 Then<br>&emsp;y1 is middle<br>&emsp;y2 is bottom (y-positive is down)<br>&emsp;y3 is top<br><br>Etc.</h3>
+        <div class="section" style="position: absolute; left:825px; top:3500px; width:350px">
+            <h3 class="basictext outlinetext" style="text-align: left; margin: 5px">If y1 &lt; y2 and y1 > y3 Then<br>&emsp;y1 is middle<br>&emsp;y2 is bottom (y-positive is down)<br>&emsp;y3 is top<br><br>Etc.</h3>
             <?php pointer(65, 650, false)?>
         </div>
     </div>
 
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="barycentric">Barycentric Coordinates</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;Barycentric coordinates are a system of coordinates that, given a triangle ΔABC and a point P inside that triangle, defines it's values as the areas of subtriangles ΔPBC, ΔAPC, and ΔABP all divided by the total area of ΔABC.
         This is used to blend vertex attributes, attributes given each vertice of a triangle, such as color or depth. Barycentric coordinates are needed for depth, but as in the mention of color, we can use 
@@ -733,9 +735,9 @@ include "global/begin.php"?>
         &emsp;And for our color mixing example,<br>
         &emsp;&emsp;$$COLOR = RED * U + GREEN * V + BLUE * W$$
         </h3>
-        <!-- <img src="assets/qb64 3d/barycentric.png" style="width:100%"> -->
-        <video width="100%" height="auto" autoplay loop muted>
-            <source src="assets/qb64 3d/UVWfromArea.mp4" type="video/mp4" />
+        <!-- <img src="assets/qb64%203d/barycentric.png" style="width:100%"> -->
+        <video style="width: 100%; height:auto" autoplay loop muted>
+            <source src="assets/qb64%203d/UVWfromArea.mp4" type="video/mp4" >
         </video>
         <h2 class="basictext outlinetext">Triangle Area via Cross Product</h2>
         <h3 class="basictext outlinetext" style="text-align:left">
@@ -744,15 +746,15 @@ include "global/begin.php"?>
             has a length (magnitude) equivelant to the area of a parallelogram formed by the two input vectors. Now what "parallelogram formed by the two input vectors" means is that if you picture a copy of
             each vector placed at the tip of the other vector, it forms a parallelogram. And this is what we will get the area of.<br>
         </h3>
-        <!-- <img src="assets/qb64 3d/acrossb.png" style="width:100%"> -->
+        <!-- <img src="assets/qb64%203d/acrossb.png" style="width:100%"> -->
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;Working in 2 dimensions, the cross product is extremely easy to compute. Given that the computation returns a vector perpendicular to the two input vectors, and our input vectors only exist 
             on the x-y plane, we can conclude that the cross product will only point in either z-direction, meaning that we only have to calculate the z-component of any 2d cross product. Furthermore, the area
             of a triangle formed by the two input vectors is half the area of the parallelogram. This is easier seen visually, however it is evident that cutting a parallelogram diagonally across two of it's vertices
             splits it in half. The triangles formed are similar as they have the same length sides, meaning that two times the area of one of the triangles gives you the area of the parallelogram.
         </h3>
-        <video width="100%" height="auto" autoplay loop muted>
-            <source src="assets/qb64 3d/areafromcross.mp4" type="video/mp4" />
+        <video style="width: 100%; height:auto" autoplay loop muted>
+            <source src="assets/qb64%203d/areafromcross.mp4" type="video/mp4">
         </video>
 
         <h3 class="basictext outlinetext" style="text-align:left">
@@ -782,17 +784,17 @@ include "global/begin.php"?>
             $$pixel_{attribute} = a_{attribute} * u + b_{attribute} * v + c_{attribute} * w$$
             &emsp;Here is a visual example, where vertex \(a\) has a color attribute of red, \(b\) with green, and \(c\) with blue.
         </h3>
-        <video width="100%" height="auto" autoplay loop muted>
-            <source src="assets/qb64 3d/usinguvw.mp4" type="video/mp4" />
+        <video style="width: 100%; height:auto" autoplay loop muted>
+            <source src="assets/qb64%203d/usinguvw.mp4" type="video/mp4">
         </video>
 
         <h3 class="basictext outlinetext" style="text-align: left">
             &emsp;This allows us to step into the more modern territory of shading and triangle rasterization. For instance, if we give each vertice of a triangle coordinates that represent a point in an image,
             it allows us to blend these coordinates across the triangle, and use them to grab data from an image. This is known as texture mapping. Here is an example of a rainbow pattern being mapped onto a triangle.
         </h3>
-        <!-- <img src="assets/qb64 3d/rainbowtextureexample.png" style="width:50%; height: auto; display:block; margin: auto" /> -->
-        <video autoplay loop muted style="display: block; margin: auto">
-            <source src="assets/qb64 3d/uvtotexture.mp4" type="video/mp4" />
+        <!-- <img src="assets/qb64%203d/rainbowtextureexample.png" style="width:50%; height: auto; display:block; margin: auto"> -->
+        <video autoplay loop muted style="width:100%; height:auto; display: block; margin: auto">
+            <source src="assets/qb64%203d/uvtotexture.mp4" type="video/mp4">
         </video>
 
         <h3 class="basictext outlinetext" style="text-align: left">
@@ -804,7 +806,7 @@ include "global/begin.php"?>
             </h3>
         </div>
 
-        <div class="section" style="position: absolute; left:-300; top:985; width:250">
+        <div class="section" style="position: absolute; left:-300px; top:985px; width:250px">
             <h3 class="basictext outlinetext">For more visual explanations, check out Grant Sanderson/3blue1brown's <a href="https://www.youtube.com/watch?v=eu6i7WJeinw">video on cross products.</a> For more on what vectors actually are and what they're used for, go down to <a href="#linear">Linear Algebra for the Faint of Heart</a></h3>
             <?php pointer(110, 20, true)?>
         </div>
@@ -816,7 +818,7 @@ include "global/begin.php"?>
     </div>
     
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="linear">Linear Algebra for the Faint of Heart</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <h3 class="basictext outlinetext">For a more in-depth and general purpose approach, I recommend Grand Sanderson/3blue1brown's series:
             <a href="https://youtu.be/fNk_zzaMoSs?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of Linear Algebra</a>
             It goes through everything visually and can teach anyone a general understanding of what Linear Algebra is.
@@ -831,8 +833,8 @@ include "global/begin.php"?>
             $$y' = 0*x + 1*y$$
             &emsp;This means that for any given x and y, the resulting x (\(x'\)) is two times the input x, and the resulting y \(y'\)) staying the same as the input y.
         </h3>
-        <video width="100%" height="auto" autoplay loop muted>
-            <source src="assets/qb64 3d/matrixExample.mp4"/>
+        <video style="width: 100%; height:auto" autoplay loop muted>
+            <source src="assets/qb64%203d/matrixExample.mp4">
         </video>
         <h3 class="basictext outlinetext" style="text-align: left">
             &emsp;A vector, in the way we visualize it, is an arrow with the tail end sitting on the origin (the coordinates 0, 0), and the tip sitting at
@@ -843,8 +845,8 @@ include "global/begin.php"?>
             that follows the rules defined by the matrix. This is extremely useful in 3d graphics as it allows for all sorts of transformations and even traslations. We could then create a matrix
             that rotates all vectors, or one that projects all input 3d vectors into 2 dimension. This idea of projection is extremely important, and will be discussed again shortly.
         </h3>
-        <video width="100%" height="auto" autoplay loop muted>
-            <source src="assets/qb64 3d/vectormatrixexample.mp4"/>
+        <video style="width: 100%; height:auto" autoplay loop muted>
+            <source src="assets/qb64%203d/vectormatrixexample.mp4">
         </video>
         <h3 class="basictext outlinetext">
             &emsp;The Matrices used above are as follows
@@ -957,17 +959,17 @@ include "global/begin.php"?>
             </h3>
         </div>
 
-        <div class="section" style="position: absolute; left:110%; top:1815; width:250">
+        <div class="section" style="position: absolute; left:110%; top:1815px; width:250px">
             <h3 class="basictext outlinetext">
                 Simplifies to
                 $$\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}$$
-                <?php pointer(30, 360, false)?>
             </h3>
+            <?php pointer(30, 360, false)?>
         </div>
         
     </div>
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto" id="depth">Depth is Easier than it Seems</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;If you were to take all the processes that have been given so far you could try to draw a cube. First by taking all the points of a cube and project them into 2d.
             Then, using the 2d points to rasterize 2d triangles, you could form an image of a cube. However, something would be off. You might be able to get it right the first time, you'll probably notice that
@@ -998,7 +1000,7 @@ include "global/begin.php"?>
             intersects eachother. The reasoning for this lies in how depth actually effects coordinates. Each x and y value are divided by their depth,
             this ends in every x and y value not being transformed equally. 
         </h3>
-        <img src="assets/qb64 3d/triangledepth.png" style="width:100%"/>
+        <img src="assets/qb64%203d/triangledepth.png" style="width:100%" alt="Triangle Depth">
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;Imagine an ant walking along a triangle, and viewing the projection of that triangle. From the projection's perspective (pun intended)
             the ant travels slower and slower as it gets further away, even if it's physically moving the same speed. This shows us how depth is not linear, and thus why we need to find depth differently
@@ -1007,8 +1009,8 @@ include "global/begin.php"?>
             <br><br>
             &emsp;We have the ability to take the depth of every pixel, it's time we should compare them. You may find the merging of pixel indexing and depth interpolation in this following code example.
         </h3>
-        <video width="100%" height="auto" autoplay loop muted>
-            <source src="assets/qb64 3d/depth example.mp4"/>
+        <video style="width: 100%; height:auto" autoplay loop muted>
+            <source src="assets/qb64%203d/depth%20example.mp4">
         </video>
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
@@ -1017,18 +1019,18 @@ include "global/begin.php"?>
         </div>
     </div>
     <h1 class="basictext outlinetext" id="correctionbarycentric" style="margin:100px">Correcting Barycentric Coordinates with Depth</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;We are not quite at the finish line, if we use all of these methods, we can draw 3d shapes with no problem. But if we attempt to draw anything on the faces using barycentric coordinates,
             we will find that the triangles appear normal, but everything will look just off every so slightly. This graphic by scratchapixel will show what it would appear like.
         </h3>
-        <img src="assets/qb64 3d/perspectivecorrection.png" style="width:100%">
+        <img src="assets/qb64%203d/perspectivecorrection.png" style="width:100%" alt="Perspective Correction">
         <h3 class="basictext outlinetext" style="text-align: left">
             &emsp;You'll see in the image that the triangle on the left appears 2 Dimensional and flat, whereas it's easier to gather the depth from the
             second triangle. This is how things will appear after depth correction of the vertex attributes.<br>
             &emsp;This problem is more apparent when using textures because images will hold straight lines, whereas simple gradients might hide misteps.
         </h3> 
-        <img src="assets/qb64 3d/naivevscorrect.png" style="width:100%">
+        <img src="assets/qb64%203d/naivevscorrect.png" style="width:100%" alt="Naive Sampling vs Perspective Corrected Sampling">
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;The reasoning for this distortion is the same as the reason for grabbing depth needing more than simple barycentric interpolation. Fortunately, after grabbing the new depth, 
             we can compute the new attributes of each pixel rather easily. How we achieve this is by just dividing each vertex attribute by its vertex's depth, then we use barycentric coordinates
@@ -1047,21 +1049,21 @@ include "global/begin.php"?>
     </div>
     <h1 class="basictext outlinetext" id="alltogether">Putting the Code All Together</h1>
     <h3 class="basictext">The following code will work in QB64</h3>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <div class="codeexample">
             <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
             <?php basicCode("assets/qb64 3d/code/full.txt", array())?>
             </h3>
             
-            <h3 class="basictext outlinetext"><a href="assets/qb64 3d/code/full.txt" download>Download Code</a></h3>
+            <h3 class="basictext outlinetext"><a href="assets/qb64%203d/code/full.txt" download>Download Code</a></h3>
     </div>
     </div>
-    <div class="" style="position: relative; margin: 10px auto auto auto; width: 800">
-        <img src="assets/qb64 3d/full example output.png" style="width:100%; margin:auto">
+    <div class="" style="position: relative; margin: 10px auto auto auto; width: 800px">
+        <img src="assets/qb64%203d/full%20example%20output.png" style="width:100%; margin:auto" alt="Full Example Output">
     </div>
     <h1 class="basictext outlinetext" id="optimization">Rotation and Optimization</h1>
 
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
         <h3 class="basictext outlinetext" style="text-align:left">
             &emsp;While the given code above will run, it isn't that exciting. There are many adjustments we can make to give more to look at, as well as adjustments we can make to 
             speed up rendering quite substantially.<br><br>
@@ -1072,14 +1074,14 @@ include "global/begin.php"?>
             $$R_z(\theta) = \begin{bmatrix}cos\theta & sin\theta & 0\\-sin\theta & cos\theta & 0\\0 & 0 & 1\end{bmatrix}$$
             What each of these mean is that, say for \(R_x(\theta)\), given angle \(\theta\), the transformation will rotate a vector around the X axis by this angle. Thus there are 3 axes of rotation, each around
             their respective 3D axis.<br>
-            <video width="30%" height="auto" autoplay loop muted>
-                <source src="assets/qb64 3d/xrotation.mp4" type="video/mp4" />
+            <video style="width:30%; height:auto" autoplay loop muted>
+                <source src="assets/qb64%203d/xrotation.mp4" type="video/mp4">
             </video>
-            <video width="30%" height="auto" autoplay loop muted>
-                <source src="assets/qb64 3d/yrotation.mp4" type="video/mp4" />
+            <video style="width:30%; height:auto" autoplay loop muted>
+                <source src="assets/qb64%203d/yrotation.mp4" type="video/mp4">
             </video>
-            <video width="30%" height="auto" autoplay loop muted>
-                <source src="assets/qb64 3d/zrotation.mp4" type="video/mp4" />
+            <video style="width:30%; height:auto" autoplay loop muted>
+                <source src="assets/qb64%203d/zrotation.mp4" type="video/mp4">
             </video><br>
             (In order left-to-right: X-rotation; Y-rotation; Z-rotation)<br><br>
             <!-- There are 6 ways to "combine" 3 matrices, however this seems to be the most accepted way to combine the three rotational matrices. 
@@ -1139,12 +1141,12 @@ include "global/begin.php"?>
             <h3 class="basictext" style="text-align:left; margin: 5px; font-family: basicbit2; color:#d8d8d8; font-weight: normal;">
                 <?php basicCode("assets/qb64 3d/code/optimized.bas", array("vector")) ?>
             </h3>
-            <h3 class="basictext outlinetext"><a href="assets/qb64 3d/code/optimized.bat" download>Download Code</a></h3>
+            <h3 class="basictext outlinetext"><a href="assets/qb64%203d/code/optimized.bat" download>Download Code</a></h3>
         </div>
     </div>
 
     <h1 class="basictext outlinetext" id="extra">Going Forward with Graphics</h1>
-    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800">
+    <div class="" style="position: relative; margin: 0 auto auto auto; width: 800px">
     <h3 class="basictext outlinetext" style="text-align:left">
         &emsp;It's great having a real-time example of 3d graphics built in BASIC, but what if we wanted to do more? If we had no regard for speed, what could we accomplish with what we've made?<br>
         &emsp;You might recall earlier in this paper when I provided images of cubes displaying textures. How exactly do we make this possible, and what more does that allow us to do?
@@ -1169,11 +1171,11 @@ include "global/begin.php"?>
             <?php basicCode("assets/qb64 3d/code/full3dEngine.bas", array()) ?>
         </h3>
         
-        <h3 class="basictext outlinetext"><a href="assets/qb64 3d/code/full3dEngine.bas" download>Download Code</a></h3>
+        <h3 class="basictext outlinetext"><a href="assets/qb64%203d/code/full3dEngine.bas" download>Download Code</a></h3>
     </div>
     <h3 class="basictext outlinetext" style="text-align: left">The output of the above code, sped up for your viewing pleasure.</h3>
-    <video width="100%" height="auto" autoplay loop muted>
-        <source src="assets/qb64 3d/qb64 3d.mp4" type="video/mp4" />
+    <video style="width:100%; height:auto" autoplay loop muted>
+        <source src="assets/qb64%203d/qb64%203d.mp4" type="video/mp4">
     </video>
     </div>
 

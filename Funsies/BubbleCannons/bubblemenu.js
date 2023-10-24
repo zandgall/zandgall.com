@@ -7,7 +7,7 @@ function createUpgrade(id, name, value, functionPath, img, unlock, locks) {
     for (let i = 0; i < locks.length; i++) {
         unlockFunc += "$('#" + locks[i] + "').remove(); ";
     }
-    var link = "<a href=\"javascript:if(money>=" + value + "){" + functionPath + "; money-=" + value + "; prm-=" + value + "; $('#" + id + "').remove(); " + unlockFunc + "}\" id = " + id + " style=\"positive:relative;\"><img style=\"position:relative; filter: brightness(1)\" src=\"Funsies/BubbleCannons/upg/" + img + "\" title=\"" + name + "\"></a>";
+    var link = "<a href=\"#\" onclick=\"if(money>=" + value + "){" + functionPath + "; money-=" + value + "; prm-=" + value + "; $('#" + id + "').remove(); " + unlockFunc + "}\" id = " + id + " style=\"positive:relative;\"><img style=\"position:relative; filter: brightness(1)\" src=\"Funsies/BubbleCannons/upg/" + img + "\" title=\"" + name + "\"></a>";
     // @ts-ignore
     $("#upgrade").append(link);
     // @ts-ignore

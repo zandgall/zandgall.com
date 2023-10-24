@@ -1,38 +1,10 @@
-<!-- 
-<html lang="en">
-    <?php 
-// $pagetitle = "Zandgall - BubbleCannons";
-// $pagedesc = "A tower-defense-esque top down shooter";
-// include "global/head_.php"?>
-
-<body>
-    <?php 
-    // $title = "BubbleCannons!";
-    // $subtitle = "An actual funsie on this site";
-    // include "global/head.php"?>
-        <div class="parallax" style="height:930px; overflow:hidden;">
-            <!-- <div class="section" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: 800">
-                
-                <!--STUFF HERE
-                
-
-            </div>
-        
-            <!-- </div>
-        </div>
-    </div>
-    
-</body>
-</html> -->
-
-
+<!DOCTYPE html>
 <html lang="en">
     <?php 
 $pagetitle = "Zandgall - BubbleCannons";
 $pagedesc = "A tower-defense-esque top down shooter";
 include "global/header.php"?>
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script src="Funsies/BubbleCannons/input.js"></script>
 <script src="Funsies/BubbleCannons/bubblebullets.js"></script>
 <script src="Funsies/BubbleCannons/bubblemenu.js"></script>
@@ -45,32 +17,21 @@ $title = "BubbleCannons!";
 $subtitle = "An actual funsie on this site?";
 include "global/begin.php"?>
 
-<div height=800 style="margin:auto; margin-top: 0; width:800; height:800">
-    <canvas class="section" id="Canvas" width=800 height=800 style="position:relative; margin: auto; margin-top:0; margin-bottom: -4; width:800; height:800">CANVAS NOT SUPPORTED</canvas>
-    <div id="upgrade" width=200 height=800 style="width:200; height: 800; float: right; position:relative; margin-top: -800; margin-bottom: 100; left: 216px;">
-        <img src="Funsies/BubbleCannons/upgrademenubg.png" id="begin" style="object-fit: cover; position: absolute;">
+<div style="margin:auto; margin-top: 0; width:800px; height:800px">
+    <canvas class="section" id="Canvas" width=800 height=800 style="position:relative; margin: auto; margin-top:0; margin-bottom: -4px; width:800px; height:800px">CANVAS NOT SUPPORTED</canvas>
+    <div id="upgrade" style="width:200px; height: 800px; float: right; position:relative; margin-top: -800px; margin-bottom: 100px; left: 216px;">
+        <img src="Funsies/BubbleCannons/upgrademenubg.png" id="begin" style="object-fit: cover; position: absolute;" alt="Upgrade">
     </div>
 </div>
 
-<a href="javascript:if(!playing) {iterate(); playing = true; increment = -1;}" style="text-decoration: none; margin: auto; position:relative;">
-    <div width=400 height=100 style="width:400; height:100; position:relative; margin: auto; margin-top: 10;">
-        <img src="Funsies/BubbleCannons/next round.png" style="object-fit: cover; position: absolute;">
+<a href="javascript:next_round()" style="text-decoration: none; margin: auto; position:relative;">
+    <div style="width:400px; height:100px; position:relative; margin: auto; margin-top: 1cm;">
+        <img src="Funsies/BubbleCannons/next%20round.png" style="object-fit: cover; position: absolute;" alt="Next Round!">
     </div>
 </a>
-<canvas id="utilcan" style="display:none">
+<canvas id="utilcan" style="display:none"></canvas>
 
-<script type="text/javascript" src="Funsies/BubbleCannons/bubblecannons.js">
-    console.log("THIS IS THE BEGINNING");
-    
-    // e();
-    // init();
-    // draw();
-</script>
-<!-- <div style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: min(800px, 80vw); margin-bottom: 2cm"> -->
-    <!-- Parent has no display style, so give it one here, but with a lower opacity. Not applied to parent so that other children won't have a default opacity of 0.92 -->
-    <!-- <div class="section" style="position:absolute; width:100%; height:100%; margin-top: 0; opacity: 0.92"></div> -->
-    <!--STUFF HERE-->
+<script src="Funsies/BubbleCannons/bubblecannons.js"></script>
 
-<!-- </div> -->
 <?php include "global/end.php"?>
 </html>

@@ -1,0 +1,176 @@
+@font-face {
+    font-family: basicbit;
+    src: url("../assets/basicbit3.ttf");
+}
+
+@font-face {
+    font-family: basicbit-light;
+    src: url("../assets/basicbit3-light.ttf");
+}
+
+@font-face {
+    font-family: "topaz";
+    src: url("../assets/Topaz-8/Topaz-8.ttf");
+    font-weight:normal;
+    font-style:normal;
+}
+
+:root {
+    font-family: sans-serif
+}
+
+p {
+    display: inline;
+}
+.link .description {
+    z-index:5;
+    display:none;
+    position:fixed;
+    width:336px;
+    height:auto;
+    background-color:aliceblue;
+    border:1px solid black;
+    border-radius: 5mm;
+    padding:5mm;
+    overflow:hidden;
+}
+.link .description {
+    font-size:16px;
+    line-height:normal;
+}
+.link .description img {
+    width:100%;
+    height:auto;
+}
+
+#Images {
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    align-content: space-around;
+}
+
+.img-container {
+    width:336px;
+    display:inline-block;
+    flex: 1 1 auto;
+    margin:5mm;
+    position:relative;
+}
+
+@keyframes highlight {
+    from {
+        background-color:yellow;
+        border: 2px solid orange;
+    }
+    to {
+        background-color:transparent;
+        border-color: transparent;
+    }
+}
+
+.img-container .overlay {
+    position:absolute;
+    cursor:not-allowed;
+    pointer-events: none;
+    top:0;left:0;
+    margin:-3%;
+    width:106%;
+    height:106%;
+    border-radius:5mm;
+    z-index:-1;
+}
+
+.img-container:target .overlay {
+    animation-name: highlight;
+    animation-duration: 2s;
+}
+
+.img-container img, .img-container video {
+    width:100%;
+    height:auto;
+}
+
+#card {
+    float: right;
+    width: 24em;
+    margin: 5mm;
+    overflow: hidden;
+    font-family:basicbit;
+}
+
+#card img {
+    width: 100%;
+}
+
+#card div {
+    display: flex;
+    font-size:large;
+}
+
+#card div .header {
+    text-align: right;
+    flex: 1 0 0;
+}
+
+#card div .header p {
+    display: block;
+    text-align: right;
+    width: 100%;
+    margin:2mm;
+    font-weight:bold;
+}
+
+#card div .text {
+    text-align: left;
+    flex: 1 0 0;
+}
+
+#card div .text p {
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin:2mm;
+}
+.description h1 {
+    color:black;
+}
+
+.description h2 {
+    color:black;
+    font-size:small;
+    font-family:basicbit-light;
+}
+.description p {
+    color:black;
+}
+
+.mcbg {
+    border: 5mm solid black;
+    border-image: url("Border.png") 40% stretch;
+    background-color: #c6c6c6;
+    background-clip: padding-box;
+}
+
+.selection {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-content:center;
+}
+
+.selection div {
+    text-align:center;
+    margin:5mm;
+    max-width:21em;
+}
+.selection div img {
+    width:100%;
+    height:auto;
+}
+
+.selection div h2 {
+    font-family: basicbit-light;
+    font-size:medium;
+}

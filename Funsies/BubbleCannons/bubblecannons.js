@@ -8,7 +8,7 @@ let increment = -1;
 let lvlenms = [];
 // @ts-ignore
 let can = document.getElementById("Canvas");
-currentCanvas = can;
+var currentCanvas = can;
 
 let sheet = new Image();
 sheet.src = "Funsies/BubbleCannons/sheet.png";
@@ -75,8 +75,17 @@ function iterate() {
     currentLevel++;
 }
 
+function next_round() {
+    if(!playing) {
+        iterate();
+        playing = true;
+        increment = -1;
+    }
+}
+
 function getPath() {
     // return levels[currentWorld][currentLevel].path;
+    console.log(levels[currentWorld][0])
     let paths = levels[currentWorld][0].path.split("~");
     let cx = 0, cy = 0;
     for(let i = 0; i < paths.length; i++) {

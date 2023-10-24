@@ -1,4 +1,5 @@
-<script type="application/javascript">
+<script>
+
     $("#universal").on("scroll", function(){
         let scroll = $("#universal").scrollTop();
         let par = $("#parallax");
@@ -23,14 +24,12 @@
 
     var cloudToggle = (localStorage["zandgall.cloud"] || "true") === "true";
 
+    var wIndex = 0.5; // Hahahahahahahahahahahahahahah
+    var wind = perlin.get(wIndex, 0);
+
     function setupcloud(cloud, reset) {
         var z = Math.random() * 4;
         
-        // $(clouds[i]).css("transform", "translate(" + (Math.random() * f($("body").width()) * rat) + "px)");
-        // $(clouds[i]).css("-webkit-transform", "translate(" + (Math.random() * f($("body").width()) * rat) + "px)");
-        // $(clouds[i]).css("-moz-transform", "translate(" + (Math.random() * f($("body").width()) * rat) + "px)");
-        // $(clouds[i]).css("-mz-transform", "translate(" + (Math.random() * f($("body").width()) * rat) + "px)");
-        // $(clouds[i]).css("top",  * rat);
         var zind = 0;
         var zspeed = (z * 0.4*0.25 + 0.1);
         let scroll = $("#universal").scrollTop();
@@ -52,7 +51,7 @@
             $(cloud).data("data-y", Math.random()*1600);
         }
         $(cloud).data("data-z", z);
-        $(cloud).css("transform", `translate(${reset ? -400 : (Math.random()) * parseFloat($("body").width())}px, ${parseFloat($(cloud).data("data-y")) - scroll * (z * 0.4*0.25 + 0.1)}px) scale(${z*0.125+0.125})`);
+        $(cloud).css("transform", `translate(${reset ? (wind < 0 ? parseFloat($("body").width()) : -400) : (Math.random()) * parseFloat($("body").width())}px, ${parseFloat($(cloud).data("data-y")) - scroll * (z * 0.4*0.25 + 0.1)}px) scale(${z*0.125+0.125})`);
         $(cloud).css("filter", `opacity(${z*0.25 + Math.random()*0.01})`);
         $(cloud).css("z-index", zind);
     }
@@ -65,22 +64,24 @@
 
     function cloudupdate() {
         if (cloudToggle) {
+            wIndex += 0.0001;
+            wind = perlin.get(wIndex, 0);
             let clouds = $(".cloud");
             for (let i = 0; i < clouds.length; i++) {
                 var trans = $(clouds[i]).css("transform") || $(clouds[i]).css("-webkit-transform") || $(clouds[i]).css("-moz-transform") || $(clouds[i]).css("-mz-transform") || $(clouds[i]).css("-o-transform");
                 var mat = (trans.replace(/[^0-9\-.,]/g, '').split(','));
-                var x = parseFloat(mat[12] || mat[4] || 0) + parseFloat($(clouds[i]).data("data-z")) / 2.0 + 1.5;
+                var x = parseFloat(mat[12] || mat[4] || 0) + parseFloat($(clouds[i]).data("data-z")) * wind;
                 var y = parseFloat(mat[13] || mat[5] || 0);
                 var scale = parseFloat(mat[0] || 1);
 
                 $(clouds[i]).css("transform", `translate(${x}px, ${y}px) scale(${scale})`)
-                if(x > parseFloat($("body").width()))
+                if(x > parseFloat($("body").width()) || x < -400)
                     setupcloud(clouds[i], true);
             }
         }
     }
     cloudsetup();
 
-    window.setInterval(cloudupdate, 64);
+    window.setInterval(cloudupdate, 13);
 
 </script>

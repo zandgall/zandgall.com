@@ -16,7 +16,7 @@
         <a class = "linkpages" href = "arvopiadownload">Arvopia</a>
         <a class = "linkpages" href = "levelcreatordownload">LevelCreator</a>
         <a class = "linkpages" href = "arvopiabuilddownload">Arvopia Builds</a>
-        <a class = "linkpages" href = "otherdownload">Other Projects</a>
+        <a class = "linkpages" href = "download">Other Projects</a>
     </div>
 
     <div class = "link" style="width: 190" tabindex = "0">

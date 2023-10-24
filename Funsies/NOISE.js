@@ -1,5 +1,5 @@
 // @ts-nocheck
-var perlin = document.getElementById("Perlin");
+var perlin_canvas = document.getElementById("Perlin");
 
 var mouseDown = false, mouseLeft = false, mouseRight=false, mouseClicked = false, mouseDBLClicked = false;
 
@@ -58,9 +58,9 @@ function init() {
 
 function draw(){
     
-    var c = perlin.getContext("2d");
+    var c = perlin_canvas.getContext("2d");
     
-    c.clearRect(0, 0, perlin.width, perlin.height);
+    c.clearRect(0, 0, perlin_canvas.width, perlin_canvas.height);
     
     c.beginPath();
     c.moveTo(0, 200);
@@ -104,7 +104,7 @@ function draw(){
 }
 
 function drawPerlin() {
-    var c = perlin.getContext("2d");
+    var c = perlin_canvas.getContext("2d");
     
     c.clearRect(0, 0, can.width, can.height);
 }
@@ -132,14 +132,14 @@ function col(x1, y1, w1, h1, x2, y2, w2, h2) {
 function move(ev) {
     var x, y;
                     
-    x = ev.pageX-perlin.offsetLeft;
-    y = ev.pageY-perlin.offsetTop;
+    x = ev.pageX-perlin_canvas.offsetLeft;
+    y = ev.pageY-perlin_canvas.offsetTop;
     
-    mouseX=x;
-    mouseY=y;
+    bc_mouseX=x;
+    bc_mouseY=y;
 }
 function click(e) {
-    console.log(mouseX, mouseY, e.button);
+    console.log(bc_mouseX, bc_mouseY, e.button);
     
     mouseClicked=true;
 }   

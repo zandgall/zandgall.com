@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <?php 
 $pagetitle = "Zandgall - Music";
@@ -15,10 +16,16 @@ include "global/begin.php"?>
     <!--STUFF HERE-->
     <!-- <a style="color: rgba(0,0,0,0)" href=https://zandgall.bandcamp.com/releases target="_blank">Bandcamp</a></p> -->
 
+    <div style="width:55vw; max-width:800px; height:780px; margin: 5cm auto 0 auto">
+        <iframe style="border-radius:12px;" src="https://open.spotify.com/embed/album/0E6QUnse299lO788TWbE8t?utm_source=generator" 
+            width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
     <div style="margin: auto; text-align: center">
-        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=2506980105/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="http://zandgall.bandcamp.com/album/zzzzzzzz">Zzzzzzzz by Zandgall  Studios</a></iframe>
-        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=1757049274/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="http://zandgall.bandcamp.com/album/arvopia-01-10">Arvopia 0.1-1.0 by Zandgall  Studios</a></iframe>
-        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=1499950768/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="http://zandgall.bandcamp.com/album/electicity">Electricity by Zandgall  Studios</a></iframe>
+        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=2644588502/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="https://zandgall.bandcamp.com/album/revopia">Revopia by Zandgall</a></iframe>
+        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=2506980105/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="http://zandgall.bandcamp.com/album/zzzzzzzz">Zzzzzzzz by Zandgall</a></iframe>
+        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=1757049274/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="http://zandgall.bandcamp.com/album/arvopia-01-10">Arvopia 0.1-1.0 by Zandgall</a></iframe>
+        <iframe style="border: 0; width: 700px; height: 1136px;" src="https://bandcamp.com/EmbeddedPlayer/album=1499950768/size=large/bgcol=333333/linkcol=0f91ff/transparent=true/" seamless><a href="http://zandgall.bandcamp.com/album/electicity">Electricity by Zandgall</a></iframe>
     </div>
 <!-- </div> -->
 

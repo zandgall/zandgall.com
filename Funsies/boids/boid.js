@@ -47,7 +47,7 @@ class boid {
         this.acceleration.add(matchedVelocity.multiplyScalar(0.125));
         this.acceleration.add(center.multiplyScalar(0.07125));
         this.acceleration.add(avoid.multiplyScalar(0.25));
-        if(this.position.distance({x:mouseX, y:mouseY})<100) {
+        if(this.position.distance({x:bc_mouseX, y:bc_mouseY})<100) {
             // let angleTo = Math.atan2(this.position.y-mouseY, this.position.x-mouseX);
             // let nAngleP = (this.velocity.horizontalAngle()-(angleTo+Math.PI/2) + Math.PI)%(2*Math.PI) - Math.PI;
             // nAngleP += (nAngleP < -Math.PI ? Math.PI*2 : 0);

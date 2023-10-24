@@ -6,6 +6,7 @@ class PathSegment {
      * @param {number} y 
      */
     constructor(code, x, y) {
+        console.log(code);
         this.type = code[0];
         this.points = []; 
         if(this.type!="M")

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <?php 
 $pagetitle = "Zandgall - Schute!";
@@ -9,11 +10,9 @@ $title = "Schute!";
 $subtitle = "Ah schute i mistyped";
 include "global/begin.php"?>
 
-<div style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: min(800px, 80vw); margin-bottom: 2cm">
-    <!-- Parent has no display style, so give it one here, but with a lower opacity. Not applied to parent so that other children won't have a default opacity of 0.92 -->
-    <div class="section" style="position:absolute; width:100%; height:100%; margin-top: 0; opacity: 0.92"></div>
+<div class="section" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: min(800px, 80vw); margin-bottom: 2cm">
     <!--STUFF HERE-->
-    <h1 class="basictext outlinetext" style="font-size: 72">Schute!</h1>
+    <h1 class="basictext outlinetext" style="font-size: 48pt">Schute!</h1>
     <h2 class="basictext outlinetext">The better, of the ScoreSpace Game Jam games</h2>
 
     <h2 class="basictext">
@@ -21,10 +20,10 @@ include "global/begin.php"?>
         It works so good in fact, that I will remake it in C++ with better controls and physics and overall level designs. I'm not sure when this will happen, especially with a ScoreSpace Game Jam coming up as I'm writing this, that I might join.<br><br>
         Overall this game is worth playing, and hopefully will be remade perfectly.
     </h2>
-    <img class = "section" src="assets/thumbnail/SchuteThumb.png" style="width: 98%; margin-left: 1%">
-    <div class="splitter" style="margin-top: 20"></div>
-    <a href="Downloads/Schute!.zip"><div class="section" style="width:75%; margin-left: auto; margin-right: auto; margin-bottom: 20; margin-top: 20"><h1 class="basictext outlinetext">Schute!.zip - 5.2MB</h1></div></a>
-    <a href="index"><div class="section" style="width:25%; margin-left: auto; margin-right: auto; margin-bottom: 20;"><h1 class="basictext outlinetext">Home</h1></div></a>
+    <img class = "section" src="assets/thumbnail/SchuteThumb.png" style="width: 98%; margin-left: 1%" alt="Schute Thumbnail">
+    <div class="splitter" style="margin-top: 2cm"></div>
+    <a href="Downloads/Schute!.zip"><div class="section" style="width:75%; margin-left: auto; margin-right: auto; margin-bottom: 2cm; margin-top: 2cm"><h1 class="basictext outlinetext">Schute!.zip - 5.2MB</h1></div></a>
+    <a href="index"><div class="section" style="width:25%; margin-left: auto; margin-right: auto; margin-bottom: 2cm;"><h1 class="basictext outlinetext">Home</h1></div></a>
 </div>
 <?php include "global/end.php"?>
 </html>

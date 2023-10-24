@@ -1,3 +1,134 @@
+/*INPUT*/
+/// Mouse
+// Mouse button input
+let leftPress = false, rightPress = false, middlePress = false, leftClick = false, rightClick = false, middleClick = false,
+leftDblClick = false, rightDblClick = false, middleDblClick = false, leftRelease = false, rightRelease = false, middleRelease = false;
+// Mouse movement input, mouse scroll and glided mouse scroll (pretty much just "smooth scrolling")
+let bc_mouseX = 0, bc_mouseY = 0, bc_mouseScroll = 0, bc_mouseScroll_g = 0;
+
+/// Keyboard
+// Keys
+// @ts-ignore
+let keys = new Map(), typed = new Map();
+
+// Events
+/**
+ * @param {MouseEvent} ev
+ */
+function mousemove(ev) {
+    bc_mouseX = ev.pageX - currentCanvas.getBoundingClientRect().left;
+    bc_mouseY = ev.pageY - currentCanvas.getBoundingClientRect().top;
+}
+/**
+ * @param {MouseEvent} ev
+ */
+function click(ev) {
+    switch(ev.button) {
+        case 0:
+            leftClick = true;
+            break;
+        case 1:
+            rightClick = true;
+            break;
+        case 2:
+            middleClick = true;
+            break;
+    }
+}
+
+function dblClick(ev) {
+    switch(ev.button) {
+        case 0:
+            leftDblClick = true;
+            break;
+        case 1:
+            rightDblClick = true;
+            break;
+        case 2:
+            middleDblClick = true;
+            break;
+    }
+}
+
+function mousedown(ev) {
+    switch(ev.button) {
+        case 0:
+            leftPress = true;
+            leftClick = false;
+            leftDblClick = false;
+            break;
+        case 1:
+            rightPress = true;
+            rightClick = false;
+            rightDblClick = false;
+            break;
+        case 2:
+            middlePress = true;
+            middleClick = false;
+            middleDblClick = false;
+            break;
+    }
+}
+
+function mouseup(ev) {
+    switch(ev.button) {
+        case 0:
+            leftPress = false;
+            leftClick = false;
+            leftDblClick = false;
+            break;
+        case 1:
+            rightPress = false;
+            rightClick = false;
+            rightDblClick = false;
+            break;
+        case 2:
+            middlePress = false;
+            middleClick = false;
+            middleDblClick = false;
+            break;
+    }
+}
+
+/**
+ * 
+ * @param {KeyboardEvent} ev 
+ */
+function keydown(ev) {
+    keys[ev.key] = true;
+    typed[ev.key] = false;
+}
+
+/**
+ * 
+ * @param {KeyboardEvent} ev 
+ */
+function keyup(ev) {
+    keys[ev.key] = false;
+    typed[ev.key] = false;
+}
+
+/**
+ * 
+ * @param {KeyboardEvent} ev 
+ */
+function keypress(ev) {
+    typed[ev.key] = true;
+}
+
+// Linking events to document
+window.onload = function() {
+    document.addEventListener("mousemove", mousemove);
+    document.addEventListener("click", click);
+    document.addEventListener("dblclick", dblClick);
+    document.addEventListener("mousedown", mousedown);
+    document.addEventListener("mouseup", mouseup);
+    document.addEventListener("keydown", keydown);
+    document.addEventListener("keyup", keyup);
+    document.addEventListener("keypress", keypress);
+}
+
+// PLAYER
 let ut, c;
 class BubblePlayer {
     handleImg() {
@@ -71,7 +202,7 @@ class BubblePlayer {
     }
 
     tick() {
-        this.rotation = Math.atan2(mouseY-this.y,mouseX-this.x);
+        this.rotation = Math.atan2(bc_mouseY-this.y,bc_mouseX-this.x);
         if(this.bodyID === "unset")
             this.handleImg();
         
@@ -111,9 +242,9 @@ class BubblePlayer {
                     this.bulletInd = this.reloadspeed; 
                     break;
                 case "bomblauncher":
-                    this.customs.push(new bomb(this.x, this.y, mouseX, mouseY, this.sheet, this.bulletPower));
+                    this.customs.push(new bomb(this.x, this.y, bc_mouseX, bc_mouseY, this.sheet, this.bulletPower));
                     if(this.barrelID=="bombtrio") {
-                        let d = Math.sqrt((mouseX-this.x)*(mouseX-this.x) + (mouseY-this.y)*(mouseY-this.y));
+                        let d = Math.sqrt((bc_mouseX-this.x)*(bc_mouseX-this.x) + (bc_mouseY-this.y)*(bc_mouseY-this.y));
                         this.customs.push(new bomb(this.x, this.y, this.x + Math.cos(this.rotation+0.3)*d, this.y + Math.sin(this.rotation+0.3)*d, this.sheet, this.bulletPower));
                         this.customs.push(new bomb(this.x, this.y, this.x + Math.cos(this.rotation-0.3)*d, this.y + Math.sin(this.rotation-0.3)*d, this.sheet, this.bulletPower));
                     }
@@ -295,9 +426,9 @@ class BubblePlayer {
         // c.drawImage(this.body, this.x, this.y);
         if(this.bulletInd>0) {
             c.fillStyle = "rgba(0, 0, 0, 0.4)";
-            c.fillRect(mouseX-5, mouseY-10, 20 - 20.0 * (this.bulletInd / this.reloadspeed), 5);
+            c.fillRect(bc_mouseX-5, bc_mouseY-10, 20 - 20.0 * (this.bulletInd / this.reloadspeed), 5);
             c.strokeStyle = "rgba(0, 0, 0, 0.4)";
-            c.strokeRect(mouseX-5, mouseY-10, 20, 5);
+            c.strokeRect(bc_mouseX-5, bc_mouseY-10, 20, 5);
         }
         switch(this.bodyID) {
             case "daredevil":

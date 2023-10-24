@@ -1,0 +1,65 @@
+{
+    "markers": [
+        {
+            "x": 510.5,
+            "z": 83.5,
+            "type": "important-place",
+            "name": "Home",
+            "description": "Where we live !!"
+        },
+        {
+            "x": 521.5,
+            "z": 15.5,
+            "type": "tree",
+            "name": "Lothniim",
+            "description": "Home of the Tree People"
+        },
+        {
+            "x": 779.5,
+            "z": 177.5,
+            "type": "default",
+            "name": "aquarium kind of",
+            "description": "axolotls anfd fishies and maybe tortles"
+        },
+        {
+            "x": 3006.5,
+            "z": -1619.5,
+            "type": "tree",
+            "name": "Azealia Tree",
+            "description": ""
+        }
+    ],
+    "deleted_markers": [
+        {
+            "x": 511.5,
+            "z": 86.5,
+            "type": "important-place",
+            "name": "Name",
+            "description": ""
+        }
+    ],
+    "regions": [
+        {
+            "name": "Isle of Deities",
+            "description": "The first land from which the Two emerged",
+            "color": "#955f95"
+        },
+        {
+            "name": "Lothniim Island",
+            "description": "The island where the tree people reside",
+            "color": "#136220"
+        },
+        {
+            "name": "Mount Echor",
+            "description": "The coldest and highest place in the world",
+            "color": "#542dae"
+        }
+    ],
+    "deleted_regions": [
+        {
+            "name": "Region",
+            "description": "Description",
+            "color": "#ff00ff"
+        }
+    ]
+}
