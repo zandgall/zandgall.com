@@ -46,7 +46,7 @@ function init() {
     console.log("INITIATE");
 
     var type = types[Math.floor(Math.random()*types.length)];
-    setupinsects(10, 14, 6, type);
+    setupinsects(100, 14, 6, type);
 }
 
 function setupinsects(number, size, sizevariation, type) {
