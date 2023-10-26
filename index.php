@@ -12,8 +12,10 @@ include "global/begin.php";
 include "global/projectGenerator.php";?>
 <h1 class="outlinetext basictext" style="width:600px; margin:auto; margin-bottom: 20px">(Website's currently being updated)</h1>
 <h1 class="outlinetext basictext" style="margin: auto; margin-bottom: 20px">Project Directory</h1>
-    <div class="section" id="projectss" style="position: relative; width:60vw; max-width:900px; height:1350px; margin:auto">
+    <div class="section" id="projectss" style="position: relative; width:60vw; max-width:900px; height:1750px; margin:auto">
         <?php 
+        project("100%", "400px", "JavaScript Rasterizer", "A simple pure-js 3D rasterization engine, with shaders and reflections and things.",
+                "assets/thumbnail/RasterizerThumb.png", "/rasterizer");
         project("50%", "400px", "NBT Video Essay", "A 20 min video essay explaining the details of the NBT format, how to use it, and comparisons to other general format JSON.",
                 "assets/nbtthumb.png", "https://youtu.be/12PAtF2Ih_c");
         project("50%", "400px", "QB64 3D", "A essay sat here on this website explaining the intricacies of 3D graphics, starting from nothing.",
