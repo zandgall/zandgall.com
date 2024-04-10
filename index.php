@@ -14,7 +14,9 @@ include "global/projectGenerator.php";?>
 <h1 class="outlinetext basictext" style="margin: auto; margin-bottom: 20px">Project Directory</h1>
     <div class="section" id="projectss" style="position: relative; width:60vw; max-width:900px; height:1750px; margin:auto">
         <?php 
-        project("100%", "400px", "JavaScript Rasterizer", "A simple pure-js 3D rasterization engine, with shaders and reflections and things.",
+        project("50%", "400px", "TicTacToe", "Just a normal game of TicTacToe",
+                "assets/thumbnail/TicTacToeThumb.png", "/tictactoe");
+        project("50%", "400px", "JavaScript Rasterizer", "A simple pure-js 3D rasterization engine, with shaders and reflections and things.",
                 "assets/thumbnail/RasterizerThumb.png", "/rasterizer");
         project("50%", "400px", "NBT Video Essay", "A 20 min video essay explaining the details of the NBT format, how to use it, and comparisons to other general format JSON.",
                 "assets/nbtthumb.png", "https://youtu.be/12PAtF2Ih_c");
