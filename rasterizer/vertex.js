@@ -1,36 +1,36 @@
-class vec2 {
-    constructor(x, y) {
-        this.x = x
-        this.y = y
-    }
-    clone() {
-        return new vec2(this.x, this.y)
-    }
-}
+// class vec2 {
+//     constructor(x, y) {
+//         this.x = x
+//         this.y = y
+//     }
+//     clone() {
+//         return new vec2(this.x, this.y)
+//     }
+// }
 
-class vec3 {
-    constructor(x, y, z) {
-        this.x = x
-        this.y = y
-        this.z = z
-    }
-    clone() {
-        return new vec3(this.x, this.y, this.z)
-    }
-}
+// class vec3 {
+//     constructor(x, y, z) {
+//         this.x = x
+//         this.y = y
+//         this.z = z
+//     }
+//     clone() {
+//         return new vec3(this.x, this.y, this.z)
+//     }
+// }
 
-class vec4 {
-    constructor(x, y, z, w) {
-        this.x = x
-        this.y = y
-        this.z = z
-        this.w = w
-    }
-    clone() {
-        return new vec4(this.x, this.y, this.z, this.w)
-    }
-}
-
+// class vec4 {
+//     constructor(x, y, z, w) {
+//         this.x = x
+//         this.y = y
+//         this.z = z
+//         this.w = w
+//     }
+//     clone() {
+//         return new vec4(this.x, this.y, this.z, this.w)
+//     }
+// }
+//
 // class vertex {
 //     constructor() {
 //         this.pos = vec4(0,0,0,1)
@@ -39,33 +39,33 @@ class vec4 {
 //         this.vec4s = []
 //     }
 // }
-
-function vertex() {
-    return { pos: new vec4(0,0,0,1) }
-}
+//
+//function vertex() {
+//    return { pos: new vec4(0,0,0,1) }
+//}
 
 function v4add(a, b) {
-    return new vec4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w)
+    return {x: a.x + b.x, y: a.y + b.y, z: a.z + b.z, w: a.w + b.w}
 }
 
 function v3add(a, b) {
-    return new vec3(a.x + b.x, a.y + b.y, a.z + b.z)
+    return {x: a.x + b.x, y: a.y + b.y, z: a.z + b.z}
 }
 
 function v2add(a, b) {
-    return new vec2(a.x + b.x, a.y + b.y)
+    return {x: a.x + b.x, y: a.y + b.y}
 }
 
 function v4scale(a, b) {
-    return new vec4(a.x * b, a.y * b, a.z * b, a.w * b)
+    return {x: a.x * b, y: a.y * b, z: a.z * b, w: a.w * b}
 }
 
 function v3scale(a, b) {
-    return new vec3(a.x * b, a.y * b, a.z * b)
+    return {x: a.x * b, y: a.y * b, z: a.z * b}
 }
 
 function v2scale(a, b) {
-    return new vec2(a.x * b, a.y * b)
+    return {x: a.x * b, y: a.y * b}
 }
 
 function v3dot(a, b) {
@@ -73,12 +73,12 @@ function v3dot(a, b) {
 }
 
 function v3cross(a, b) {
-    return new vec3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x)
+    return {x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x}
 }
 
 function v3normalize(a) {
     if (a.x == 0 && a.y == 0 && a.z == 0)
-        return new vec3(Infinity, Infinity, Infinity)
+        return {x: Infinity, y: Infinity, z: Infinity}
     return v3scale(a, 1.0/Math.sqrt(a.x*a.x + a.y*a.y + a.z*a.z))
 }
 
@@ -90,7 +90,7 @@ function v3reflect(a, n) {
 function v3refract(a,n,eta) {
     let k = 1.0 - eta * eta * (1.0 - v3dot(n,a)*v3dot(n,a))
     if(k < 0)
-        return new vec3(0,0,0)
+        return {x: 0, y: 0, z: 0}
     return v3add(v3scale(a,eta), v3scale(n,eta * v3dot(n,a)+Math.sqrt(k)))
 }
 
@@ -98,18 +98,18 @@ function v3refract(a,n,eta) {
 
 class matrix {
     constructor() {
-        this.a = new vec4(1,0,0,0)
-        this.b = new vec4(0,1,0,0)
-        this.c = new vec4(0,0,1,0)
-        this.d = new vec4(0,0,0,1)
+        this.a = {x:1,y:0,z:0,w:0}
+        this.b = {x:0,y:1,z:0,w:0}
+        this.c = {x:0,y:0,z:1,w:0}
+        this.d = {x:0,y:0,z:0,w:1}
     }
 
     clone() {
         let out = new matrix()
-        out.a = this.a.clone()
-        out.b = this.b.clone()
-        out.c = this.c.clone()
-        out.d = this.d.clone()
+        out.a = {...this.a}
+        out.b = {...this.b}
+        out.c = {...this.c}
+        out.d = {...this.d}
         return out
     }
 
@@ -153,7 +153,7 @@ class matrix {
 
 function transform3x3(a, b) {
     let out4 = v4add(v4add(v4scale(a.a, b.x), v4scale(a.b, b.y)), v4scale(a.c, b.z))
-    return new vec3(out4.x, out4.y, out4.z)
+    return {x:out4.x, y:out4.y, z:out4.z}
 }
 
 function transform(a, b) {
@@ -190,10 +190,10 @@ function m_mult(a, b) {
 
 function transpose(a) {
     let out = new matrix()
-    out.a = new vec4(a.a.x, a.b.x, a.c.x, a.d.x)
-    out.b = new vec4(a.a.y, a.b.y, a.c.y, a.d.y)
-    out.c = new vec4(a.a.z, a.b.z, a.c.z, a.d.z)
-    out.d = new vec4(a.a.w, a.b.w, a.c.w, a.d.w)
+    out.a = {x:a.a.x, y:a.b.x, z:a.c.x, w:a.d.x}
+    out.b = {x:a.a.y, y:a.b.y, z:a.c.y, w:a.d.y}
+    out.c = {x:a.a.z, y:a.b.z, z:a.c.z, w:a.d.z}
+    out.d = {x:a.a.w, y:a.b.w, z:a.c.w, w:a.d.w}
     return out
 }
 

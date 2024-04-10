@@ -13,20 +13,20 @@ class cubemap {
 }
 
 function vs_mvp(input, uni) {
-    let out = vertex()
+    let out = {pos:{x:0,y:0,z:0,w:1}}
     out.pos = transform(uni.m, input.pos)
     out.normal = transform3x3(inverseTranspose3x3(uni.m), input.normal)
-    out.worldPos = new vec3(out.pos.x, out.pos.y, out.pos.z)
+    out.worldPos = {x:out.pos.x, y:out.pos.y, z:out.pos.z}
     out.pos = transform(uni.p, transform(uni.v, out.pos))
     out.uv = input.uv
     return out
 }
 
 function vs_skybox(input, uni) {
-    let out = vertex()
+    let out = {pos:{x:0,y:0,z:0,w:1}}
     out.pos = transform(uni.m, input.pos)
     out.pos.z = out.pos.w
-    out.uvw = new vec3(input.pos.x, input.pos.y, input.pos.z)
+    out.uvw = {x:input.pos.x, y:input.pos.y, z:input.pos.z}
     return out
 }
 
@@ -35,7 +35,7 @@ function vs_skybox(input, uni) {
 function texture2D(s, x, y) {
     let xi = Math.floor(Math.max(Math.min(x, 1), 0)*(s.w - 1))
     let yi = Math.floor(Math.max(Math.min(y, 1), 0)*(s.h - 1))
-    let out = new vec4(s.data[(yi*s.w + xi)*4 + 0]/255, s.data[(yi*s.w + xi)*4 + 1]/255, s.data[(yi*s.w + xi)*4 + 2]/255, 1)
+    let out = {x:s.data[(yi*s.w + xi)*4 + 0]/255, y:s.data[(yi*s.w + xi)*4 + 1]/255, z:s.data[(yi*s.w + xi)*4 + 2]/255, w:1}
     if(isNaN(out.x)) {
         console.log("Texture error:",out, xi, yi, s, s.data[(yi*s.w + xi) * 4 + 0], s.data[(yi*s.w + xi) * 4 + 1], s.data[(yi*s.w + xi) * 4 + 2], s.data[(yi*s.w + xi) * 4 + 3])
     }
@@ -59,23 +59,23 @@ function textureCubemap(s, x, y, z) {
 }
 
 function fs_red(input, uni) {
-    return new vec4(1, 0, 0, 1)
+    return {x:1, y:0, z:0, w:1}
 }
 
 function fs_depth(input, uni) {
-    return new vec4(input.pos.z, input.pos.z, input.pos.z, 1)
+    return {x:input.pos.z, y:input.pos.z, z:input.pos.z, w:1}
 }
 
 function fs_pos(input, uni) {
-    return new vec4(input.pos.x, input.pos.y, input.pos.z, 1)
+    return {x:input.pos.x, y:input.pos.y, z:input.pos.z, w:1}
 }
 
 function fs_norm(input, uni) {
-    return new vec4(input.normal.x, input.normal.y, input.normal.z, 1)
+    return {x:input.normal.x, y:input.normal.y, z:input.normal.z, w:1}
 }
 
 function fs_uv(input, uni) {
-    return new vec4(input.uv.x, input.uv.y, 1, 1)
+    return {x:input.uv.x, y:input.uv.y, z:1, w:1}
 }
 
 function fs_texture(input, uni) {
@@ -91,22 +91,22 @@ function fs_monkey(input, uni) {
     let reflect_sample = textureCubemap(uni.cubemap, reflection.x, reflection.y, reflection.z)
     let sky_bright = Math.sqrt(reflect_sample.x * reflect_sample.x + reflect_sample.y * reflect_sample.y + reflect_sample.z + reflect_sample.z)
     let diff = Math.max(v3dot(nnorm, light_dir) + sky_bright*0.2, 0)
-    let diffuse = new vec3(0,0,0)
-    let ambient = new vec3(0,0,0)
+    let diffuse = {x:0,y:0,z:0}
+    let ambient = {x:0,y:0,z:0}
     if(uni.texture.w == 0 || uni.texture.h == 0) {
         diffuse = v3scale(uni.diffuse_color, diff)
         ambient = uni.ambient_color
     } else {
         let s = texture2D(uni.texture, input.uv.x, input.uv.y)
-        diffuse = new vec3(diff*s.x, diff*s.y, diff*s.z)
-        ambient = v3add(new vec3(0.1*s.x, 0.1*s.y, 0.1*s.z), uni.ambient_color)
+        diffuse = {x:diff*s.x, y:diff*s.y, z:diff*s.z}
+        ambient = v3add({x:0.1*s.x, y:0.1*s.y, z:0.1*s.z}, uni.ambient_color)
     }
 
     let spec_reflect = v3reflect(v3scale(light_dir, -1), nnorm)
     let spec = Math.pow(Math.max(v3dot(v3scale(view_dir, -1), spec_reflect), 0.0), 32)
     let specular = v3scale(uni.specular_color, spec*0.5)
 
-    base = new vec4(ambient.x + diffuse.x + specular.x, ambient.y + diffuse.y + specular.y, ambient.z + diffuse.z + specular.z, 1)
+    base = {x:ambient.x + diffuse.x + specular.x, y:ambient.y + diffuse.y + specular.y, z:ambient.z + diffuse.z + specular.z, w:1}
     let out = v4add(v4scale(base, 1-uni.reflect_amount), v4scale(reflect_sample, uni.reflect_amount))
     return out
 }
@@ -123,7 +123,7 @@ function fs_refract(input, uni) {
 
     let d = v3cross(view_dir, nnorm)
     let reflection_amount = d.x * d.x + d.y * d.y + d.z * d.z
-    return v4add(v4scale(v4add(v4scale(reflect_sample, reflection_amount), v4scale(refract_sample, 1-reflection_amount)), 0.25*reflection_amount+0.75), new vec4(0.25*reflection_amount+0.25, 0.25*reflection_amount+0.25, 0.25*reflection_amount+0.25, 0.25*reflection_amount+0.25))
+    return v4add(v4scale(v4add(v4scale(reflect_sample, reflection_amount), v4scale(refract_sample, 1-reflection_amount)), 0.25*reflection_amount+0.75), {x:0.25*reflection_amount+0.25, y:0.25*reflection_amount+0.25, z:0.25*reflection_amount+0.25, w:0.25*reflection_amount+0.25})
 }
 
 function fs_skybox(input, uni) {

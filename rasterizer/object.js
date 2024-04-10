@@ -31,17 +31,17 @@ function load_obj(filepath) {
                 let nums = [...line.matchAll(/-?\d+\.\d*/g)]
                 if (nums.length < 3)
                     console.error("Error: vertex at line #" + line_number + " doesn't have 3 or more coordinates")
-                out.vertices.push(new vec4(parseFloat(nums[0]), parseFloat(nums[1]), parseFloat(nums[2]), 1))
+                out.vertices.push({x:parseFloat(nums[0]), y:parseFloat(nums[1]), z:parseFloat(nums[2]), w:1})
             } else if(line.startsWith("vt ")) {
                 let nums = [...line.matchAll(/-?\d+\.\d*/g)]
                 if (nums.length < 2)
                     console.error("Error: vertex texture at line #" + line_number + " doesn't have 2 or more coordinates")
-                out.uvs.push(new vec2(parseFloat(nums[0]), parseFloat(nums[1])))
+                out.uvs.push({x:parseFloat(nums[0]), y:parseFloat(nums[1])})
             } else if(line.startsWith("vn ")) {
                 let nums = [...line.matchAll(/-?\d+\.\d*/g)]
                 if (nums.length < 3)
                     console.error("Error: vertex normal at line #" + line_number + " doesn't have 3 or more coordinates")
-                out.normals.push(new vec3(parseFloat(nums[0]), parseFloat(nums[1]), parseFloat(nums[2])))
+                out.normals.push({x:parseFloat(nums[0]), y:parseFloat(nums[1]), z:parseFloat(nums[2])})
             } else if (line.startsWith("f ")) {
                 let nums = [...line.matchAll(/\d+/g)]
                 let f = out.faces.length
@@ -82,7 +82,7 @@ function load_obj(filepath) {
 }
 
 function draw_object(obj, vs, v_uni, fs, f_uni) {
-    let verts = [vertex(), vertex(), vertex()]
+    let verts = [{pos:{x:0,y:0,z:0,w:1}}, {pos:{x:0,y:0,z:0,w:1}}, {pos:{x:0,y:0,z:0,w:1}}]
     for (let i = 0; i < obj.faces.length; i++) {
         verts[0].pos = obj.vertices[obj.faces[i].a_v]
         verts[1].pos = obj.vertices[obj.faces[i].b_v]
@@ -92,9 +92,9 @@ function draw_object(obj, vs, v_uni, fs, f_uni) {
         }
 
         if(obj.faces[i].a_vt==-1) {
-            verts[0]["uv"] = new vec2(0,0)
-            verts[1]["uv"] = new vec2(0,0)
-            verts[2]["uv"] = new vec2(0,0)
+            verts[0]["uv"] = {x:0,y:0}
+            verts[1]["uv"] = {x:0,y:0}
+            verts[2]["uv"] = {x:0,y:0}
         } else {
             verts[0]["uv"] = obj.uvs[obj.faces[i].a_vt]
             verts[1]["uv"] = obj.uvs[obj.faces[i].b_vt]
@@ -102,9 +102,9 @@ function draw_object(obj, vs, v_uni, fs, f_uni) {
         }
 
         if(obj.faces[i].a_vn==-1) {
-            verts[0]["normal"] = new vec3(0,0,0)
-            verts[1]["normal"] = new vec3(0,0,0)
-            verts[2]["normal"] = new vec3(0,0,0)
+            verts[0]["normal"] = {x:0,y:0,z:0}
+            verts[1]["normal"] = {x:0,y:0,z:0}
+            verts[2]["normal"] = {x:0,y:0,z:0}
         } else {
             verts[0]["normal"] = obj.normals[obj.faces[i].a_vn]
             verts[1]["normal"] = obj.normals[obj.faces[i].b_vn]

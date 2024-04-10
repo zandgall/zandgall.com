@@ -7,7 +7,7 @@ function shade_triangle(args, fragment_shader, f_uni) {
      * It doesn't have to be in terms of y, but that's what we chose, arbitrarily
     */
 
-    let t = vertex(), m = vertex(), b = vertex()
+    let t = undefined, m = undefined, b = undefined
 
     // Calculate the screenspace y-position of each arg, in order to compare them and find the top, middle, and bottom point
     let a0y = args[0].pos.y / args[0].pos.w
@@ -107,7 +107,7 @@ function shade_triangle(args, fragment_shader, f_uni) {
         switch_ant = sm_x
 
     // Declaring and allocating our current vertex
-    let current_vertice = vertex()
+    let current_vertice = {pos:{x:0,y:0,z:0,w:1}}
 
     // The y-loop. Loop from y = st_y, to sm_y. Along the way, increment straight and switch ant by their respective slopes
     for (let y = Math.floor(st_y); y < sm_y; y++, straight_ant += tb, switch_ant += tm)
@@ -140,8 +140,19 @@ function shade_triangle(args, fragment_shader, f_uni) {
                             else if (Object.keys(t[key]).length == 2)
                                 current_vertice[key] = v2scale(v2add(v2add(v2scale(t[key], u / t.pos.w), v2scale(m[key], v / m.pos.w)), v2scale(b[key], w / b.pos.w)), d)
 
+                    let z = current_vertice.pos.z / current_vertice.pos.w
+                    // If the current pixel (x, y) was drawn this frame, and is closer to the camera, don't draw over it
+                    if(frame_buff[y*WIDTH + x] == frame && depth_buff[y * WIDTH + x] < z)
+                        continue
+
                     // Call the given shade function with the interpolated vertex attributes, x and y screen position, and draw function
-                    tri_draw_func(x, y, current_vertice.pos.z / current_vertice.pos.w, fragment_shader(current_vertice, f_uni))
+                    let input = fragment_shader(current_vertice, f_uni)
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 0] = Math.min(Math.max(input.x, 0), 1)*255
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 1] = Math.min(Math.max(input.y, 0), 1)*255
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 2] = Math.min(Math.max(input.z, 0), 1)*255
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 3] = 255
+                    frame_buff[y*WIDTH + x] = frame
+                    depth_buff[y*WIDTH + x] = z
                 }
         }
     
@@ -174,7 +185,21 @@ function shade_triangle(args, fragment_shader, f_uni) {
                             else if (Object.keys(t[key]).length == 2)
                                 current_vertice[key] = v2scale(v2add(v2add(v2scale(t[key], u / t.pos.w), v2scale(m[key], v / m.pos.w)), v2scale(b[key], w / b.pos.w)), d)
 
-                    tri_draw_func(x, y, current_vertice.pos.z / current_vertice.pos.w, fragment_shader(current_vertice, f_uni))
+                    //tri_draw_func(x, y, current_vertice.pos.z / current_vertice.pos.w, fragment_shader(current_vertice, f_uni))
+
+                    let z = current_vertice.pos.z / current_vertice.pos.w
+                    // If the current pixel (x, y) was drawn this frame, and is closer to the camera, don't draw over it
+                    if(frame_buff[y*WIDTH + x] == frame && depth_buff[y * WIDTH + x] < z)
+                        continue
+
+                    // Call the given shade function with the interpolated vertex attributes, x and y screen position, and draw function
+                    let input = fragment_shader(current_vertice, f_uni)
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 0] = Math.min(Math.max(input.x, 0), 1)*255
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 1] = Math.min(Math.max(input.y, 0), 1)*255
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 2] = Math.min(Math.max(input.z, 0), 1)*255
+                    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 3] = 255
+                    frame_buff[y*WIDTH + x] = frame
+                    depth_buff[y*WIDTH + x] = z
                 }
         }
 }

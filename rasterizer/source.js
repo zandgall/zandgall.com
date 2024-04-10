@@ -100,31 +100,31 @@ function main() {
     
     persp = perspective(3.14159265 / 2, WIDTH / HEIGHT, 0.1, 100.0)
     tf_monkey = new matrix()
-    tf_monkey.rotate(0.72, new vec3(0,1,0))
-    tf_monkey.rotate(0.6, new vec3(1,0,0))
-    tf_monkey.translate(new vec3(0, 0.5, 0))
+    tf_monkey.rotate(0.72, {x:0,y:1,z:0})
+    tf_monkey.rotate(0.6, {x:1,y:0,z:0})
+    tf_monkey.translate({x:0,y:0.5,z:0})
 
     tf_monkey2 = new matrix()
-    tf_monkey2.rotate(2.72, new vec3(0, 1, 0))
-    tf_monkey2.rotate(0.6, new vec3(1, 0, 0))
-    tf_monkey2.translate(new vec3(-3, 0.5, -2))
+    tf_monkey2.rotate(2.72, {x:0,y:1,z:0})
+    tf_monkey2.rotate(0.6, {x:1,y:0,z:0})
+    tf_monkey2.translate({x:-3,y:0.5,z:-2})
 
     tf_plane = new matrix()
-    tf_plane.scale(new vec3(5, 1, 5))
-    tf_plane.rotate(0.72, new vec3(0, 1, 0))
+    tf_plane.scale({x:5,y:1,z:5})
+    tf_plane.rotate(0.72, {x:0,y:1,z:0})
     
     tf_cube2 = new matrix()
-    tf_cube2.rotate(-1.22, new vec3(1, 0, 0))
-    tf_cube2.rotate(0.72, new vec3(0, 1, 0))
-    tf_cube2.translate(new vec3(-4, 4.5, 0))
+    tf_cube2.rotate(-1.22, {x:1,y:0,z:0})
+    tf_cube2.rotate(0.72, {x:0,y:1,z:0})
+    tf_cube2.translate({x:-4,y:4.5,z:0})
 
     tf_cube3 = new matrix()
-    tf_cube3.rotate(-0.42, new vec3(0, 1, 0))
-    tf_cube3.scale(new vec3(0.5, 0.5, 1.7))
-    tf_cube3.translate(new vec3(3, 0.5, 2))
+    tf_cube3.rotate(-0.42, {x:0,y:1,z:0})
+    tf_cube3.scale({x:0.5,y:0.5,z:1.7})
+    tf_cube3.translate({x:3,y:0.5,z:2})
 
     tf_pawn = new matrix()
-    tf_pawn.translate(new vec3(3, 1, -6))
+    tf_pawn.translate({x:3,y:1,z:-6})
 
     tf_skybox = new matrix()
 
@@ -132,25 +132,25 @@ function main() {
 
     skybox_uni = {
         cubemap: skybox,
-        cam_pos: new vec3(0,0,0)
+        cam_pos: {x:0,y:0,z:0}
     }
 
     monkey_uni = { 
         cubemap: skybox,
         texture: monkey_image,
-        light_pos: new vec3(-10000, 20000, -10000),
-        cam_pos: new vec3(0, 0, 0),
-        diffuse_color: new vec3(0,0.5,1),
-        ambient_color: new vec3(0,0,0.1),
-        specular_color: new vec3(1,1,0.9),
+        light_pos: {x:-10000, y:20000, z:-10000},
+        cam_pos: {x:0, y:0, z:0},
+        diffuse_color: {x:0,y:0.5,z:1},
+        ambient_color: {x:0,y:0,z:0.1},
+        specular_color: {x:1,y:1,z:0.9},
         reflect_amount: 0
     }
 
-    cam_center = new vec3(0,0,0)
-    cam_dir = v3normalize(new vec3(1,1,1))
+    cam_center = {x:0,y:0,z:0}
+    cam_dir = v3normalize({x:1,y:1,z:1})
     cam_dist = 5
 
-    cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), new vec3(0,1,0))
+    cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), {x:0,y:1,z:0})
 
     monkey = load_obj("monkey.obj")
     cube = load_obj("cube.obj")
@@ -177,33 +177,33 @@ function loop() {
     mvp_uni.v = cam
     mvp_uni.m = tf_monkey
     monkey_uni.reflect_amount = 0.1
-    monkey_uni.diffuse_color = new vec3(0, 0.5, 1)
+    monkey_uni.diffuse_color = {x:0, y:0.5, z:1}
     // console.log("MONKEY")
     draw_object(monkey, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
+    mvp_uni.m = tf_cube2
+    // console.log("CUBE2")
+    draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
     monkey_uni.texture = new sampler2D()
     mvp_uni.m = tf_plane
     // console.log("PLANE")
     draw_object(plane, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
-    mvp_uni.m = tf_cube2
-    // console.log("CUBE2")
-    draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
 
     let a = frame * 2 * 3.14159265 / 256
     let c = Math.cos(a), s = Math.sin(a)
 
     let rotation = new matrix()
-    rotation.a = new vec4(c, 0, -s, 0)
-    rotation.b = new vec4(0, 1, 0, 0)
-    rotation.c = new vec4(s, 0, c, 0)
-    rotation.d = new vec4(0, 0, 0, 1)
+    rotation.a = {x:c, y:0, z:-s, w:0}
+    rotation.b = {x:0, y:1, z:0, w:0}
+    rotation.c = {x:s, y:0, z:c, w:0}
+    rotation.d = {x:0, y:0, z:0, w:1}
 
-    rotation.translate(new vec3(-3, -6, 2))
+    rotation.translate({x:-3, y:-6, z:2})
     mvp_uni.m = rotation
     // console.log("CUBE")
     draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
 
     monkey_uni.reflect_amount = 0.8
-    monkey_uni.diffuse_color = new vec3(1, 0.9, 0.8)
+    monkey_uni.diffuse_color = {x:1, y:0.9, z:0.8}
     mvp_uni.m = tf_cube3
     // console.log("CUBE3")
     draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
@@ -217,7 +217,7 @@ function loop() {
     draw_object(pawn, vs_mvp, mvp_uni, fs_refract, skybox_uni)
 
     tf_skybox = cam.clone()
-    tf_skybox.d = new vec4(0, 0, 0, 1)
+    tf_skybox.d = {x:0, y:0, z:0, w:1}
     mvp_uni.m = m_mult(persp, tf_skybox)
     ZG_DISABLE_CULLING = true
     // console.log("SKYBOX")
@@ -246,24 +246,24 @@ var mouse_left = false, mouse_right = false
 function mouseMove(ev) {
     if(mouse_right) {
         let f = v3scale(v3normalize(cam_dir), -1)
-        let r = v3cross(f, new vec3(0, 1, 0))
+        let r = v3cross(f, {x:0, y:1, z:0})
         let u = v3cross(r, f)
         cam_center = v3add(cam_center, v3add(v3scale(r, -ev.movementX*0.01), v3scale(u, ev.movementY*0.01)))
-        cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), new vec3(0,1,0))
+        cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), {x:0,y:1,z:0})
     } else if(mouse_left) {
         let m = new matrix()
-        m.rotate(ev.movementX*0.01, new vec3(0, 1, 0))
-        cam_dir = transform3x3(m, cam_dir)
+        m.rotate(ev.movementX*0.01, {x:0, y:1, z:0})
+        cam_dir = v3normalize(transform3x3(m, cam_dir))
         m = new matrix()
-        m.rotate(ev.movementY*0.01, v3cross(new vec3(0, 1, 0), cam_dir))
-        cam_dir = transform3x3(m, cam_dir)
-        cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), new vec3(0,1,0))
+        m.rotate(ev.movementY*0.01, v3cross({x:0, y:1, z:0}, cam_dir))
+        cam_dir = v3normalize(transform3x3(m, cam_dir))
+        cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), {x:0,y:1,z:0})
     }
 }
 
 function mouseWheel(ev) {
     cam_dist += cam_dist * Math.min(0.001 * ev.deltaY, 1)
-    cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), new vec3(0,1,0))
+    cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), {x:0,y:1,z:0})
     ev.preventDefault()
 }  
 

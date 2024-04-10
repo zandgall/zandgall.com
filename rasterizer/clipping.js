@@ -4,9 +4,9 @@ var ZG_DISABLE_CULLING = false
 function shade_clip_plane_augment(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
     let ratio_ac = a_coord / (a_coord - c_coord);
 	let ratio_bc = b_coord / (b_coord - c_coord);
-	let seg1 = vertex();
+	let seg1 = {pos:{x:0,y:0,z:0,w:1}}
 	
-    let seg2 = vertex();
+    let seg2 = {pos:{x:0,y:0,z:0,w:1}}
 	
 	// Clip a->c
 	for (const key in a)
@@ -35,9 +35,9 @@ function shade_clip_plane_create(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) 
     let ratio_ab = b_coord / (b_coord - a_coord);
 	let ratio_ac = c_coord / (c_coord - a_coord);
 
-	let seg1 = vertex();
+	let seg1 = {pos:{x:0,y:0,z:0,w:1}}
 	
-    let seg2 = vertex();
+    let seg2 = {pos:{x:0,y:0,z:0,w:1}}
 
     // Clip a->b
 	for (const key in a) {
