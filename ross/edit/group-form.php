@@ -59,7 +59,7 @@ if(isset($_POST["page"])) {
     fwrite($upl, json_encode($data));
     fclose($upl);
 
-    $n = PHP_EOL;
+    /*$n = PHP_EOL;
     $upl = fopen("../".$group["page"].".php", "w") or die("Unable to open page");
     fwrite($upl, "
     <?php$n
@@ -69,6 +69,6 @@ if(isset($_POST["page"])) {
     include \"./gen/footer.php\";$n
     ?>$n");
     fclose($upl);
-    chmod("../".$group["page"].".php", 0777);
+    chmod("../".$group["page"].".php", 0777);*/
 }
 ?>

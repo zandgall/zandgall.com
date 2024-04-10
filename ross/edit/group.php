@@ -68,8 +68,8 @@ if($group_ID == "new") {
 }
 $group = $data["groups"][$group_ID];
 echo "<a href='./group'>Back to groups</a><br>";
-if(file_exists("../".$group["page"].".php"))
-    echo "<a href='../".$group["page"]."'>View result</a>";
+// if(file_exists("../".$group["page"].".php"))
+echo "<a href='../group/".$group["page"]."'>View result</a>";
 echo "
     <form action='group-form?group=".$group_ID."' method='post' enctype='multipart/form-data'>
         <label for='name'>Name:</label>

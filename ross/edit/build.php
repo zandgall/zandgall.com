@@ -16,6 +16,11 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));
     <body>
 <?php
 
+$database = new mysqli('localhost', 'zandgall', 'Z3DavidGall', 'RossWiki');
+if($database->connect_errno > 0) {
+    die('Unable to connect to database [' . $db->connect_error . ']');
+}
+
 $json_file = file_get_contents("../data.json");
 $data = json_decode($json_file, true);
 
@@ -31,8 +36,13 @@ function thumb4($image_path) {
 }
 
 if(!isset($_GET["build"])) {
-    echo "<main>";
-    for($i = 0; $i < count($data["builds"]); $i++) {
+    echo "<main>
+        <a href='build?build=new".(isset($_GET["nothumb"])?"&nothumb":"")."'>
+            <div class='new'>
+                <h1>Add New</h1>
+            </div>
+        </a>";
+    for($i = count($data["builds"])-1; $i >= 0; $i--) {
         echo "
         <a href='build?build=".$i.(isset($_GET["nothumb"])?"&nothumb":"")."'>
             <div class='item'>
@@ -40,18 +50,12 @@ if(!isset($_GET["build"])) {
                 <h2>{$data["builds"][$i]["type"]}</h2>
                 <h3>{$data["builds"][$i]["server"]}</h3>";
         if(isset($data["builds"][$i]["thumbnail"]) && $data["builds"][$i]["thumbnail"]!="" && !isset($_GET["nothumb"]))
-            echo "<img src='../".thumb16($data["builds"][$i]["thumbnail"])."' alt='{$data["name"]}'>";
+            echo "<img src='../".thumb16($data["builds"][$i]["thumbnail"])."' alt='{$data["builds"][$i]["name"]}'>";
         echo "</div>
         </a>
         ";
     }
-    echo "
-        <a href='build?build=new".(isset($_GET["nothumb"])?"&nothumb":"")."'>
-            <div class='new'>
-                <h1>Add New</h1>
-            </div>
-        </a>
-    </main>";
+    echo "</main>";
     return;
 }
 
@@ -85,9 +89,12 @@ if($BUILD_ID == "new") {
     $data = json_decode(json_encode($data), true);
 }
 $build = $data["builds"][$BUILD_ID];
+// See if the element exists in the Highlights table
+if(!$table = $database->query("SELECT * FROM Highlights WHERE `type`='build' and `selection`={$BUILD_ID}")) {
+    die("Couldn't run query: " . $database->error);
+}
 echo "<a href='./build".(isset($_GET["nothumb"])?"?nothumb":"")."'>Back to builds</a><br>";
-if(file_exists("../".$build["page"].".php"))
-    echo "<a href='../".$build["page"]."'>View result</a>";
+echo "<a href='../build/".$build["page"]."'>View result</a>";
 echo "
     <form action='build-form?build=".$BUILD_ID."' method='post' enctype='multipart/form-data'>
         <label for='name'>Name:</label>
@@ -128,6 +135,8 @@ echo "
         echo"\" /><br>
         <label for='on_map'>Appears on map:</label>
         <input id='on_map' name='on_map' type='checkbox' ". (isset($build["on_map"]) ? ($build["on_map"] ? "checked" : "") : "checked")."><br>
+        <label for='highlight'>A Ross Highlight:</label>
+        <input id='highlight' name='highlight' type='checkbox' ". ($table->num_rows == 0 ? "" : "checked") ."><br>
         <label for='x'>Coordinates:</label><br>
         <input id='x' name='x' type='number' value='{$build["coordinates"][0]}' style='width:60px'>
         <input id='y' name='y' type='number' value='{$build["coordinates"][1]}' style='width:60px'>

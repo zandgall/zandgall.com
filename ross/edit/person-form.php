@@ -50,7 +50,7 @@ if(isset($_POST["description"])) {
     fwrite($upl, json_encode($data));
     fclose($upl);
 
-    $n = PHP_EOL;
+    /*$n = PHP_EOL;
     $upl = fopen("../$PERSON_ID.php", "w") or die("Unable to open page");
     fwrite($upl, "
     <?php$n
@@ -60,6 +60,6 @@ if(isset($_POST["description"])) {
     include \"./gen/footer.php\";$n
     ?>$n");
     fclose($upl);
-    chmod("../$PERSON_ID.php", 0777);
+    chmod("../$PERSON_ID.php", 0777);*/
 }
 ?>

@@ -174,3 +174,37 @@ p {
     font-family: basicbit-light;
     font-size:medium;
 }
+
+.long-selection {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-content:center;
+    justify-content: center;
+    width:100vw;
+}
+
+.long-selection div {
+    display:flex;
+    flex-direction:row;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    text-align:center;
+    margin:5mm;
+    max-height:21em;
+}
+.long-selection div img {
+    height:100%;
+    width:auto;
+}
+
+
+.long-selection div h1 {
+    font-family: basicbit;
+}
+
+.long-selection div h2 {
+    font-family: basicbit-light;
+    font-size:medium;
+}

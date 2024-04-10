@@ -8,7 +8,40 @@ $data = json_decode($json_file, true);
 $BUILD_ID = $_GET["build"];
 header("Location: build?build=".$BUILD_ID);
 $build = $data["builds"][$BUILD_ID];
+
+$database = new mysqli('localhost', 'zandgall', 'Z3DavidGall', 'RossWiki');
+if($database->connect_errno > 0) {
+    die('Unable to connect to database [' . $db->connect_error . ']');
+}
+// See if the element exists in the Highlights table
+if(!$table = $database->query("SELECT * FROM Highlights WHERE `type`='build' and `selection`={$BUILD_ID}")) {
+    die("Couldn't run query: " . $database->error);
+}
+
 if(isset($_POST["page"])) {
+    print($_POST["page"] . "\n");
+    print($_POST["name"] . "\n");
+    print($_POST["description"] . "\n");
+    print($_POST["server"] . "\n");
+    print($_POST["type"] . "\n");
+    print($_POST["constructed"] . "\n");
+    print($_POST["on_map"] . "\n");
+    print($_POST["x"] . "\n");
+    print($_POST["y"] . "\n");
+    print($_POST["z"] . "\n");
+    print($_FILES["thumbnail"]["name"] . "\n");
+    print($_FILES["thumbnail"]["error"] . "\n");
+    print($_FILES["thumbnail"]["size"] . "\n");
+
+    print($_POST["builders"] . "\n");
+    print($_POST["events"] . "\n");
+    print($_POST["caption0"] . "\n");
+
+    print($_FILES["image0"]["name"] . "\n");
+    print($_FILES["image0"]["error"] . "\n");
+    print($_FILES["image0"]["size"] . "\n");
+
+
     $build["page"] = $_POST["page"];
     $build["name"] = $_POST["name"];
     $build["description"] = $_POST["description"];
@@ -32,7 +65,11 @@ if(isset($_POST["page"])) {
                 list($width, $height) = getimagesize("../".$thumbnail_file);
                 $src = imagecreatefrompng("../".$thumbnail_file);
                 $dst = imagescale($src, intdiv($width, 4), intdiv($height, 4));
-                imagepng($dst, str_replace(".png", "_x0.25.png", $thumbnail_file));
+                imagepng($dst, str_replace(".png", "_x0.25.png", "../".$thumbnail_file));
+                $dst = imagescale($src, intdiv($width, 8), intdiv($height, 8));
+                imagepng($dst, str_replace(".png", "_x0.125.png", "../".$thumbnail_file));
+                $dst = imagescale($src, intdiv($width, 16), intdiv($height, 16));
+                imagepng($dst, str_replace(".png", "_x.16.png", "../".$thumbnail_file));
             }
         }
     }
@@ -47,6 +84,16 @@ if(isset($_POST["page"])) {
         $events[$i] = trim($events[$i]);
     $build["events"] = $events;
 
+    if($_POST["highlight"]=="on") {
+        if($table->num_rows == 0)
+            if(!$table = $database->query("INSERT INTO Highlights(`selection`, `type`) VALUES ({$BUILD_ID}, 'build')"))
+                die("Couldn't run query: " . $database->error);
+    } else {
+        if($table->num_rows > 0)
+            if(!$table = $database->query("DELETE FROM Highlights WHERE 'selection'={$BUILD_ID} AND 'type'='build'"))
+                die("Couldn't run query: " . $database->error);
+    }
+
     for($i = 0; isset($_POST["caption".$i]); $i++) {
         if(isset($_FILES["image".$i]) && strlen($_FILES["image".$i]["name"])>0 && $_FILES["image".$i]["error"]==0 && $_FILES["image".$i]["size"] > 0) {
             $new_file = $build["server"]."/".$build["type"]."/".$build["page"]."/".basename($_FILES["image".$i]["name"]);
@@ -60,7 +107,11 @@ if(isset($_POST["page"])) {
                     list($width, $height) = getimagesize("../".$new_file);
                     $src = imagecreatefrompng("../".$new_file);
                     $dst = imagescale($src, intdiv($width, 4), intdiv($height, 4));
-                    imagepng($dst, str_replace(".png", "_x0.25.png", $new_file));
+                    imagepng($dst, str_replace(".png", "_x0.25.png", "../".$new_file));
+                    $dst = imagescale($src, intdiv($width, 8), intdiv($height, 8));
+                    imagepng($dst, str_replace(".png", "_x0.125.png", "../".$new_file));
+                    $dst = imagescale($src, intdiv($width, 16), intdiv($height, 16));
+                    imagepng($dst, str_replace(".png", "_x.16.png", "../".$new_file));
                 }
             // }
         }
@@ -71,7 +122,7 @@ if(isset($_POST["page"])) {
     fwrite($upl, json_encode($data));
     fclose($upl);
 
-    $n = PHP_EOL;
+   /* $n = PHP_EOL;
     $upl = fopen("../".$build["page"].".php", "w") or die("Unable to open page");
     fwrite($upl, "
     <?php$n
@@ -81,6 +132,6 @@ if(isset($_POST["page"])) {
     include \"./gen/footer.php\";$n
     ?>$n");
     fclose($upl);
-    chmod("../".$build["page"].".php", 0777);
+    chmod("../".$build["page"].".php", 0777);*/
 }
 ?>

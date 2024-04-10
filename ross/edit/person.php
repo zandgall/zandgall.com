@@ -40,8 +40,8 @@ if(!isset($_GET["person"])) {
 $PERSON_ID = $_GET["person"];
 $person = $data["people"][$PERSON_ID];
 echo "<a href='./person'>Back to people</a><br>";
-if(file_exists("../$PERSON_ID.php"))
-    echo "<a href='../$PERSON_ID'>View result</a>";
+// if(file_exists("../$PERSON_ID.php"))
+echo "<a href='../person/$PERSON_ID'>View result</a>";
 echo "
     <form action='person-form?person=".$PERSON_ID."' method='post' enctype='multipart/form-data'>
         <label for='aka'>AKA:</label>

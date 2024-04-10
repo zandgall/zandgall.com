@@ -16,6 +16,11 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));
     <body>
 <?php
 
+$database = new mysqli('localhost', 'zandgall', 'Z3DavidGall', 'RossWiki');
+if($database->connect_errno > 0) {
+    die('Unable to connect to database [' . $db->connect_error . ']');
+}
+
 // Simply returns the image path with "_x.16" inserted before ".png", for code shortening
 function thumb16($image_path) {
     return str_replace(".png", "_x.16.png", $image_path);
@@ -31,8 +36,13 @@ $json_file = file_get_contents("../data.json");
 $data = json_decode($json_file, true);
 
 if(!isset($_GET["event"])) {
-    echo "<main>";
-    for($i = 0; $i < count($data["events"]); $i++) {
+    echo "<main>
+    <a href='event?event=new".(isset($_GET["nothumb"])?"&nothumb":"")."'>
+            <div class='new'>
+                <h1>Add New</h1>
+            </div>
+        </a>";
+    for($i = count($data["events"])-1; $i >= 0; $i--) {
         echo "
         <a href='event?event=".$i.(isset($_GET["nothumb"])?"&nothumb":"")."'>
             <div class='item'>
@@ -40,17 +50,12 @@ if(!isset($_GET["event"])) {
                 <h2>{$data["events"][$i]["type"]}</h2>
                 <h3>{$data["events"][$i]["server"]}</h3>";
         if(isset($data["events"][$i]["thumbnail"]) && $data["events"][$i]["thumbnail"]!="" && !isset($_GET["nothumb"]))
-            echo "<img src='../{$data["events"][$i]["thumbnail"]}' alt='{$data["name"]}'>";
+            echo "<img src='../{$data["events"][$i]["thumbnail"]}' alt='{$data["events"][$i]["name"]}'>";
         echo "</div>
         </a>
         ";
     }
     echo "
-        <a href='event?event=new".(isset($_GET["nothumb"])?"&nothumb":"")."'>
-            <div class='new'>
-                <h1>Add New</h1>
-            </div>
-        </a>
     </main>";
     return;
 }
@@ -80,13 +85,17 @@ if($EVENT_ID == "new") {
     $data = json_decode(json_encode($data), true);
 }
 $event = $data["events"][$EVENT_ID];
+// See if the element exists in the Highlights table
+if(!$table = $database->query("SELECT * FROM Highlights WHERE `type`='event' and `selection`={$EVENT_ID}")) {
+    die("Couldn't run query: " . $database->error);
+}
 echo "<a href='./event'>Back to events</a><br>";
-if(file_exists("../".$event["page"].".php"))
-    echo "<a href='../".$event["page"]."'>View result</a>";
+// if(file_exists("../".$event["page"].".php"))
+echo "<a href='../event/".$event["page"]."'>View result</a>";
 echo "
     <form action='event-form?event=".$EVENT_ID."' method='post' enctype='multipart/form-data'>
         <label for='name'>Name:</label>
-        <input id='name' name='name' type='text' value='".$event["name"]."' /><br>
+        <input id='name' name='name' type='text' value=\"".$event["name"]."\" /><br>
         <label for='page'>Page URL:</label>
         <input id='page' name='page' type='text' value='".$event["page"]."' /><br>
         <label for='description'>Description:</label><br>
@@ -121,6 +130,9 @@ echo "
                 echo ", ";
         }
         echo"' /><br>
+
+        <label for='highlight'>A Ross Highlight:</label>
+        <input id='highlight' name='highlight' type='checkbox' ". ($table->num_rows == 0 ? "" : "checked") ."><br>
 
         <label for='locations'>Locations:</label>
         <input id='locations' name='locations' type='text' value='";

@@ -187,7 +187,6 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));?>
                     coords[1] = Number(coords[1]);
                     coords[2] = Number(coords[2]);
                     let s = (8/zoom) * (document.getElementById("bigIcons").checked ? 2 : 1);
-                    console.log(key, builds[key]["type"]);
                     c.drawImage(icons[builds[key]["type"]], coords[0]-s, coords[2]-s, 2*s, 2*s);
                     if(mouseMapX >= coords[0]-s && mouseMapX <= coords[0]+s && mouseMapY >= coords[2]-s && mouseMapY <= coords[2]+s) {
                         t = builds[key].name;
@@ -201,7 +200,7 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));?>
                             let desc = deformat(builds[key].description);
                             $("#info p").text((desc.length > 500) ? (desc.substr(0, 500)+"...") : desc);
                             $("#info img").attr("src", builds[key].thumbnail);
-                            $("#info a").attr("href", builds[key].page);
+                            $("#info a").attr("href", "build/"+builds[key].page);
                             $("#info a").text(t);
                         }
                     }

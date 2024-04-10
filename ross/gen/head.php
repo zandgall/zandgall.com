@@ -35,36 +35,36 @@ function format($text, $data, $element) {
                 break;
             case "s":
                 $replacement = (($element == "") ? "" : "</".$element.">") .
-                "<a class='link' href='".$data["servers"][$content[1]]["page"]."'>".$content[2].
+                "<a class='link' href='../server/".$data["servers"][$content[1]]["page"]."'>".$content[2].
                 "<div class='description'>
                     <h1>".$content[1]."</h1>
                     <p>".format_no_links($data["servers"][$content[1]]["description"], $data)."</p>
-                    <img src='".$data["servers"][$content[1]]["thumbnail"]."' alt='".$content[1]." Thumbnail'>
+                    <img src='../".$data["servers"][$content[1]]["thumbnail"]."' alt='".$content[1]." Thumbnail'>
                 </div></a>" . (($element == "") ? "" : "<".$element.">");
                 break;
             case "p":
                 $replacement = (($element == "") ? "" : "</".$element.">") .
-                "<a class='link' href='".$content[1]."'>".$content[2]."<div class='description'>
+                "<a class='link' href='../person/".$content[1]."'>".$content[2]."<div class='description'>
                     <h1>".$content[1]."</h1>
                     <h2>a.k.a: ".$data["people"][$content[1]]["aka"]."</h2>
                     <p>".format_no_links($data["people"][$content[1]]["description"], $data)."</p>
-                    <img src='".$data["people"][$content[1]]["thumbnail"]."' alt='".$content[1]." Thumbnail'>
+                    <img src='../".$data["people"][$content[1]]["thumbnail"]."' alt='".$content[1]." Thumbnail'>
                 </div></a>" . (($element == "") ? "" : "<".$element.">");
                 break;
             case "b":
                 $replacement = (($element == "") ? "" : "</".$element.">") .
-                "<a class='link' href='".$data["builds"][$content[1]]["page"]."'>".$content[2]."<div class='description'>
+                "<a class='link' href='../build/".$data["builds"][$content[1]]["page"]."'>".$content[2]."<div class='description'>
                     <h1>".$data["builds"][$content[1]]["name"]."</h1>
                     <p>".format_no_links($data["builds"][$content[1]]["description"], $data)."</p>
-                    <img src='".thumb($data["builds"][$content[1]]["thumbnail"])."' alt='".$data["builds"][$content[1]]["name"]." Thumbnail'>
+                    <img src='../".thumb($data["builds"][$content[1]]["thumbnail"])."' alt='".$data["builds"][$content[1]]["name"]." Thumbnail'>
                 </div></a>" . (($element == "") ? "" : "<".$element.">");
                 break;
             case "e":
                 $replacement = (($element == "") ? "" : "</".$element.">") .
-                "<a class='link' href='".$data["events"][$content[1]]["page"]."'>".$content[2]."<div class='description'>
+                "<a class='link' href='../event/".$data["events"][$content[1]]["page"]."'>".$content[2]."<div class='description'>
                     <h1>".$data["events"][$content[1]]["name"]."</h1>
                     <p>".format_no_links($data["events"][$content[1]]["description"], $data)."</p>
-                    <img src='".thumb($data["events"][$content[1]]["thumbnail"])."' alt='".$data["events"][$content[1]]["name"]." Thumbnail'>
+                    <img src='../".thumb($data["events"][$content[1]]["thumbnail"])."' alt='".$data["events"][$content[1]]["name"]." Thumbnail'>
                 </div></a>" . (($element == "") ? "" : "<".$element.">");
                 break;
             default:

@@ -1,5 +1,5 @@
 <?php
-        $json_file = file_get_contents("../ross/data.json");
+        $json_file = file_get_contents("../data.json");
         $data = json_decode($json_file, true);
         $people = $data["people"];
         $person = $people[$PERSON_ID];
@@ -12,7 +12,7 @@
         echo "
         <main>
         <h1 id='Name'>$PERSON_ID</h1>
-        <img id='thumbnail' src='".$person["thumbnail"]."'><br>
+        <img id='thumbnail' src='../".$person["thumbnail"]."'><br>
         <p id='Description'>".format($person["description"], $data, "p")."</p><br>
         <p>Member from ".$person["join-date"].($person["leave-date"]!="" ? " - ".$person["leave-date"] : "")."</p><br>";
         if(isset($person["controversies"]) && $person["controversies"]!="") {
@@ -22,9 +22,9 @@
         echo "<h1>Groups</h1>
             <section class='selection'>";
             for($i = 0; $i < count($person["groups"]); $i++) {
-                echo "<a class='select-link' href='{$data["groups"][$person["groups"][$i]]["page"]}'><div class='select mcbg'>
+                echo "<a class='select-link' href='../group/{$data["groups"][$person["groups"][$i]]["page"]}'><div class='select mcbg'>
                     <h1>{$data["groups"][$person["groups"][$i]]["name"]}</h1>
-                    <img src='{$data["groups"][$person["groups"][$i]]["thumbnail"]}' alt=\"{$data["groups"][$person["groups"][$i]]["name"]}\">
+                    <img src='../{$data["groups"][$person["groups"][$i]]["thumbnail"]}' alt=\"{$data["groups"][$person["groups"][$i]]["name"]}\">
                 </div></a>";
             }
         }
@@ -34,9 +34,9 @@
                 <h1>$name Builds</h1>
                 <section class='selection'>";
                 for($i = 0; $i < count($person["builds"][$name]); $i++) {
-                    echo "<a class='select-link' href='{$data["builds"][$person["builds"][$name][$i]]["page"]}'><div class='select mcbg'>
+                    echo "<a class='select-link' href='../build/{$data["builds"][$person["builds"][$name][$i]]["page"]}'><div class='select mcbg'>
                         <h2>{$data["builds"][$person["builds"][$name][$i]]["name"]}</h2>
-                        <img src='".thumb($data["builds"][$person["builds"][$name][$i]]["thumbnail"])."' alt=\"{$data["builds"][$person["builds"][$name][$i]]["name"]} thumbnail\">
+                        <img src='../".thumb($data["builds"][$person["builds"][$name][$i]]["thumbnail"])."' alt=\"{$data["builds"][$person["builds"][$name][$i]]["name"]} thumbnail\">
                     </div></a>";
                 }
             }
@@ -45,9 +45,9 @@
                 <h1>$name Events</h1>
                 <section class='selection'>";
                 for($i = 0; $i < count($person["events"][$name]); $i++) {
-                    echo "<a class='select-link' href='{$data["events"][$person["events"][$name][$i]]["page"]}'><div class='select mcbg'>
+                    echo "<a class='select-link' href='../event/{$data["events"][$person["events"][$name][$i]]["page"]}'><div class='select mcbg'>
                         <h2>{$data["events"][$person["events"][$name][$i]]["name"]}</h2>
-                        <img src='".thumb($data["events"][$person["events"][$name][$i]]["thumbnail"])."' alt=\"{$data["events"][$person["events"][$name][$i]]["name"]} thumbnail\">
+                        <img src='../".thumb($data["events"][$person["events"][$name][$i]]["thumbnail"])."' alt=\"{$data["events"][$person["events"][$name][$i]]["name"]} thumbnail\">
                     </div></a>";
                 }
             }
