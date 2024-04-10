@@ -1,0 +1,83 @@
+/* registration.css - Style sheet for registration.php
+   Student Name
+   Copied: 12/1/23
+   Revised:
+*/
+body {
+    background: #EEE;
+    font-size: 16px;
+    font-family: optima, helvetica, arial, sans-serif;
+}
+
+h1 {
+    margin: 0;
+    color: #000080;
+}
+
+h2 {
+    color: #000080;
+    text-align: center;
+    border-top: white 1px solid;
+    border-bottom: white 1px solid;
+}
+
+#frame {
+    max-width: 1200px;
+    margin: auto;
+    border: 1px solid #000080;
+    padding: 10px;
+}
+
+/* Form Styles */
+.topLabel {
+    float: left;
+    display: inline-block;
+    margin: 0px 20px 0 0px;
+}
+
+.topLabel label {
+    display: block;
+    /* position labels above text boxes */
+}
+
+input[type=text] {
+    font-size: 1em;
+    padding: 5px;
+    margin: 0px;
+    display: inline;
+}
+
+select {
+    font-size: 1.2em;
+}
+
+button {
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 10px;
+    background: white;
+    margin: 5px 5px;
+}
+
+fieldset {
+    color: #000080;
+    border: 1px solid #DDD;
+    border-radius: 10px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+}
+
+td,
+th {
+    padding: 5px 20px;
+    background: white;
+    color: black;
+}
+
+th {
+    background: #EEE;
+    color: #000080;
+}

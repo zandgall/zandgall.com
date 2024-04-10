@@ -1,0 +1,66 @@
+/* classicVinyl.css - Styling for the Classic Vinyl website
+	Written by Student Name
+	Written: Original Date
+	Revised: Current Date
+*/
+
+body {
+	background: #EEE;
+	font-size: 18px;
+	font-family: optima, helvetica, arial, sans-serif;
+}
+
+h1 {
+	border: 1px #000080 solid;
+	padding: 10px;
+	background: #AAA;
+	color: white;
+}
+
+h2 {
+	background: #DDD;
+	color: #000080;
+	padding: 10px;
+	border: 1px #000080 solid;
+}
+
+li {
+	margin: 1.5em 0 0 0;
+}
+
+#frame {
+	max-width: 800px;
+	margin: auto;
+	border: 1px solid #000080;
+	padding: 20px;
+}
+
+select {
+	font-size: 1.1em;
+	padding: 5px;
+	margin: 10px;
+}
+
+table {
+	border: 4px solid #000080;
+	width: 100%;
+}
+
+td, th {
+	padding: 5px 20px;
+}
+
+th {
+	background: #000080;
+	color: white;
+}
+
+/* zebra stripe the table */
+tr:nth-child(even) {
+	background: #f2f0ff; /* pale blue */
+}
+
+input[type="text"] {
+    font-size:             1.5em;
+    color:                 #000080;  /* dark blue */
+  }

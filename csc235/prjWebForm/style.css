@@ -1,0 +1,141 @@
+/** 
+ * Zander Gall
+ * Nov 3rd, 2023
+ * CSC235 - Prof. Furtney
+ *
+ * CSS is rather messy and difficult to comment succinctly on, but I tried my best
+*/
+
+
+/* Remove spacing between body and edge of document. Give it a minimum width so background doesn't tile. */
+body {
+    margin: 0;
+    background: linear-gradient(#000, #100);
+    min-height: 100vh;
+}
+
+/* Create a full-width header with central text. Customize it's coloring. */
+header {
+    width: 100%;
+    text-align: center;
+    font-family: "Lugrasimo";
+    color: blanchedalmond;
+    background: linear-gradient(#400, #300 90%, #000);
+}
+
+/* Header's h1's top margin was creating space between header and top edge. */
+header h1 { margin-top: 0; }
+
+/* Visual sizing to taste, spacing, margin, and border customizing. */
+main {
+    width: 66%;
+    margin: auto;
+    background: linear-gradient(#400, #202);
+    margin: 5mm auto auto auto;
+    padding: 5mm;
+    border-radius: 5mm;
+}
+
+/* Goofy fire background. Subtle, fixed, takes up whole screen, in the background. */
+main img {
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.05;
+    image-rendering: pixelated;
+    z-index: -1;
+}
+
+/* Style tables. No border spacing, full width, top border rounding */
+table {
+    border-spacing:0;
+    width:100%;
+    border-right: 1mm solid blanchedalmond;
+    border-bottom: 1mm solid blanchedalmond;
+    border-top-left-radius: 5mm;
+    border-top-right-radius: 5mm;
+}
+
+td {
+    background-color: rgba(100, 50, 50, 0.5);
+    color: burlywood;
+}
+
+th {
+    font-family: "Lugrasimo";
+    color: blanchedalmond;
+}
+
+th, td {
+    padding: 1mm;
+    border-left: 1mm solid blanchedalmond;
+    border-top: 1mm solid blanchedalmond;
+}
+
+/* Add a border radius to the top-left and top-right tiles ONLY. */
+th:last-child { border-top-right-radius: 5mm; }
+
+th:first-child { border-top-left-radius: 5mm; }
+
+
+/* FORMS; add spacing between table and first form */
+#addForm {
+    margin-top: 5mm;
+}
+
+/* Set text and border style for forms */
+form fieldset {
+    border: 1mm solid blanchedalmond;
+    color: blanchedalmond;
+    font-family: "Lugrasimo";
+}
+
+/* Make all divs in the 'addForm' flex-display */
+#addForm div {
+    display: flex;
+}
+
+/* Margin for less clutter; flex only applies to addForm */
+form label {
+    flex: 1;
+    text-align:right;
+    margin:2mm;
+}
+
+/* Coloring; flex only applies to addForm. Targeting select as well, for select/delete form. */
+form input, form select {
+    flex: 4;
+    background-color: #200;
+    border-color: #406;
+    color: #9144B8;
+}
+
+/* SUBMIT BUTTONS
+We use parent div/containers in order to modify margins on hover without moving other things around.
+Containers need fit-width, block display, and auto margins on left and right.
+*/
+.submitParent {
+    display: block;
+    width: fit-content;
+    margin: 5mm auto auto auto;
+}
+
+/* The buttons are styled here. Follow purple color scheme, use this border+radius and padding. */
+.submitParent input {
+    background-color: #200;
+    border: 1mm solid #406;
+    border-radius:5mm;
+    padding: 2mm;
+    color: #406;
+    font-size:large;
+}
+
+/* when hovered, modify colors. AND change margins; shift left and up 1 millimeter, and pad right and down 1mm to make up for lost space. */
+.submitParent input:hover {
+    background-color: #314;
+    color: #9144B8;
+    box-shadow: #406 1mm 1mm;
+    margin: -1mm 1mm 1mm -1mm;
+}

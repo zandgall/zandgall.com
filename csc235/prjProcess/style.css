@@ -1,0 +1,107 @@
+/* 
+  Zander Gall - galla@csp.edu
+  CSC235 - Prof. Furtney
+
+  This stylesheet was modified from 11/24 through 11/25
+*/
+
+html {
+  text-align: center;
+  font-family: 'roboto', mono;
+}
+
+main {
+  width: fit-content;
+  max-width: 100vw;
+  margin: auto;
+}
+
+.assignment {
+  border: 1mm solid black;
+  border-radius: 5mm;
+  margin: 5mm;
+}
+
+.color-id {
+  filter: drop-shadow(0 1px 1px black);
+  padding: 2mm;
+  margin-bottom: 5mm;
+  border-top-left-radius: 4mm;
+  border-top-right-radius: 4mm;
+}
+
+.color-id h1 {
+  margin: 0;
+  font-size: medium;
+}
+
+.color-id h2 {
+  margin: 0;
+  font-size: small;
+}
+
+.assignment>form>div,
+.assignment>div {
+  display: flex;
+  flex-direction: column;
+}
+
+.assignment>form>div>div {
+  display: flex;
+}
+
+.assignment>div>div {
+  justify-content: center;
+  display: flex;
+}
+
+.due {
+  font-style: italic;
+}
+
+.classForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+@keyframes fade-in {
+  0% {opacity: 0; margin-top: 0mm}
+  50% {opacity: 0.5; margin-top: -5mm}
+  100% {opacity: 1; margin-top: 0mm}
+}
+
+@keyframes fade-out {
+  from {opacity:1}
+  to {opacity:0}
+}
+
+.week>div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  animation-name: fade-in;
+  animation-duration: 2s;
+}
+
+.congrats {
+  pointer-events: none;
+  position:absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  animation-name:fade-out;
+  animation-duration: 5s;
+}
+
+.week>hr {
+  width: 100%;
+}

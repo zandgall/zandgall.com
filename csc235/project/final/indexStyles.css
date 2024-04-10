@@ -1,0 +1,34 @@
+body {
+    text-align: center;
+    font-family:'Courier New', Courier, monospace
+}
+
+ul {
+    display: block;
+    margin:auto;
+    text-align:left;
+    width: 60vw;
+}
+
+a {
+    display:block;
+}
+
+#gallery {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#gallery > div {
+    width:min-content;
+    border: 1mm solid black;
+    border-radius:5mm;
+    margin: 5mm;
+    padding:5mm;
+}
+
+#gallery img {
+    max-width: 40vw;
+}

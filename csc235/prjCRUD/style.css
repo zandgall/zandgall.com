@@ -1,0 +1,41 @@
+/*
+    Zander Gall - galla@csp.edu
+    CSC235 - Prof. Furtney
+
+    11/16/23 - Set up body flexbox for tables (dbfCreate) and sections (dbfJoin). Extra styling
+ */
+
+ body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+
+table, section {
+    margin: 5mm;
+    flex: 1;
+    border-collapse: collapse;
+    text-align: center;
+    min-width: 5cm;
+}
+
+section {
+    border: 1px solid black;
+    border-radius: 5mm;
+    padding: 5mm;
+    min-width: 20cm;
+}
+
+td, th {
+    padding: 1mm;
+}
+
+/* white-space attribute required for text-wrapping in pre tags (https://css-tricks.com/snippets/css/make-pre-text-wrap/)*/
+pre {
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+section table {
+    margin: auto;
+}

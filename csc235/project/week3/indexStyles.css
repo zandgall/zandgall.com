@@ -1,0 +1,49 @@
+body {
+    font-family: "Sometype Mono";
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100vw;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    min-height: 20vh;
+    margin: -1mm -2mm -1mm -2mm;
+    border: 1mm solid black;
+    border-bottom-left-radius: 5mm;
+    border-bottom-right-radius: 5mm;
+    text-align: center;
+}
+
+header > div {
+    margin: auto;
+}
+
+header > div > * {
+    display:block;
+    margin:5mm;
+}
+
+section {
+    flex: 0 0 auto;
+    padding: 10mm;
+    border: 1mm solid black;
+    border-radius: 5mm;
+    margin: 5mm;
+} 
+
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 2mm
+}

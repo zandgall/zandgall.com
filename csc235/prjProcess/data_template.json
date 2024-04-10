@@ -1,0 +1,76 @@
+{
+    "classes": {
+        "CSC235": {
+            "name": "Server-Side Development",
+            "color": "#4287f5",
+            "assignments": [
+                {
+                    "name": "Week 4 Individual Project",
+                    "due": 1701064799,
+                    "steps": [
+                        "Think of a project",
+                        "Needs Assessment",
+                        "Problem Analysis",
+                        "Proof-Of-Concept",
+                        "Prototype the UI",
+                        "Write the App",
+                        "Publish to the Server"
+                    ]
+                },
+                {
+                    "name": "Week 4 Term Project",
+                    "due": 1701064799,
+                    "steps": [
+                        "Create Web Form"
+                    ]
+                }
+            ]
+        },
+        "MAT255": {
+            "name": "Calculus III",
+            "color": "#f56f42",
+            "assignments": [
+                { 
+                    "name": "Homework 5.6 Calculating Centers of Mass and Moments of Inertia",
+                    "due": 1701151199,
+                    "steps": []
+                }
+            ]
+        }
+    },
+    "students": {
+        "galla": {
+            "enrolled-classes": {
+                "CSC235": {
+                    "grade": "something",
+                    "attendance": "something",
+                    "assignment-progress": [
+                        {
+                            "comment": "Assignments are a fixed array. Index 0 of 'enrolled-classes.csc235.assignment-progress' matches index 0 of 'classes.csc235.assignments'. Which means this is for Week 4 Individual Assignment",
+                            "done": false,
+                            "steps": [
+                                true, true, true, false, false, false, false
+                            ]
+                        },
+                        {
+                            "done": false,
+                            "steps": [
+                                false
+                            ]
+                        }
+                    ]
+                },
+                "MAT255": {
+                    "grade": "something",
+                    "attendance": "something",
+                    "assignment-progress": [
+                        {
+                            "done": false,
+                            "steps": []
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

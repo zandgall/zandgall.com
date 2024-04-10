@@ -1,0 +1,64 @@
+/* Fit the body to the page (at minimum) and add a vignette background */
+body {
+    margin: 0;
+    background:radial-gradient(#201020, #121012);
+    text-align: center;
+    min-width:100vw;
+    min-height:100vh;
+}
+
+/* Center the table, select font, let elements have their own borders, and add subtle glow */
+table {
+    margin: auto auto auto auto;
+    font-family: 'Lato', sans-serif;
+    border-collapse: collapse;
+    filter: drop-shadow(0 0 10mm #504050);
+}
+
+/* Just text styling, and a top margin */
+caption {
+    margin-top:10mm;
+    font-size:x-large;
+    font-weight: bold;
+    color:rgb(152, 170, 177);
+}
+
+/* Add a border between the header and the body of the table */
+thead {
+    border-bottom: 0.75mm solid aliceblue;
+}
+
+/* Color headers + pad */
+th {
+    color: rgb(201, 225, 233);
+    padding: 1mm;
+}
+
+/* Color data + pad */
+td {
+    color: aliceblue;
+    padding: 1mm;
+}
+
+/* Add a border on the first column, body only */
+/* (First column is a th) */
+tbody > tr > th {
+    border-right: 0.5mm solid rgba(240, 248, 255, 0.5);
+}
+
+/* Make the second column (comes after a th)  */
+th + td {
+    text-align: left;
+}
+
+/* Separate form from table if present, or top of page */
+form {
+    margin-top:10mm;
+}
+
+/* Paragraph font, italic, and color */
+p {
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    color: aliceblue;
+}

@@ -1,0 +1,65 @@
+/*
+    Zander Gall - galla@csp.edu
+    11/12/2023
+    CSC235 - Prof. Furtney
+ */
+
+body {
+    margin: 0;
+    padding: 10mm;
+    background: radial-gradient(#324, #352040);
+    color:#b7d;
+}
+
+main {
+    margin: 15mm;
+    font-family: 'Lato', sans-serif;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+h3 {
+    font-style: italic;
+    font-size: medium;
+    margin: 0;
+}
+main > a {
+    margin-top: 0;
+    font-style:italic;
+    color: #c8e;
+}
+
+hr {
+    border-style: solid;
+    color: #c8e6
+}
+
+main > div {
+    display: flex;
+}
+
+section {
+    padding: 5mm;
+    margin: 5mm -5mm 5mm -5mm;
+    /* border: 1mm solid black; */
+    border-radius: 10mm;
+    text-align:center;
+    flex: 1;
+
+    background:radial-gradient(rgb(134, 68, 100), rgb(156, 75, 116));
+    color:rgb(39, 10, 53);
+}
+section hr {
+    color:rgba(39, 10, 53, 0.5);
+}
+#database {margin-right: 5mm;}
+#layout {margin-left: 5mm;}
+
+section img {
+    border-radius: 5mm;
+}
+
+a:hover img {
+    opacity: 0.5;
+}
