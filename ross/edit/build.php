@@ -16,7 +16,8 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));
     <body>
 <?php
 
-$database = new mysqli('localhost', 'zandgall', 'Z3DavidGall', 'RossWiki');
+include "../password.php";
+$database = new mysqli('localhost', 'zandgall', $DATABASE_PASSWORD, 'RossWiki');
 if($database->connect_errno > 0) {
     die('Unable to connect to database [' . $db->connect_error . ']');
 }

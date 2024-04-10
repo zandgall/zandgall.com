@@ -9,7 +9,8 @@ $BUILD_ID = $_GET["build"];
 header("Location: build?build=".$BUILD_ID);
 $build = $data["builds"][$BUILD_ID];
 
-$database = new mysqli('localhost', 'zandgall', 'Z3DavidGall', 'RossWiki');
+include "../password.php";
+$database = new mysqli('localhost', 'zandgall', $DATABASE_PASSWORD, 'RossWiki');
 if($database->connect_errno > 0) {
     die('Unable to connect to database [' . $db->connect_error . ']');
 }
