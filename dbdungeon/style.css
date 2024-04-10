@@ -1,0 +1,253 @@
+/* 
+    Zander Gall
+    For my Computer Science Class
+    Professor Furtney
+
+    12/5/23 - Copied over from previous assignment, and organized
+    
+*/
+
+body {
+    margin:0;
+    display:block;
+    overflow: hidden;
+    font-family: 'Lato';
+}
+
+main {
+    padding: 5mm;
+    overflow-y: scroll;
+    width:90vw;
+}
+
+img {
+    max-width:50vmin;
+    max-height:50vmin;
+}
+
+/* * * * * * 
+* BACKPACK *
+* * * * * */
+
+@keyframes backpack-tuck {
+    from {top: 80vh;}
+    to {top:100vh;}
+}
+
+#backpack {
+    display: flex;
+    width: 100vw;
+    height: 20vh;
+    position: absolute;
+    border-top: 1mm solid black;
+    left: 0;
+    top: 80vh;
+    background-color:white;
+}
+
+#backpack.in {
+    animation: backpack-tuck 500ms ease-out forwards; 
+}
+
+#backpack.out {
+    animation: backpack-tuck 500ms ease-out reverse forwards;
+}
+
+#backpack .tab {
+    height: 40vh;
+    width: 20mm;
+    margin: -10mm 0mm -10mm 5mm;
+    border: 1mm solid black;
+    background-color:#ff0000;
+    border-radius: 5mm;
+}
+
+#backpack .tab:hover {
+    margin-top: -11mm;
+    cursor:pointer;
+}
+
+/* Content */
+
+#backpackContent {
+    width: calc(100vw - 30mm);
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap:wrap;
+    height: 20vh;
+}
+
+.backpackSlot {
+    flex: 1;
+    margin: 1mm;
+    padding: 1mm;
+    border: 1mm solid black;
+    border-radius: 2mm;
+    overflow-y: scroll;
+    text-align: center;
+    max-height: calc(20vh - 6mm);
+    background-color: white;
+}
+
+.backpackSlot.dragging {
+    min-height: 4cm;
+}
+
+/* * * * * * * 
+* INTERFACE  *
+* * * * * * */
+
+@keyframes interface-tuck {
+    from {left: calc(80vw - 20mm)}
+    to {left: 100vw}
+}
+
+#interface {
+    position:absolute;
+    width:calc(20vw + 20mm);
+    height:40vh;
+    border: 1mm solid black;
+    border-right:0;
+    border-top-left-radius: 5mm;
+    border-bottom-left-radius: 5mm;
+    
+    left: 100vw;
+    bottom: 30vh;
+    background-color:white;
+}
+
+#interface.in {
+    animation: interface-tuck 500ms ease-out forwards; 
+}
+
+#interface.out {
+    animation: interface-tuck 500ms ease-out reverse forwards;
+}
+
+#interface .tab {
+    height: 20mm;
+    width: 60vw;
+    margin: 5mm -10mm 0mm -10mm;
+    border: 1mm solid black;
+    background-color:#0077ff;
+    border-radius: 5mm;
+}
+
+#interface .tab:hover {
+    margin-left: -11mm;
+    cursor:pointer;
+}
+
+#interface form {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:5mm;
+}
+
+#interface form div {
+    display:flex;
+    flex-direction:column;
+    margin:2mm;
+    text-align:center;
+}
+
+/* * * * * * * *
+* Page Content *
+* * * * * * * */
+
+.pageSlot {
+    display:flex;
+    flex-direction:row;
+}
+
+.pageSlot .info {
+    display:none;
+    pointer-events: none;
+}
+
+.info {
+    position:absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1mm solid black;
+    border-radius: 5mm;
+    padding: 5mm;
+    z-index: 3;
+}
+
+.pageSlot .header {
+    width: 5mm;
+}
+
+.pageSlot:hover .info {
+    display:block;
+}
+
+.pageSlot.dragging .info {
+    display:none;
+}
+
+.header {
+    cursor: grab;
+    pointer-events: all;
+    flex-shrink: 0;
+    text-decoration:underline;
+}
+
+.header div {
+    margin: 1mm;
+    background-color:lightgrey;
+    height: calc(100% - 2mm);
+}
+
+/* Dragging functionality */
+
+.pageSlot.dragging *, .backpackSlot.dragging * {
+    pointer-events: none;
+}
+
+.dragging {
+    pointer-events: none;
+    position:absolute;
+    z-index: 2;
+    min-width: 5cm;
+}
+
+/* * * * * * * * *
+* Progress Bulbs *
+* * * * * * * * */
+
+#progress {
+    display:flex;
+    flex-direction:row;
+}
+
+.bulb {
+    border: 1mm solid black;
+    border-radius: 1cm;
+    width: 1cm;
+    height: 1cm;
+    margin:2mm;
+    text-align:center;
+}
+
+.bulb>h1 {
+    margin-top:1mm;
+}
+
+.bulb.wrong {
+    background-color: palevioletred;
+}
+
+.bulb.empty {
+    background-color: lightgrey;
+}
+
+.bulb.right {
+    background-color: lightgreen;
+}
+
+.bulb.right.empty {
+    background-color: lightgrey;
+    border-color: lightgreen;
+}
