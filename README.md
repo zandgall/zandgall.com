@@ -1,2 +1,2 @@
 # zandgall.com
-My modern website
+Repository for my website.
