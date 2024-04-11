@@ -1,0 +1,547 @@
+{
+    "CSC235": {
+        "name": "Server-Side Dev",
+        "color": "#4287f5",
+        "assignments": [{
+            "name": "Week 6 - Individual Assignment",
+            "due": 1702274399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Week 6 - Term Project",
+            "due": 1702274399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Week 6 - Quiz",
+            "due": 1702274399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Week 6 - Discussion",
+            "due": 1702274399,
+            "steps": [{
+                "name": "First Response",
+                "done": true
+            }, {
+                "name": "3 Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Week 7 - Discussion",
+            "due": 1703138399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Term Project",
+            "due": 1703138399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Final Quiz I",
+            "due": 1703138399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Final Quiz II",
+            "due": 1703138399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignment Name",
+            "due": 1701893956,
+            "steps": [],
+            "done": true
+        }]
+    },
+    "MAT255": {
+        "name": "Calculus III",
+        "color": "#e01b24",
+        "assignments": [{
+            "name": "6.2",
+            "due": 1701928799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "6.3",
+            "due": 1702101599,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Project Check-in",
+            "due": 1701889200,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "6.4",
+            "due": 1702360799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "6.5",
+            "due": 1702533599,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "6.6",
+            "due": 1702706399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Project",
+            "due": 1702706399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Exam 3",
+            "due": 1702922400,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Homework 9",
+            "due": 1702101599,
+            "steps": [],
+            "done": true
+        }]
+    },
+    "THL200": {
+        "name": "Scripture",
+        "color": "#ffa348",
+        "assignments": [{
+            "name": "Review Questions 4",
+            "due": 1702706399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Passport",
+            "due": 1702533599,
+            "steps": [],
+            "done": true
+        }]
+    },
+    "CSC110": {
+        "name": "Probability & Statistics",
+        "color": "#8ff0a4",
+        "assignments": [{
+            "name": "Project Part 2",
+            "due": 1701410399,
+            "steps": [{
+                "name": "Add actual numbers",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Gen Ed Assessment",
+            "due": 1702619999,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Final Project",
+            "due": 1702447199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 5 Tutoring Verification",
+            "due": 1702706399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Written Assignment 7",
+            "due": 1702879199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Mom Quiz 5",
+            "due": 1702274399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Mom Homework 14",
+            "due": 1702360799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Mom Homework 15",
+            "due": 1702965599,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Written Assignment 6",
+            "due": 1702274399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Final Exam",
+            "due": 1703008800,
+            "steps": [],
+            "done": true
+        }]
+    },
+    "CSC310": {
+        "name": "Computer Arch and Operating Systems",
+        "color": "#dc8add",
+        "assignments": [{
+            "name": "Discussion 1",
+            "due": 1705298399,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Lesson 1 & 2 Assignments",
+            "due": 1705298399,
+            "steps": [{
+                "name": "Discuss a device and its purpose, evolution, specs, current state, and future",
+                "done": true
+            }, {
+                "name": "Discuss evolution of AMD CPUs, pick 5 chips, list specs",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Quiz 1",
+            "due": 1705298399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignment 2",
+            "due": 1705903199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Discussion 2",
+            "due": 1705903199,
+            "steps": [{
+                "name": "First Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Quiz 2",
+            "due": 1705903199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Discussion 3",
+            "due": 1706507999,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Quiz 3",
+            "due": 1706507999,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignmend 3",
+            "due": 1706507999,
+            "steps": [{
+                "name": "Summarize Memory",
+                "done": true
+            }, {
+                "name": "Design Micro System",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Discussion 4",
+            "due": 1707112799,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Assignment 4",
+            "due": 1707112799,
+            "steps": [{
+                "name": "Compare Windows, Linux, and Android",
+                "done": true
+            }, {
+                "name": "Describe 7-state process model",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Quiz 4",
+            "due": 1707112799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Discussion 5",
+            "due": 1707717599,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Assignment 5",
+            "due": 1707717599,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 5",
+            "due": 1707717599,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignment 6",
+            "due": 1708322399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 6",
+            "due": 1708322399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Discussion 6",
+            "due": 1708322399,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Final Exam 1",
+            "due": 1709186399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Final Exam 2",
+            "due": 1709186399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Final Discussion",
+            "due": 1709186399,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Three Replies",
+                "done": true
+            }],
+            "done": true
+        }]
+    },
+    "MUS122": {
+        "name": "Music for Life",
+        "color": "#f8e45c",
+        "assignments": [{
+            "name": "Module 1 Discussion",
+            "due": 1705298399,
+            "steps": [{
+                "name": "Initial Post",
+                "done": true
+            }, {
+                "name": "Two Replies",
+                "done": true
+            }],
+            "done": true
+        }, {
+            "name": "Assignment 1",
+            "due": 1705903199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 1",
+            "due": 1705903199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 2",
+            "due": 1707112799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignment 2",
+            "due": 1707112799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignment 3",
+            "due": 1708322399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 3",
+            "due": 1708322399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Assignment 4",
+            "due": 1710694799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Quiz 4",
+            "due": 1710697440,
+            "steps": [],
+            "done": true
+        }]
+    },
+    "MAT220": {
+        "name": "Discrete Math",
+        "color": "#ffbe6f",
+        "assignments": [{
+            "name": "Course Essentials",
+            "due": 1704927600,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "PA1",
+            "due": 1705694400,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Q1",
+            "due": 1705903199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "A1",
+            "due": 1705953600,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "PA2",
+            "due": 1706904000,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Q2",
+            "due": 1707112799,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "A2",
+            "due": 1707163200,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "PA3",
+            "due": 1708113600,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Q3",
+            "due": 1708322399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "A3",
+            "due": 1708545600,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "EXAM 1",
+            "due": 1708549200,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "PA4",
+            "due": 1710529200,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Q4",
+            "due": 1710737999,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "A4",
+            "due": 1710788400,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "PA5",
+            "due": 1712343600,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Q5",
+            "due": 1712552399,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "A5",
+            "due": 1712602800,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "PA6",
+            "due": 1713553200,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "Q6",
+            "due": 1713761999,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "A6",
+            "due": 1713812400,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "PA7",
+            "due": 1714158000,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "EXAM 2 A",
+            "due": 1714420800,
+            "steps": [],
+            "done": false
+        }, {
+            "name": "EXAM 2 B",
+            "due": 1714593600,
+            "steps": [],
+            "done": false
+        }]
+    },
+    "UTS397": {
+        "name": "Rwanda Travel Seminar",
+        "color": "#a51d2d",
+        "assignments": [{
+            "name": "Discussion 3",
+            "due": 1710824399,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Discussion 4",
+            "due": 1710565199,
+            "steps": [],
+            "done": true
+        }, {
+            "name": "Journal",
+            "due": 1711169999,
+            "steps": [],
+            "done": true
+        }]
+    }
+}
