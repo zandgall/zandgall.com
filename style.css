@@ -380,13 +380,13 @@ a.night {
     color: #ebb5eb
 }
 
-:hover {
-    color: rgb(200, 210, 140)
-}
+/* :hover { */
+    /* color: rgb(200, 210, 140) */
+/* } */
 
-:focus {
-    color: rgb(200, 210, 140)
-}
+/* :focus { */
+    /* color: rgb(200, 210, 140) */
+/* } */
 
 .night:focus {
     color: rgb(190, 220, 255)

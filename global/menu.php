@@ -19,7 +19,7 @@
         <a class = "linkpages" href="#" onclick="menuSelected(2)"><h3 class="basictext link btopic">Resources</h3></a>
     </div>
     <div class="bmenu" style="--bsize: 100; margin-right: -200px; margin-left: -200px">
-        <a class = "linkpages" href="#" onclick="menuSelected(3)"><h3 class="basictext link btopic">Misc</h3></a>
+        <a class = "linkpages" href="#" onclick="menuSelected(3)"><h3 class="basictext link btopic">Settings</h3></a>
     </div>
 
     <!-- Main menu separators -->

@@ -94,48 +94,63 @@ $pagedesc = "A Resume web page for Alexander Gall";
     <div class="splitter" style="margin-top: -40"></div>
     <h3 style="margin-top: 5">Human Born; Computer Raised</h3>
     <h4 style="margin-top: 5">Converted from web page, view original <a href="https://www.zandgall.com/resume">here!</a></h4>
-    <img src="assets/resume/me.png" height=620 style="margin-left: 50px; margin-top: 10px; filter: drop-shadow(0px 0px 10px rgb(100, 120, 255)); float: left;">
+    <div style="display: flex; flex-direction:row; justify-items: center;">
+        <img src="assets/resume/me.png" height=620 style="margin-left: 50px; margin-top: 10px; filter: drop-shadow(0px 0px 10px rgb(100, 120, 255));" alt="Me">
+        
+        <div>
+            <h1>All about me</h1>
+            
+            <h4>I am looking for an Internship for Software Development, I have a wide range of technological skills and knowlege, and experience in picking up new technological skills rather quickly. Good at collaborating with, teaching, and learning from fellow students. </h4>
+        </div>
+    </div>
     
-    <h1>All about me</h1>
+    <div class="splitter" style="margin-top: 50px; width: 80%"></div>
     
-    <h4>I am looking for an Internship for Software Development, I have a wide range of technological skills and knowlege.</h1>
+    <h2>Education and Employment</h2>
     
-    <div class="splitter" style="margin-left: 50%; margin-top: 50px; width: 40%"></div>
-    
-    <h2>Education and Employment</h1>
-    
-    <h4 style="text-align: left"><br>Educated at Cyber Village Academy - Junior - 768 Hamline Ave. S, St. Paul, MN 55116 - 2017 to Current</h1>
-    <h4>Educated at Concordia University Saint Paul - PSEO Student First Year (done) - 1282 Concordia Avenue, St. Paul, MN 55104 - 2021 to Current</h1>
-    
-    <h4>Previously Employed at INWYK Partners as a Researcher from 2018 to 2020.</h1>
-    <h4>Previously Employed at Caltronics as a Manufacturer from June through August 2021</h1>
-    <h4>Currently Employed at Conny's Creamy Cone as a part time worker, 2021 to current.</h1>
-    <div class="splitter" style="margin-top:100px"></div>
-    <h2>Languages I am familiar with</h2>
-    <h3>Given in order from most familiar to least.</h3>
-    <h3 style="text-align:left; width:800; margin:auto">
+    <div class="splitter" style="margin-top: 50px; width: 80%"></div>
+    <h4>Cyber Village Academy<br>3810 E 56th Street, Minneapolis, MN 55417<br> 2017 - 2023</h4>
+    <h4>Concordia University Saint Paul<br>1282 Concordia Avenue, St. Paul, MN 55104<br>
+PSEO: 2021 - 2023<br>Full-Time Student: 2023 - Current<br>
+Computer Science Major, Mathematics Minor</h4>
+    <div class="splitter" style="margin-top: 100px"></div>
+    <h4>INWYK Partners, Researcher: 2018 - 2020.</h4>
+    <h4>Caltronics, Manufacturer: June 2021 - August 2021</h4>
+    <h4>Conny's Creamy Cone, Employee: May 2021 - November 2022.</h4>
+    <h4>Concordia University Saint Paul, IT Technician: June 2023 - Current </h4>
+    <div class="splitter" style="margin-bottom:100px"></div>
+    <h2>Languages and Frameworks</h2>
+    <h3>From most familiar to least.</h3>
+    <h3 style="text-align:left; width:800px; margin:auto">
+        - C<br>
+        <span style="font-size:12pt">&emsp;<i>Memory management and low level coding, proficient in pointers and references, C-based allocation, state-based frameworks. Very familiar with Procedural Programming. Creating, using, and manipulating data structures within main memory and other locations.</i><br></span>
         - C++<br>
-        <font size=4>&emsp;<i>Memory management and low level coding, proficient in pointers and references, C-based allocation, and the C++ standard library. Very familiar with Procedural Programming</i><br></font>
+        <span style="font-size:12pt">&emsp;<i>Extending on C, familiar with the C++ standard library.</i><br></span>
         - Java<br>
-        <font size=4>&emsp;<i>Extensively familiar with the Java AWT libraries, as well as the JDK standard overall. Very familiar with Object Oriented Programming</i><br></font>
+        <span style="font-size:12pt">&emsp;<i>Extensively familiar with the Java AWT libraries, as well as the JDK standard overall. Very familiar with Object Oriented Programming</i><br></span>
+        - Assembly<br>
+        <span style="font-size:12pt">&emsp;<i>Working in x86-64 assembly, writing analogs for C standard library functions. Also learning assembly for the Nintendo GameBoy, learning to make games on it using GBASM. Experimenting with writing compilers for simple language, I’ve done one for the esoteric language, <a href="https://esolangs.org/wiki/Brainfuck">"brainf***"</a></i></span><br>
         - Python<br>
-        <font size=4>&emsp;<i>Familiar with Scripting/Interpreted languages, iterators and general Python syntax.</i><br></font>
+        <span style="font-size:12pt">&emsp;<i>Familiar with Scripting/Interpreted languages, iterators and general Python syntax. As well as creating Interpreters for other languages.</i><br></span>
+        - Apache<br>
+        <span style="font-size:12pt">&emsp;<i>You are (likely) viewing this on my website, which is hosted using Apache2 on my own computer. This server utilizes SSL and PHP, pointed to by Cloudflare. There are many different levels of server and client side features, such as the graphical backgrounds, and form-post content.</i></span><br>
         - JavaScript<br>
-        <font size=4>&emsp;<i>Familiar with both web Client applications (as well as using JQuery), as well as Node.js server+general applications.</i><br></font>
+        <span style="font-size:12pt">&emsp;<i>Familiar with both web Client applications (as well as using JQuery), as well as Node.js server+general applications.</i><br></span>
         - CSS and HTML<br>
-        <font size=4>&emsp;<i>Though they aren't programming languages, I am very familiar with using them nonetheless.</i><br></font>
+        <span style="font-size:12pt">&emsp;<i>Though they aren't programming languages, I am very familiar with using them nonetheless.</i><br></span>
         - PHP<br>
-        <font size=4>&emsp;<i>I am generally familiar with basic web protocols and how to use them, my website is hosted on my machine as an Apache server, and uses PHP to deliver (server side) dynamic webpages. I have also been able to make HTTPS requests to PHP, and this website, in various other languages.</i><br></font>
+        <span style="font-size:12pt">&emsp;<i>I am generally familiar with basic web protocols and how to use them, my website is hosted on my machine as an Apache server, and uses PHP to deliver (server side) dynamic webpages. I have also been able to make HTTPS requests to PHP, and this website, in various other languages.</i><br></span>
         - Generic BASIC + QuickBasic<br>
-        <font size=4>&emsp;<i>Although I highly doubt I will be using BASIC professionally, it's worth mentioning that I have used Basic (and QB64, a fork of it that allows for very basic 64 bit graphics) to build a 3D renderer. I wrote a <a href="qb64 3d">paper</a> detailing the steps, from Linear Algebra and 3D space transformation, Shaders and 3D data, to Triangles and Rasterization.</i></font>
+        <span style="font-size:12pt">&emsp;<i>Although I highly doubt I will be using BASIC professionally, it's worth mentioning that I have used Basic (and QB64, a fork of it that allows for very basic 64 bit graphics) to build a 3D renderer. I wrote a <a href="qb64%203d">paper</a> detailing the steps, from Linear Algebra and 3D space transformation, Shaders and 3D data, to Triangles and Rasterization.</i></span>
     </h3>
     <h2>Notable Topics I am capable of</h2>
-    <h4 style="text-align:left; width:1000; margin:auto">
+    <h4 style="text-align:left; width:1000px; margin:auto">
     - I/O, creating and/or using file specifications<br><br>
-    - Data Structures; Binary, String encodings (i.e. UTF and Unicode), etc.<br><br>
+    - Data Structures and Data manipulation; Binary, String encodings (i.e. UTF and Unicode), reading and writing using new file specifications, etc.<br><br>
     - Computer Graphics, either using an external or built in library, or building from the ground up.<br><br>
-    - Applying simple and complex math to solve problems<br><br>
-    - Using various Open Source libraries*, like OpenGL, ZLib, Freetype, OpenAL and so on.
+    - Linear Algebra, visual mathematics and problem solving <br><br>
+    - Teaching others about the things I create and communicate even the technical details in an understandable way<br><br>
+    - Learning from others and asking for help when I don't understand something, or am out of my depth.
     </h4>
     <h5 style="text-align:left; width:1000; margin:auto">
         <i>
