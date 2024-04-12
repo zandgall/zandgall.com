@@ -1,5 +1,3 @@
-/*<style>*/
-
 :root {
     --night: "false";
 }
@@ -308,17 +306,6 @@ body.night {
     opacity: 1
 }
 
-.bgimg {
-    background-image: url("assets/spacebg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    left: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    position: fixed;
-}
-
 .option {
     position: absolute;
     left: 10px;
@@ -380,14 +367,6 @@ a.night {
     color: #ebb5eb
 }
 
-/* :hover { */
-    /* color: rgb(200, 210, 140) */
-/* } */
-
-/* :focus { */
-    /* color: rgb(200, 210, 140) */
-/* } */
-
 .night:focus {
     color: rgb(190, 220, 255)
 }
@@ -434,5 +413,3 @@ a.night {
     height:inherit; 
     position:absolute;
 }
-
-/* </style> */

@@ -1,7 +1,0 @@
-Got 6 args!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Opening region world/r.0.-1.mca
-Opening output json file (in read mode)
-Loading desired chunk range, x: 0, z: 25, w: 1, h: 3
-Opening output json file (in write mode)
-Writing output

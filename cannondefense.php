@@ -4,7 +4,7 @@ $pagetitle = "Nat Gall - Cannon Defense";
 $pagedesc = "A top down shooter inspired by BubbleCannons and Toy Defense";
 include "global/header.php"?>
 
-<script src="funsies/p5/p5.min.js"></script>
+<script src="Funsies/p5/p5.min.js"></script>
 <?php 
 $title = "Cannon Defense!";
 $subtitle = "Created by 9yo Nathaniel Gall";

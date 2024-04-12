@@ -11,8 +11,8 @@ function setup() {
     const canvas = createCanvas(850, 750);
     canvas.parent("canvasDiv");
 
-    tankimage = loadImage("nat/game 1/tank.png");
-    bulletimage = loadImage("nat/game 1/bullet.png");
+    tankimage = loadImage("./tank.png");
+    bulletimage = loadImage("./bullet.png");
 }
 
 function keyPressed() {

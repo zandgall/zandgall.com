@@ -20,13 +20,12 @@ include "global/begin.php"?>
     <h3 class="basictext">I'm Zander Gall, a young-yet-aging tech nerd who's focused on programming. I have a whole host of projects that anyone can take a look at.</h3>
     <h1 class="basictext">What do you do?</h1>
     <h3 class="basictext">
-        Like I said above, I spend my time programming, but I also make <a href="music">music</a> and should be making <a href="https://www.youtube.com/channel/UCYsx5ufS_hoJlfYH9pQKK9A">video essays</a>.
+        Like I said above, I spend my time programming, but I also make <a href="music">music</a> and should be making <a href="https://www.youtube.com/channel/UCYsx5ufS_hoJlfYH9pQKK9A">videos</a>.
     </h3>
     <h1 class="basictext">How do you do that?</h1>
     <h3 class="basictext">
-        I program using tools like <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA (Java)</a>, <a
-            href="visualstudio.microsoft.com">Visual Studio (C++)</a>, and <a href="code.visualstudio.com">Visual
-            Studio Code (PHP/HTML/CSS/JavaScript)</a>. For making music I use, <a
+        I program using tools like <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA (Java)</a>, and <a href="https://www.sublimetext.com/">Sublime
+            Text</a>. For making music I use, <a
             href="https://www.image-line.com/flstudio/">FL Studio</a>.
     </h3>
     <h1 class="basictext">Why do you do that?</h1>
@@ -62,26 +61,6 @@ include "global/begin.php"?>
         I have a whole host of projects available to look at from my <a href="index">homepage</a> as well as by looking through the list of projects and resources you can find in the menu that you can open at the top-right corner.
         I make games, little tools and programs. I also have a few online JavaScript things you can check out on my <a href="funstuff">'funsies page'</a>
     </h3>
-    <h1 class="basictext">Which is your best project?</h1>
-    <h3 class="basictext">
-        I'm working on a lot of projects every once in a while, and I'm proud of most of them. But out of all the projects I've posted on this website, I'd say that 
-        Arvopia and Schute! are the two most worth checking out. And although it isn't really a published game or even tool, my recent <a href="qb64%203d">interactive paper on 3D rendering
-        in BASIC</a> is definitely one of my best pieces of work.
-    </h3>
-    <h1 class="basictext">Which is the worst?</h1>
-    <h3 class="basictext">
-        Although it's a harsh title to give, I do has some projects, tools, and games that haven't gotten the work they deserved. For one, 'Super Marbo'. A mock
-        PC remake of Super Mario Bros. for the NES. It's fully functional and has some neat features like the ability to use New Super Mario Bros-styled sprites and moveset.
-        However it left much to be desired. It was buggy, clunky, and didn't really live up to my own expectations. Beyond that, there are some projects like some 'misc Arvopia tools',
-        as I call them, that aren't really worth playing around with. They were intended to evolve to become sort of a modding toolset, but as Arvopia was dropped they don't really serve a purpose.
-    </h3>
-    <!-- Resources -->
-    <h1 class="basictext outlinetext" style="font-size: 32pt">Elsewhere</h1>
-    <h1 class="basictext">Where else can you be found?</h1>
-    <h3 class="basictext">
-        I am semi-active on twitter: @Zandgall, very active on Discord: zandgall#4007, and you can hear my music on
-        <a href="https://zandgall.bandcamp.com/releases">bandcamp</a>
-    </h3>
 </div>
-<?php include "global/end.php"?>
+<?php include "global/end.php"?>a
 </html>

@@ -1,22 +1,18 @@
+<?php 
+$pagetitle = "Zandgall - Old Bubble cannons";
+$pagedesc = "Old version of Bubble Cannons";
+include "global/header.php"?>
 
-<html lang="en">
     <script src="Funsies/BubbleCannons_old/bcenemy.js"></script>
     <script src="Funsies/BubbleCannons_old/upgrademenu.js"></script>
     <script src="Funsies/BubbleCannons_old/cannons.js"></script>
     <script src="Funsies/BubbleCannons_old/rounds.js"></script>
     <script src="Funsies/BubbleCannons_old/bcplayer.js"></script>
+
 <?php 
-$pagetitle = "Zandgall - Old Bubble cannons";
-$pagedesc = "Old version of Bubble Cannons";
-include "global/head_.php"?>
-
-<body>
-    <?php 
-    $title = "BubbleCannons!";
-    $subtitle = "An actual funsie on this site";
-    ?>
-
-            <?php include "global/head.php"?>
+$title = "Welcome to the site!";
+$subtitle = "A resource for Arvopia and other projects";
+include "global/begin.php";?>
 
             <!-- <div class="section" style="position: relative; margin-left: auto; margin-right: auto; margin-top: 0; width: 800"> -->
                 
@@ -37,8 +33,7 @@ include "global/head_.php"?>
         </div>
     </div>
     
-    
-</body>
+<?php include "global/end.php"?>
 </html>
 
 

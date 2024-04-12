@@ -12,7 +12,7 @@ include "global/begin.php";
 include "global/projectGenerator.php";?>
 <h1 class="outlinetext basictext" style="width:600px; margin:auto; margin-bottom: 20px">(Website's currently being updated)</h1>
 <h1 class="outlinetext basictext" style="margin: auto; margin-bottom: 20px">Project Directory</h1>
-    <div class="section" id="projectss" style="position: relative; width:60vw; max-width:900px; height:1750px; margin:auto">
+    <div id="projectss" style="position: relative; width:60vw; max-width:900px; height:1750px; margin:auto">
         <?php 
         project("50%", "400px", "TicTacToe", "Just a normal game of TicTacToe",
                 "assets/thumbnail/TicTacToeThumb.png", "/tictactoe");

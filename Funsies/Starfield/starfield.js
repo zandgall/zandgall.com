@@ -16,7 +16,7 @@ var kode = {
     s: false,
     w: false,
     space: false,
-    ctrl: false,
+    shift: false,
     
     set: function() {
         kode.arrowright=keys[39];
@@ -29,7 +29,7 @@ var kode = {
         kode.s=keys[83];
         kode.d=keys[68];
         kode.space=keys[32];
-        kode.ctrl=keys[17]||keys[18];
+        kode.shift=keys[16];
     }
 }
 
@@ -160,13 +160,13 @@ function draw(){
     console.log(scale);
     
     if(kode.arrowup||kode.w){
-        if(kode.ctrl){
+        if(kode.shift){
             scaleVel+=Math.min(0.001*scale, 1);
         }else{
             offYVel+=scale/10;
         }
     } else if(kode.arrowdown||kode.s){
-        if(kode.ctrl){
+        if(kode.shift){
             scaleVel-=Math.min(0.001*scale, 1);
         }else{
             offYVel-=scale/10;
