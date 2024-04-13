@@ -19,7 +19,7 @@ include "global/begin.php"?>
         As this was my first Game Jam in general, of course my submission wasn't the best. It was a simple game, where you just keep jumping until you die. Similar to Doodle Jump a little bit. However with the constrained time, and limited knowlege, it didn't turn out too well. Platforms would spawn off screen, or too high. And there would be just impossible spike obstacles.<br><br>
         However it works, and I think it's still fun enough to have been made.
     </h2>
-    <img class = "section" src="assets/thumbnail/FallingMineThumb.png" style="width: 98%; margin-left: 1%" alt="Falling Mine Thumbnail">
+    <img class = "section" src="assets/thumbnail/FallingMine.png" style="width: 98%; margin-left: 1%" alt="Falling Mine Thumbnail">
     <a href="Downloads/Fallen%20Mine.zip"><div class="section" style="width:75%; margin-left: auto; margin-right: auto; margin-bottom: 2cm;"><h1 class="basictext outlinetext">Fallen Mine.zip - 3.4MB</h1></div></a>
     <a href="index"><div class="section" style="width:25%; margin-left: auto; margin-right: auto; margin-bottom: 2cm;"><h1 class="basictext outlinetext">Home</h1></div></a>
 </div>

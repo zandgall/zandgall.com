@@ -19,6 +19,15 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));
             font-family: basicbit2;
             src: url("assets/basicbit2.ttf");
         }
+        @font-face {
+            font-family: basicbit;
+            src: url("../assets/basicbit3.ttf");
+        }
+
+        @font-face {
+            font-family: basicbit-light;
+            src: url("../assets/basicbit3-light.ttf");
+        }
     </style>
     
     <link rel="stylesheet" href="<?php echo $ROOT?>style.css">

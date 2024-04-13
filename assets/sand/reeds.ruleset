@@ -1,0 +1,60 @@
+#bf7c3d: 1
+- "seed"
+- "solid"
+- "fallable"
+- "plant"
+
+#1ed03c:
+- "reed"
+- "solid"
+- "plant"
+#1ec83c:
+- "reed"
+- "solid"
+- "plant"
+#1ec03c:
+- "reed"
+- "solid"
+- "plant"
+#1eb83c:
+- "reed"
+- "solid"
+- "plant"
+#1eb03c:
+- "reed"
+- "solid"
+- "plant"
+#1ea83c:
+- "reed"
+- "solid"
+- "plant"
+#1ea03c:
+- "reed"
+- "solid"
+- "plant"
+#1e983c:
+- "reed"
+- "solid"
+- "plant"
+#1e903c:
+- "solid"
+- "plant"
+
+s => "sand"
+r => "reed"
+. => "seed"
+w => "water"
+
+rule: 0.5%
+* * * * *		* * * * *
+* * w * *	    * * * * *
+* * . * *   =>	* * r * *
+* * s * *		* * * * *
+* * * * *		* * * * *
+
+rule: 1%
+* * * * *		* * * * *
+* * w * *		* * * * *
+* * w * *	=>	* * (0, 1, 0, -8, 0) * *
+* * r * *		* * * * *
+* * * * *		* * * * *

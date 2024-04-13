@@ -66,7 +66,7 @@ $subtitle = "A resource for Arvopia and other projects";
 include "global/begin.php"?>
 
     <h1 class="basictext outlinetext" style="margin: 100px auto 50px auto; font-size: 32pt">3D Rasterizing in QB64</h1>
-    <img src="assets/qb64%203d/thumb.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; image-rendering: pixelated" alt="QB64 3D Thumbnail">
+    <img src="assets/thumbnail/QB64 3D.png" style="width: 800px; height: auto; display: block; margin: 0px auto 150px auto; image-rendering: pixelated" alt="QB64 3D Thumbnail">
 
     <h3 class="basictext outlinetext" style="font-size: 24px; margin: auto auto 100px auto">
         <span style="text-decoration:underline; font-size:24pt">Contents</span><br>

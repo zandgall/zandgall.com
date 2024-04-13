@@ -34,17 +34,17 @@ include "global/projectGenerator.php"?>
         project("50%", "200px", "Super Marbo 0.1.4", "Everything from SMB and more! You can toggle locked screen scrolling, life limit, time limit, and switch to NSMB mode and use multiplayer<br>19mb - 11/15/19",
                 "assets/super%20marbo/Marbo0.1.4.png", "Downloads/Super%20Marbo%200.1.4.zip");
         project("50%", "400px", "Schute!", "Made for the Scorespace May Gamejam in 72 hours. You play as a little plant guy who places \"schutes\" to climb to higher places. You're able to place them on the ground, a wall, or even on other vines!<br>5mb - 5/7/19",
-                "assets/thumbnail/SchuteThumb.png", "Downloads/Schute!.zip");
+                "assets/thumbnail/Schute.png", "Downloads/Schute!.zip");
         project("50%", "400px", "Fallen Mine", "Made for the Scorespace March Gamejam in 72 hours. A game where you jump from platform to platform to avoid getting burnt. Also with the nice addition of fireballs falling from the cieling<br>4mb - 3/5/19",
-                "assets/thumbnail/FallingMineThumb.png", "Downloads/Fallen%20Mine.zip");
+                "assets/thumbnail/FallingMine.png", "Downloads/Fallen%20Mine.zip");
         project("50%", "200px", "Map Coder", "Encode and Decode Minecraft Maps from and to PNGs!<br>83kb - 8/18/19",
-                "assets/thumbnail/MapCoderThumb.png", "Downloads/MapCoder%20-%20BETA0.1.zip");
+                "assets/thumbnail/MapCoder.png", "Downloads/MapCoder%20-%20BETA0.1.zip");
         project("50%", "200px", "Normal Buddy", "Make and preview Normal Maps from textures<br>38kb - 4/27/19",
-                "assets/thumbnail/NormalBuddyThumb.png", "Downloads/Normal%20Buddy.zip");
+                "assets/thumbnail/NormalBuddy.png", "Downloads/Normal%20Buddy.zip");
         project("50%", "200px", "Arvopia Animator", "Used for making animations for Arvopia 0.8. Can be used in mods, however there is no documentation yet.<br>865kb - 4/27/19",
-                "assets/thumbnail/AnimatorThumb.png", "Downloads/Arvopia%20Animator.zip");
+                "assets/thumbnail/Animator.png", "Downloads/Arvopia%20Animator.zip");
         project("50%", "200px", "Trading Design", "Another modding tool to create interective NPCs. NAME will be the player's name, ~end~ ends the conversation, and \"Trader name\" will be the name of the variable, so no characters aside from A-Z and 0-9<br>625kb - 3/12/19",
-                "assets/thumbnail/TradingThumb.png", "Downloads/Trading%20Design.zip");
+                "assets/thumbnail/Trading.png", "Downloads/Trading%20Design.zip");
         
         ?>
     </div>
