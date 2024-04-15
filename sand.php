@@ -168,10 +168,10 @@ function sandCode($filepath, $preDefVars = array()) {
 ?>
 
 <div style="width:80vmin; height:80vmin; position: relative; margin: auto auto calc(144pt + 1cm) auto;" width=80 height=80>
-	<canvas id="sandvas" class="section" style="width:100%; height:100%" width=80 height=80></canvas>
+	<canvas id="sandvas" class="section" style="width:100%; height:100%; image-rendering: pixelated;" width=80 height=80></canvas>
 	<p class="basictext outlinetext"><i>A JavaScript port for easy access</i></p>
 	<p class="basictext outlinetext">s: sand, w: water, a: air, x: stone, 1: seed, e: fish egg</p>
-	<p class="basictext outlinetext">ctrl: single place, scroll: change place size</p>
+	<p class="basictext outlinetext">ctrl: single place, up/down arrow: change place size</p>
 </div>
 
 <div class="section" style="width: 60vw; max-width:800px; margin: auto">
