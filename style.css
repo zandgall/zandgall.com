@@ -33,9 +33,9 @@ img.night {
 .section > h6 {
     text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
 }
-.section > p {
+/*.section > p {
     text-shadow: 0px 0px 8px rgba(212, 229, 244, 0.7);
-}
+}*/
 
 .bline {
     height: 10px;
@@ -319,11 +319,11 @@ body.night {
 }
 
 p {
-    color: #e8eaf5;
+    color: #37383c;
 }
 
 p.night {
-    color: #37383c;
+    color: #e8eaf5;
 }
 
 h1 {

@@ -74,6 +74,7 @@ function toggle_night() {
         $($(".paralayer")[3]).css("background-image", `url("${ROOT}assets/background/dirt.png")`);
     }
     document.documentElement.style.setProperty("--night", night ? 1 : 0);
+    localStorage["zandgall.night"] = night ? "true" : "false";
 }
 
 let menu = $(".bmenu");
@@ -173,8 +174,10 @@ function load() {
         
     }
 
-    if ((localStorage["zandgall_dayNight"] || "day") == "night")
+    if (night) {
+        night = !night; // quickly flip to 'true' and use the function to toggle it on
         toggle_night();
+    }
     
 }
 

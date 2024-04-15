@@ -1,0 +1,10 @@
+f => "fallable"
+0 => "passthrough"
+s => "solid"
+p => "pileable"
+
+r => #ff0000
+
+^ => (0, -1)
+\ => (1, 1)
+/ => (-1, -1)

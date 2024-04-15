@@ -1,0 +1,20 @@
+#9bd7e8: a
+- "air"
+- "passthrough"
+
+#f2d994: s
+- "sand"
+- "solid"
+- "fallable"
+- "pileable"
+
+#808080: x
+- "stone"
+- "solid"
+- "fallable"
+
+#0080ff: w
+- "water"
+- "fallable"
+- "pileable"
+- "liquid"
