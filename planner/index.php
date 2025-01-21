@@ -1,331 +1,406 @@
 <?php
 
-// 10 hour long session lol
 ini_set('session.gc_maxlifetime', 36000);
 session_set_cookie_params(36000);
 
 session_start();
 
 include "login.php";
-if(!isset($_SESSION["logged"])) {
-    return;
+if (!isset($_SESSION["logged"])) {
+	return;
 }
-
-// Read data
-$file = file_get_contents("data.json");
-$data = json_decode($file, true);
-
-$edit = false;
-
-if(isset($_POST["hidFormType"])) {
-    switch($_POST["hidFormType"]) {
-    case "classUpdated":
-        // Swap old class ID with new class ID if different
-        if($_POST["txtID"] != $_POST["hidClass"]) {
-            $data[$_POST["txtID"]] = $data[$_POST["hidClass"]];
-            unset($data[$_POST["hidClass"]]);
-        }
-
-        $data[$_POST["txtID"]]["name"] = $_POST["txtName"];
-        $data[$_POST["txtID"]]["color"] = $_POST["color"];
-        $edit = true;
-
-        break;
-    case "classAdded":
-
-        // Add new class with template values
-        $data["ClassID"] = array("name"=>"Class Name", "color"=>"#ff0000", "assignments"=>array());
-        $edit = true;
-
-        break;
-    case "classDeleted":
-
-        // Delete class
-        unset($data[$_POST["hidClass"]]);
-
-        break;
-    case "assignmentUpdated":
-        
-        // Update assignment details
-        $assignment = intval($_POST["hidAssignment"]);
-        if($_POST["newClass"] != $_POST["hidClass"]) {
-            $assignment = count($data[$_POST["newClass"]]["assignments"]);
-            array_push($data[$_POST["newClass"]]["assignments"], $data[$_POST["hidClass"]]["assignments"][$_POST["hidAssignment"]]);
-            array_splice($data[$_POST["hidClass"]]["assignments"], $_POST["hidAssignment"], 1);
-        }
-        
-        $data[$_POST["newClass"]]["assignments"][$assignment]["name"] = $_POST["txtName"];
-        $datetime = new DateTime($_POST["dtDue"]);
-        $data[$_POST["newClass"]]["assignments"][$assignment]["due"] = $datetime->getTimestamp();
-        $edit = true;
-
-        break;
-    case "assignmentAdded":
-
-        $datetime = new DateTime(); // Get 'now'
-        array_push($data[array_key_first($data)]["assignments"], array("name"=>"Assignment Name", "due"=>$datetime->getTimestamp(), "steps"=>array(), "done"=>false));
-        $edit = true;
-
-        break;
-    case "assignmentDeleted":
-
-        // Splice assignment out of its class
-        array_splice($data[$_POST["hidClass"]]["assignments"], $_POST["hidAssignment"], 1);
-        $edit = true;
-
-        break;
-    case "stepUpdated":
-
-        // Update step text
-        $data[$_POST["hidClass"]]["assignments"][$_POST["hidAssignment"]]["steps"][$_POST["hidStepIndex"]]["name"] = $_POST["txtStep"];
-        $edit = true;
-
-        break;
-    case "stepAdded":
-
-        // Add step to class
-        array_push($data[$_POST["hidClass"]]["assignments"][$_POST["hidAssignment"]]["steps"], array("name"=>$_POST["txtStep"], "done"=>false));
-        $edit = true;
-
-        break;
-    case "stepDeleted":
-
-        // Splice step from class assignment
-        array_splice($data[$_POST["hidClass"]]["assignments"][$_POST["hidAssignment"]]["steps"], $_POST["hidStepIndex"], 1);
-        $edit = true; 
-    
-        break;
-    
-    /* * * * * * * * * * * *
-    * ASSIGNMENT PROGRESS  *
-    * * * * * * * * * * * */
-    case "markComplete":
-        $class = $_POST["hidClass"];
-        $assignment = $_POST["hidAssignment"];
-
-        // Mark done, and mark all steps as done
-        $data[$class]["assignments"][$assignment]["done"] = true;
-        for($i = 0; isset($data[$class]["assignments"][$assignment]["steps"]) && $i < count($data[$class]["assignments"][$assignment]["steps"]); $i++)
-            $data[$class]["assignments"][$assignment]["steps"][$i]["done"] = true;
-        
-        break;
-    case "updateSteps":
-        $class = $_POST["hidClass"];
-        $assignment = $_POST["hidAssignment"];
-
-
-        $data[$class]["assignments"][$assignment]["steps"][$_POST["hidStepIndex"]]["done"] = isset($_POST["chkStep"]);
-        // Go through steps and update values
-        // for($i = 0; isset($data[$class]["assignments"][$assignment]["steps"]) && $i < count($data[$class]["assignments"][$assignment]["steps"]); $i++)
-
-        // Update and write new data
-        break;
-    }
-
-    file_put_contents("data.json", json_encode($data));
-}
-
-
-// We'll put all assignments into this array, before sorting by due-date and displaying
-$assignments = array();
-
-// Populating the assignments array
-foreach($data as $className => $classData) {
-    for($i = 0; $i < count($classData["assignments"]); $i++) {
-        $classData["assignments"][$i]["class"] = $className;
-        $classData["assignments"][$i]["index"] = $i;
-        array_push($assignments, $classData["assignments"][$i]);
-    }
-}
-
-// We sort by due date to get them in order from soonest to latest.
-function dueSort($a, $b) {
-    return $a["due"]-$b["due"];
-}
-usort($assignments, "dueSort");
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planner</title>
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PlannerJS</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body class="<?=$edit ? "editing" : "notEditing"?>">
-    <main>
-        <section id="classes" class="editElement">
-            <h2>Classes</h2>
-            <?php foreach($data as $classID => $class):?>
-            <div class='classForm'>
-                <form method='post'>
-                    <input type='text' name='txtID' onchange='this.form.submit()' value='<?=$classID?>'>
-                    <input type='text' name='txtName' onchange='this.form.submit()' value='<?=$class["name"]?>'>
-                    <input type='color' name='color' onchange='this.form.submit()' value='<?=$class["color"]?>'>
-                    <input type='hidden' name='hidFormType' value='classUpdated'>
-                    <input type='hidden' name='hidClass' value='<?=$classID?>'>
-                </form>
-                <form method='post'>
-                    <input type='submit' value='X' title='Delete Class' onclick='return confirm("Are you sure? This action will delete all assignments in this class.")'>
-                    <input type='hidden' name='hidFormType' value='classDeleted'>
-                    <input type='hidden' name='hidClass' value='<?=$classID?>'>
-                </form>
-            </div>
-            <?php endforeach;?>
 
-            <form method="post" style="margin:5mm;">
-                <input type="hidden" name="hidFormType" value='classAdded'>
-                <input type="submit" value="+" title='Add New Class'>
-            </form>
-        </section>
+<body class="notEditing">
+	<main>
+		<section id="classes" class="editElement">
+			<h2>Classes</h2>
+
+		</section>
+		<h2 style="display:inline">Assignments</h2>
+		<button id="toggleWriting" onclick="toggleWriting()"><img src="quill.png" width="20"></button>
+
+		<div class='step' id='stepBase'>
+			<form class='stepDone'>
+				<input type='submit' value='✓'>
+				<label class='nonEditElement' for='chkStep'>Step</label>
+			</form>
+			<form class='editElement stepName'>
+				<input type='text' size='40' name='txtStep' value='Step'>
+			</form>
+			<form class='editElement stepDelete'>
+				<input type='submit' value='X'>
+			</form>
+		</div>
+
+		<div class='assignment' id='base'>
+			<div class='color-id'>
+				<form class='editElement editAssignment'>
+					<input type='text' size='30' name='txtName' value='Assignment'>
+					<input type='datetime-local' name='dtDue' step='1'>
+					<br>
+					<select name="newClass">
+					</select>
+					<input type="submit" value="✓">
+				</form>
+				<form class='editElement deleteAssignment'>
+					<input type='submit' value='X' title='Delete Assignment' onclick='return confirm("Are you sure?")'>
+				</form>
+				<div class="nonEditElement">
+					<h1>Assignment</h1>
+					<h2>Class ID - Class name</h2>
+				</div>
+			</div>
+			<div class='steps'>
+				<form class='editElement addStep'>
+					<input type='text' size='40' name='txtStep'>
+					<input type='submit' value='+'>
+				</form>
+			</div>
+			<form class='completeAssignment'>
+				<input type="submit" value='Done!' />
+			</form>
+			<p class='due'>Due: Sometime</p>
+		</div>
+
+		<form id="addAssignment" style="margin-bottom:10mm">
+			<input type="submit" value="+" title="Add Assignment">
+		</form>
+
+		<section id="assignments">
+
+		</section>
+	</main>
+
+	<script>
+		var edit = false
+
+		function toggleWriting() {
+			if (edit) {
+				document.body.classList.remove("editing")
+				document.body.classList.add("notEditing")
+				edit = false
+			} else {
+				document.body.classList.remove("notEditing")
+				document.body.classList.add("editing")
+				edit = true
+			}
+		}
+
+		var classdata = {}
+
+		var $assignmentElements = []
+
+		var $assignment, assignmentEdit, assignmentDelete, assignmentDisplay;
+
+		var assignmentData = []
+
+		$.getJSON("data.json", function(data) {
+			classdata = data
+
+			firstClass = Object.keys(classdata)[0]
+
+			for (className in classdata) {
+				$("#base .editAssignment select").append("<option value='" + className + "'>" + classdata[className]["name"] + "</option>")
+			}
+
+			$assignment = $("#base")
+			$("#base").attr("className", firstClass)
+			$("#base .color-id").css("background-color", data[firstClass]["color"])
+			$("#base .nonEditElement h2").html(firstClass + " - " + data[firstClass]["name"])
+
+			for (className in classdata) {
+				console.log(className)
+				for (i in classdata[className]["assignments"]) {
+					assignment = classdata[className]["assignments"][i]
+					if (assignment["done"])
+						continue
+					console.log(assignment["name"], assignment["done"])
+					$assignmentElem = $assignment.clone()
+					$("#assignments").append($assignmentElem)
+					updateAssignmentElementFromData($assignmentElem, className, i)
+				}
+			}
+
+			sortAssignments()
+		})
+
+		function updateAssignmentElementFromData($assignmentElem, className, assignmentID) {
+			id = className.replace(" ", "_") + "assignment" + assignmentID
+			$assignmentElem.attr("assignment", assignmentID)
+			$assignmentElem.attr("className", className)
+			$assignmentElem.attr("id", id)
+			assignment = classdata[className]["assignments"][assignmentID]
+			dueDate = new Date()
+			dueDate.setTime(assignment["due"] * 1000)
+			$assignmentElem.attr("due", assignment["due"])
+			id = "#" + id
+			$(id + " .color-id").css("background-color", classdata[className]["color"])
+			$(id + " .color-id input[name='txtName']").attr("value", assignment["name"])
+			$(id + " .color-id input[name='dtDue']").val(dueDate.toISOString().slice(0, 16))
+			$(id + " .nonEditElement h1").html(assignment["name"])
+			$(id + " .nonEditElement h2").html(className + " - " + classdata[className]["name"])
+			$(id + " .editAssignment select").val(className)
+			fixedDate = new Date()
+			fixedDate.setTime(fixedDate.getTime() - new Date().getTimezoneOffset() * 60000)
+			if (dueDate < fixedDate)
+				$(id).addClass("late")
+			else
+				$(id).removeClass("late")
+			$(id + " .due").html("Due: " + dueDate.getUTCFullYear() + "/" + (dueDate.getUTCMonth() + 1) + "/" + dueDate.getUTCDate() + " " + dueDate.getUTCHours() + ":" + dueDate.getUTCMinutes())
+
+			for (j in assignment["steps"]) {
+				sid = id + "step" + j
+				step = assignment["steps"][j]
+				$step = $(sid)
+				if ($step.length == 0)
+					$step = $("#stepBase").clone().attr("id", sid.substring(1)).attr("step", j)
+				$(id + " .steps .addStep").before($step)
+				if (step["done"])
+					$(sid + " .stepDone input").attr("value", "✓")
+				else
+					$(sid + " .stepDone input").attr("value", "")
+				$(sid + " .stepName input").attr("value", step["name"])
+				$(sid + " .stepDone label").html(step["name"])
+
+				$(sid + " .stepDone").off("submit").on("submit", toggleStep)
+				$(sid + " .stepName").off("submit").on("submit", renameStep)
+				$(sid + " .stepDelete").off("submit").on("submit", deleteStep)
+			}
+
+			$(id + " .steps .addStep").off("submit").on("submit", addStep)
+			$(id + " .editAssignment").off("submit").on("submit", editAssignment)
+			$(id + " .deleteAssignment").off("submit").on("submit", deleteAssignment)
+			$(id + " .completeAssignment").off("submit").on("submit", completeAssignment)
+		}
+
+		$("#addAssignment").submit((e) => {
+			$newAss = $("#base").clone()
+			$("#assignments").append($newAss)
+
+			classdata[$newAss.attr("className")]["assignments"].push({
+				"name": "Assignment",
+				"due": Math.floor(new Date().getTime() / 1000),
+				"steps": [],
+				"done": false
+			})
+
+			if (!edit)
+				toggleWriting()
+
+			updateAssignmentElementFromData($newAss, $newAss.attr("className"), classdata[$newAss.attr("className")]["assignments"].length - 1)
+			updateData()
+			sortAssignments()
+
+			e.preventDefault()
+		})
+
+		function sinceMonday(date) {
+			if (date.getDay() == 0)
+				return 6
+			else return date.getDay() - 1
+		}
+
+		function sortAssignments() {
+			var sort_by_due = function(a, b) {
+				anum = Number.parseInt($(a).attr("due"))
+				bnum = Number.parseInt($(b).attr("due"))
+				return anum < bnum ? -1 : (anum > bnum ? 1 : 0)
+			}
+
+			$(".week").remove()
+
+			var list = $("#assignments > .assignment").get()
+			list.sort(sort_by_due)
+			lastDate = new Date()
+			firstAssignment = true
+			for (i in list) {
+				date = new Date()
+				date.setTime(Number($(list[i]).attr("due")) * 1000)
+				console.log(i, lastDate.getDate(), date.getDate(), lastDate.getDay(), date.getDay(), $(list[i]).attr("due"))
+				if (lastDate < date && (sinceMonday(date) < sinceMonday(lastDate) || (sinceMonday(date) == sinceMonday(lastDate) && date.getDate() != lastDate.getDate()))) {
+					if (firstAssignment)
+						$(list[i].parentNode).append($("<div class='week'><div><img src='party-popper.svg' width='20mm'/><p>Woo! You made it through the week! Take some time to relax.</p></div><hr></div>"))
+					else
+						$(list[i].parentNode).append($("<div class='week'><hr></div>"))
+				}
+
+				list[i].parentNode.appendChild(list[i])
+				firstAssignment = false
+				lastDate = date
+			}
+		}
+
+		function addStep(e) {
+			form = e.target
+			assignment = form.parentElement.parentElement
+
+			className = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
+
+			newStep = Object.fromEntries(new FormData(form))["txtStep"]
+
+			classdata[className]["assignments"][assNum]["steps"].push({
+				name: newStep,
+				done: false
+			})
+
+			updateAssignmentElementFromData($(assignment), className, assNum)
+			updateData()
+
+			e.preventDefault()
+		}
+
+		function renameStep(e) {
+			form = e.target
+			step = form.parentElement
+			assignment = step.parentElement.parentElement
+
+			newStep = Object.fromEntries(new FormData(form))["txtStep"]
+
+			className = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
+			stepNum = Number($(step).attr("step"))
+
+			classdata[className]["assignments"][assNum]["steps"][stepNum]["name"] = newStep
+
+			updateAssignmentElementFromData($(assignment), className, assNum)
+			updateData()
+
+			e.preventDefault()
+		}
+
+		function toggleStep(e) {
+			form = e.target
+			step = form.parentElement
+			assignment = step.parentElement.parentElement
+
+			className = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
+			stepNum = Number($(step).attr("step"))
+
+			classdata[className]["assignments"][assNum]["steps"][stepNum]["done"] = !classdata[className]["assignments"][assNum]["steps"][stepNum]["done"]
+
+			updateAssignmentElementFromData($(assignment), className, assNum)
+			updateData()
+
+			e.preventDefault()
+		}
+
+		function deleteStep(e) {
+			form = e.target
+			step = form.parentElement
+			assignment = step.parentElement.parentElement
+
+			className = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
+			stepNum = Number($(step).attr("step"))
+
+			$(step).remove()
+
+			classdata[className]["assignments"][assNum]["steps"].splice(stepNum, 1)
+			for (i = stepNum; i < classdata[className]["assignments"][assNum]["steps"].length; i++) {
+				idTemplate = className.replace(" ", "_") + "assignment" + assNum + "step"
+				$("#" + idTemplate + (i + 1)).attr("step", i)
+				$("#" + idTemplate + (i + 1)).attr("id", idTemplate + i)
+			}
+
+			updateData()
+
+			e.preventDefault()
+		}
+
+		function deleteAssignment(e) {
+			form = e.target
+			assignment = form.parentElement.parentElement
+
+			className = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
 
 
-        <h2 style="display:inline">Assignments</h2>
-        <button id="toggleWriting" onclick="toggleWriting()"><img src="quill.png" width="20"/></button>
+			$(assignment).remove()
 
-        <form method='post' style="margin-bottom:10mm">
-            <input type='submit' value='+' title='Add Assignment'>
-            <input type='hidden' name='hidFormType' value='assignmentAdded'>
-        </form>
+			classdata[className]["assignments"].splice(assNum, 1)
+			for (i = assNum; i < classdata[className]["assignments"].length; i++) {
+				idTemplate = className.replace(" ", "_") + "assignment"
+				classdata[className]["assignments"][i].assignmentNum = i
+				$("#" + idTemplate + (i + 1)).attr("assignment", i)
+				$("#" + idTemplate + (i + 1)).attr("id", idTemplate + i)
+			}
 
-        <?php
-        
-        $preDate = new DateTime();
-        $firstAssignment = true;
-        ?>
-        <?php foreach($assignments as $assignment):?>
-            
-            <?php
+			updateData()
+			e.preventDefault()
+		}
 
-            if($assignment["done"])
-                continue; // If this assignment is done, then skip it
+		function completeAssignment(e) {
+			form = e.target
+			assignment = form.parentElement
 
-            
-            // Loop through and display
-            $date = new DateTime();
-            $date->setTimestamp($assignment["due"]);
+			className = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
 
-            // If a monday was crossed, add a congratulations for making it through the week
-            if(intval($date->format('W')) > intval($preDate->format('W'))) {
-                if($firstAssignment) {
-                    echo "<div class='week'><div><img src='party-popper.svg' width='20mm'/><p>Woo! You made it through the week! Take some time to relax.</p></div><hr></div>";
-                    echo "<img class='congrats' src='confetti.gif'>";
-                } else {
-                    echo "<div class='week'><hr></div>";
-                }
-            }
-            $preDate = $date;
+			console.log(className, assNum, classdata[className])
 
-            $firstAssignment = false;
-            $class = $assignment["class"];
-            ?>
-            <div class='assignment<?php if($date < new DateTime()) echo " late";?>'>
-                <div class='color-id' style='background-color:<?= $data[$class]["color"]; ?>'>
-                    <form method='post' class="editElement">
-                        <input type='text' size='30' name='txtName' value='<?=$assignment["name"];?>'>
-                        <input type='datetime-local' name='dtDue' step='1' value='<?=$date->format("Y-m-d\TH:i:s")?>'>
-                        <br>
-                        <select name="newClass" >
-                            <?php 
-                            foreach($data as $classID => $classOption) {
-                                echo "<option value='$classID'";
-                                if($classID==$class)
-                                    echo "selected";
-                                echo ">{$classOption["name"]}</option>";
-                            }
-                            ?>
-                        </select>
-                        <input type="submit" value="✓">
-                        <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                        <input type='hidden' name='hidClass' value='<?=$class?>'>
-                        <input type='hidden' name='hidFormType' value='assignmentUpdated'>
-                    </form>
-                    <form method='post' class="editElement">
-                        <input type='submit' value='X' title='Delete Assignment' onclick='return confirm("Are you sure?")'>
-                        <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                        <input type='hidden' name='hidClass' value='<?=$class?>'>
-                        <input type='hidden' name='hidFormType' value='assignmentDeleted'>
-                    </form>
-                    <div class="nonEditElement">
-                        <h1><?=$assignment["name"]?></h1>
-                        <h2><?=$class?> - <?=$data[$class]["name"]?></h2>
-                    </div>
-                </div>
-            
-                <div>
-                <?php for($i = 0; $i < count($assignment["steps"]); $i++): ?>
-                    <!--
-                    
-                    For every step in the assignment, we create a div. In this div is a checkbox and a label.
-                    If the step is marked done, the checkbox is default checked.
-                    When the checkbox is changed, it submits the form automatically.
-                    
-                    -->
-                    
-                    <div>
-                        <form method='post'>
-                            <input type='hidden' name='hidFormType' value='updateSteps'>
-                            <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                            <input type='hidden' name='hidClass' value='<?=$assignment["class"]?>'>
-                            <input type='hidden' name='hidStepIndex' value='<?=$i?>'>
-                            <input type='checkbox' name='chkStep' onchange='this.form.submit()' <?php if($assignment["steps"][$i]["done"]) echo "checked";?> >
-                            <label class="nonEditElement" for="chkStep"><?=$assignment["steps"][$i]["name"]?></label>
-                        </form>
-                        <form method='post' class="editElement">
-                            <input type='text' size='40' name='txtStep' value='<?=$assignment["steps"][$i]["name"]?>'>
-                            <input type='hidden' name='hidStepIndex' value='<?=$i?>'>
-                            <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                            <input type='hidden' name='hidClass' value='<?=$class?>'>
-                            <input type='hidden' name='hidFormType' value='stepUpdated'>
-                        </form>
-                        <form method='post' class="editElement">
-                            <input type='submit' value='X'>
-                            <input type='hidden' name='hidStepIndex' value='<?=$i?>'>
-                            <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                            <input type='hidden' name='hidClass' value='<?=$class?>'>
-                            <input type='hidden' name='hidFormType' value='stepDeleted'>
-                        </form>
-                    </div>
-                <?php endfor; ?>
+			$(assignment).remove()
 
-                <form method='post' id="addStep" class="editElement">
-                    <input type='text' size='40' name='txtStep'>
-                    <input type='submit' value='+'>
-                    <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                    <input type='hidden' name='hidClass' value='<?=$class?>'>
-                    <input type='hidden' name='hidFormType' value='stepAdded'>
-                </form>
-            </div>
+			classdata[className]["assignments"][assNum]["done"] = true
 
-            <!-- Create a form with hidden input that marks currently modified data. This form marks an assignment (and all its steps) as complete. -->
-            <form method='post'>
-                <input type='hidden' name='hidFormType' value='markComplete'>
-                <input type='hidden' name='hidAssignment' value='<?=$assignment["index"]?>'>
-                <input type='hidden' name='hidClass' value='<?=$class?>'>
-                <input type='submit' value='Done!' />
-            </form>
+			updateData()
 
-            <!-- Echo a human readable date & time -->
-            <p class='due'>Due: <?=$date->format("Y/m/d h:i A")?></p>
-        </div>
-        <?php endforeach;?>
-    </main>
+			e.preventDefault()
+		}
 
-    <script>
-        var edit = <?=$edit ? "true" : "false"?>;
-        function toggleWriting() {
-            if(edit) {
-                document.body.classList.remove("editing");
-                document.body.classList.add("notEditing");
-                edit = false;
-            } else {
-                document.body.classList.remove("notEditing");
-                document.body.classList.add("editing");
-                edit = true;
-            }
-        }
-    </script>
+		function editAssignment(e) {
+			form = e.target
+			assignment = form.parentElement.parentElement
+
+			currClass = $(assignment).attr("className")
+			assNum = Number($(assignment).attr("assignment"))
+
+			formData = Object.fromEntries(new FormData(form))
+			newClass = formData["newClass"]
+
+			console.log(currClass, newClass, newClass != currClass)
+
+			if (newClass != currClass) {
+				assignmentData = classdata[currClass]["assignments"][assNum]
+				console.log("Got", assignmentData, "from", currClass, assNum, classdata[currClass]["assignments"])
+				classdata[currClass]["assignments"].splice(assNum, 1)
+				console.log("Spliced", classdata[currClass]["assignments"])
+				assNum = classdata[newClass]["assignments"].length
+				classdata[newClass]["assignments"].push(assignmentData)
+				console.log("Put", assignmentData, "into", newClass, assNum, classdata[newClass]["assignments"])
+			}
+
+			classdata[newClass]["assignments"][assNum]["name"] = formData["txtName"]
+			dueDate = new Date(formData["dtDue"])
+			// Account for timezone offset between html date input and UTC date object
+			dueDate.setTime(dueDate.getTime() - new Date().getTimezoneOffset() * 60000)
+			classdata[newClass]["assignments"][assNum]["due"] = dueDate.getTime() / 1000
+
+			updateAssignmentElementFromData($(assignment), newClass, assNum)
+			updateData()
+			sortAssignments()
+
+			e.preventDefault()
+		}
+
+		function updateData() {
+			$.post("upload.php", JSON.stringify(classdata), function(data) {
+				console.log(data);
+			})
+		}
+	</script>
 </body>
-</html>

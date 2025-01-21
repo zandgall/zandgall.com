@@ -142,3 +142,15 @@ body.notEditing .editElement {
 body.notEditing .nonEditElement {
   display:initial;
 }
+
+.stepDone input {
+  width: 2em;
+}
+
+#stepBase {
+  display: none;
+}
+
+#base {
+  display: none;
+}
