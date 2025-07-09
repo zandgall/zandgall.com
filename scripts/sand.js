@@ -6,6 +6,7 @@ const ITERATIONS = 4
 const STEPPING = 2
 let step = 0;
 
+/* A long list of identifiers for different types of elements */
 const identities = {
 	"air": [
 		"9bd7e8"
@@ -120,6 +121,7 @@ const identities = {
 	]
 }
 
+// Keys to press and the element it selects for you
 const keybinds = {
 	"a": "9bd7e8",
 	"s": "f2d994",
@@ -132,6 +134,7 @@ const keybinds = {
 let selectedElement = "f2d994";
 let paintSize = 1;
 
+/* An even longer list of rules, see the zandgall.com/sand page itself for an explanation on syntax here. Just an object representation */
 let rules = [
 	{
 		pattern: [ // 0 = anything, "string" = identity
@@ -755,12 +758,16 @@ let rules = [
 		chance: 0.25
 	}
 ]
+
+/* A list of indexes referencing every rule in rules. Makes it easier to shuffle */
 let ruleList = Array.apply(null, Array(rules.length)).map(function(x,i){return i;});
 
 let pixels = Array(WIDTH*HEIGHT).fill("9bd7e8");
 
+// S stands for sand :)
 let smouseX, smouseY, smouseLeft, paintOnce;
 
+// See if a rule matches at the given coordinates
 function matches(rule, x, y) {
 	if ("chance" in rule && rule.chance < Math.random())
 		return false;
@@ -779,6 +786,7 @@ function matches(rule, x, y) {
 	return true;
 }
 
+// Apply a rule (on the assumption that it matches), affecting the world
 function enforce(rule, x, y) {
 	let source = Array(5*5).fill(0);
 	for(let j = 0; j < 5; j++)
@@ -813,9 +821,9 @@ function enforce(rule, x, y) {
 }
 
 function main() {
-	console.log("main!");
-
+	// Check if mouse is held and within window, needing to paint an element
 	if(smouseLeft && smouseX >= 0 && smouseX < WIDTH && smouseY >= 0 && smouseY < HEIGHT) {
+		// Paint a square based on 'paintSize'
 		for(let x = Math.max(smouseX + 1 - Math.floor(paintSize), 0); x < WIDTH && x < smouseX + paintSize; x++)
 			for(let y = Math.max(smouseY + 1 - Math.floor(paintSize), 0); y < HEIGHT && y < smouseY + paintSize; y++)
 				pixels[y * WIDTH + x] = selectedElement;
@@ -823,7 +831,11 @@ function main() {
 			smouseLeft = false;
 	}
 
+	// 'tick' ITERATIONS times
 	for(let iter = 0; iter < ITERATIONS; iter++) {
+
+		// Loop through all pixels, we offset based on our stepping size, and only select every (STEPPING)th pixel
+		// We check if any of the rules apply to world at the current pixel, and enforce the rule if a match is found
 		let ystart = HEIGHT + 3 - Math.floor(step/STEPPING);
 		let xstart = Math.floor(-4 + (step%STEPPING));
 		for(let j = ystart; j > -5; j-=STEPPING)
@@ -831,17 +843,22 @@ function main() {
 				for(let r = 0; r < rules.length; r++)
 					if(matches(rules[ruleList[r]], i, j))
 						enforce(rules[ruleList[r]], i, j);
+
+		// Shuffle two random rules for added variation in priority
 		let shuffle_a = Math.floor(Math.random() * rules.length);
 		let shuffle_b = Math.floor(Math.random() * rules.length);
 		let shuffle_z = ruleList[shuffle_a];
 		ruleList[shuffle_a] = ruleList[shuffle_b];
 		ruleList[shuffle_b] = shuffle_z;
+
+		// step step step step step st
 		step++;
 		if(step >= STEPPING * STEPPING)
 			step = 0;
 	}
 
 
+	// Draw world to the screen 
 	let ctx = canvas.getContext("2d");
 	ctx.clearRect(0, 0, WIDTH, HEIGHT);
 	for(let j = 0; j < HEIGHT; j++)
@@ -849,6 +866,8 @@ function main() {
 			ctx.fillStyle = "#"+pixels[j*WIDTH + i];
 			ctx.fillRect(i,j,1,1);
 		}
+
+	// Draw selected element colored pixel under mouse
 	let num = Number("0x"+selectedElement);
 	let r = Math.min(((num&0x00ff0000) >> 16) + 10, 255);
 	let g = Math.min(((num&0x0000ff00) >> 8) + 10, 255);

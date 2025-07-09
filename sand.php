@@ -6,31 +6,28 @@ $pagedesc = "Little basic sand engine created by zandgall";
 include "global/header.php"; ?>
 
 <style>
-.codeexample {
-/*    width: 1000px; */
-/*    margin: 10px auto 10px -100px; */
-    border: inset 2px #000027; 
-    background-color: #101020;
-}
+	.codeexample {
+		border: inset 2px #000027;
+		background-color: #101020;
+	}
 
-.codeexample h3 {
-    text-align:left; 
-    margin: 5px; 
-    color:#d8d8d8; 
-    font-family:basicbit; 
-    font-weight: normal;
-}
+	.codeexample h3 {
+		text-align: left;
+		margin: 5px;
+		color: #d8d8d8;
+		font-family: basicbit;
+		font-weight: normal;
+	}
 
-.code-seg {
-	display:flex; 
-/*	flex-direction:row;*/
-}
+	.code-seg {
+		display: flex;
+	}
 
-.section:has(.code-seg) {
-	width: 80vw; 
-	max-width:1000px; 
-	margin:1cm auto auto auto; 
-}
+	.section:has(.code-seg) {
+		width: 80vw;
+		max-width: 1000px;
+		margin: 1cm auto auto auto;
+	}
 </style>
 
 
@@ -39,131 +36,134 @@ $title = "SAND!";
 $subtitle = "and fish and reeds and water and clouds and";
 include "global/begin.php";
 
-function stringIncludes($strings, $search) {
-    for($i = 0; $i < sizeof($strings); $i++) {
-        if($strings[$i] == "")
-            continue;
-        if(strpos($search, $strings[$i]) !== false) {
-            return true;
-        }
-    }
-    return false;
+function stringIncludes($strings, $search)
+{
+	for ($i = 0; $i < sizeof($strings); $i++) {
+		if ($strings[$i] == "")
+			continue;
+		if (strpos($search, $strings[$i]) !== false) {
+			return true;
+		}
+	}
+	return false;
 }
-function strip($string) {
-    $remove = array(" ", " ", ",", "(", ")", ":", "\n", "\r", "\r\n");
-    foreach($remove as $toRem) {
-        $string = str_replace($toRem, "", $string);
-    }
-    return $string;
+function strip($string)
+{
+	$remove = array(" ", " ", ",", "(", ")", ":", "\n", "\r", "\r\n");
+	foreach ($remove as $toRem) {
+		$string = str_replace($toRem, "", $string);
+	}
+	return $string;
 }
-function astrip($array) {
+function astrip($array)
+{
 	$out = array();
-	foreach($array as $element)
-		if($element!="" && $element!=" ")
+	foreach ($array as $element)
+		if ($element != "" && $element != " ")
 			array_push($out, $element);
 	return $out;
 }
-function sandCode($filepath, $preDefVars = array()) {
+function sandCode($filepath, $preDefVars = array())
+{
 	$file = fopen($filepath, "r") or die("Unable to open code file!");
-    $filesize = filesize($filepath);
-    $indents = 0;
-    $variables = array("*"=>"#aaaaaa");
-    $variable_hue = 0;
-    foreach($preDefVars as $var) {
-   		$h = fmod($variable_hue, 1) * 360;
-   		$variables[$var] = "hsl($h,60%,70%)";
-    	$variable_hue += 1.618;
-    }
+	$filesize = filesize($filepath);
+	$indents = 0;
+	$variables = array("*" => "#aaaaaa");
+	$variable_hue = 0;
+	foreach ($preDefVars as $var) {
+		$h = fmod($variable_hue, 1) * 360;
+		$variables[$var] = "hsl($h,60%,70%)";
+		$variable_hue += 1.618;
+	}
 
-    while(!feof($file)) {
-    	$line = fgets($file);
-        $words = astrip(explode(" ", $line));
+	while (!feof($file)) {
+		$line = fgets($file);
+		$words = astrip(explode(" ", $line));
 
-        for($i = 0; $i < $indents; $i++)
-        	echo "&emsp;";
+		for ($i = 0; $i < $indents; $i++)
+			echo "&emsp;";
 
-        if($line[0]=='#') {
-        	list($r,$g,$b) = sscanf($words[0], "#%02x%02x%02x");
-        	$luma = 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
-        	$bg_col = $luma < 128 ? "#ffffff" : "rgba(0,0,0,0)";
-        	$bg_col = "rgba(0,0,0,0);";
-        	echo "<span style='background-color:$bg_col; color:".strip($words[0]).";'>$words[0] ";
-        	for($i = 1; $i < sizeof($words); $i++)
-        		echo "<span style='text-decoration:underline'>$words[$i]</span> ";
-        	echo"</span><br>";
-        	continue;
-        }
-       	if($line[0]=='-') {
-       		echo "<span style='color:#aaaaaa'><i>$line</i></span><br>";
-       		continue;
-       	}
+		if ($line[0] == '#') {
+			list($r, $g, $b) = sscanf($words[0], "#%02x%02x%02x");
+			$luma = 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+			$bg_col = $luma < 128 ? "#ffffff" : "rgba(0,0,0,0)";
+			$bg_col = "rgba(0,0,0,0);";
+			echo "<span style='background-color:$bg_col; color:" . strip($words[0]) . ";'>$words[0] ";
+			for ($i = 1; $i < sizeof($words); $i++)
+				echo "<span style='text-decoration:underline'>$words[$i]</span> ";
+			echo "</span><br>";
+			continue;
+		}
+		if ($line[0] == '-') {
+			echo "<span style='color:#aaaaaa'><i>$line</i></span><br>";
+			continue;
+		}
 
-       	if(strip($words[0])=="rule") {
-       		echo "<span style='color:#ffffff'><b>rule: ";
-       		for($i = 1; $i < sizeof($words); $i++){
-       			if(strip($words[$i])=="x")
-       				echo "<span style='color:#aa4444'>$words[$i]</span> ";
-       			elseif (strip($words[$i])=="y")
-       				echo "<span style='color:#44aa44'>$words[$i]</span> ";
-       			elseif (strip($words[$i])=="xy" || strip($words[$i])=="yx")
-       				echo "<span style='color:#aaaa44'>$words[$i]</span> ";
-       			elseif (str_ends_with(strip($words[$i]), "%"))
-       				echo "<span style='color:#4444aa'>$words[$i]</span> ";
-       			else echo $words[$i]." ";
-       			
-       		}
-       		echo "</b></span><br>";
-       		for($i = 0; $i < 5; $i++) {
-       			$line = fgets($file);
-       			$words = astrip(explode(" ", $line));
+		if (strip($words[0]) == "rule") {
+			echo "<span style='color:#ffffff'><b>rule: ";
+			for ($i = 1; $i < sizeof($words); $i++) {
+				if (strip($words[$i]) == "x")
+					echo "<span style='color:#aa4444'>$words[$i]</span> ";
+				elseif (strip($words[$i]) == "y")
+					echo "<span style='color:#44aa44'>$words[$i]</span> ";
+				elseif (strip($words[$i]) == "xy" || strip($words[$i]) == "yx")
+					echo "<span style='color:#aaaa44'>$words[$i]</span> ";
+				elseif (str_ends_with(strip($words[$i]), "%"))
+					echo "<span style='color:#4444aa'>$words[$i]</span> ";
+				else echo $words[$i] . " ";
+			}
+			echo "</b></span><br>";
+			for ($i = 0; $i < 5; $i++) {
+				$line = fgets($file);
+				$words = astrip(explode(" ", $line));
 
-       			$j = 0;
-       			for(; $j < 5; $j++) {
-       				if(array_key_exists($words[$j], $variables))
-       					echo "<span style='color:{$variables[$words[$j]]}'>$words[$j]</span> ";
-       				else
-       					echo "<span style='background-color:#ff0000; color:#aaaaaa'>$words[$j]</span> ";
-       			}
-       			if($i == 2) {
-       				$j++;
-       				echo "=> ";
-       			} else {
-	       			echo "&nbsp;&nbsp;&nbsp;";
-	       		}
-	       		for(; $j < sizeof($words); $j++) {
-	       			if ($words[$j][0]=='(' && sizeof($words)>$j+1) {
-	       				list($x) = sscanf($words[$j], "(%d");
-	       				list($y) = sscanf($words[$j+1], "%d)");
-	       				if($x<-1||$x>1||$y<-1||$y>1)
-	       					echo "<span style='color:#aaccaa;'>$words[$j] {$words[$j+1]}</span> ";
-	       				else {
-	       					$arroys = array('↖', '↑', '↗', '←', '*', '→', '↙', '↓', '↘');
-	       					$arrow = $arroys[$x+1+($y+1)*3];
-	       					echo "<span style='color:#aaccaa; text-decoration:underline;' title='Literal: $words[$j] {$words[$j+1]}'>$arrow</span> ";
-	       				}
-	       				$j++;
-	       			} elseif (array_key_exists(strip($words[$j]), $variables))
-	       				echo "<span style='color:{$variables[strip($words[$j])]}'>$words[$j]</span> ";
-	       			else
-       					echo "<span style='background-color:#ff0000; color:#aaaaaa'>$words[$j]</span> ";
-	       		}
-       			echo "<br>";
-       			if(feof($file))
-       				return;
-       		}
-       		continue;
-       	}
-       	if(sizeof($words)>1 && $words[1] == "=>") {
-       		$h = fmod($variable_hue, 1) * 360;
-       		$variables[$words[0]] = "hsl($h,60%,70%)";
-       		$variable_hue += 1.618;
-       		echo "<span style='color:hsl($h,60%,70%);'>$line</span><br>";
-       		continue;
-       	}
+				$j = 0;
+				for (; $j < 5; $j++) {
+					if (array_key_exists($words[$j], $variables))
+						echo "<span style='color:{$variables[$words[$j]]}'>$words[$j]</span> ";
+					else
+						echo "<span style='background-color:#ff0000; color:#aaaaaa'>$words[$j]</span> ";
+				}
+				if ($i == 2) {
+					$j++;
+					echo "=> ";
+				} else {
+					echo "&nbsp;&nbsp;&nbsp;";
+				}
+				for (; $j < sizeof($words); $j++) {
+					if ($words[$j][0] == '(' && sizeof($words) > $j + 1) {
+						list($x) = sscanf($words[$j], "(%d");
+						list($y) = sscanf($words[$j + 1], "%d)");
+						if ($x < -1 || $x > 1 || $y < -1 || $y > 1)
+							echo "<span style='color:#aaccaa;'>$words[$j] {$words[$j + 1]}</span> ";
+						else {
+							$arroys = array('↖', '↑', '↗', '←', '*', '→', '↙', '↓', '↘');
+							$arrow = $arroys[$x + 1 + ($y + 1) * 3];
+							echo "<span style='color:#aaccaa; text-decoration:underline;' title='Literal: $words[$j] {$words[$j + 1]}'>$arrow</span> ";
+						}
+						$j++;
+					} elseif (array_key_exists(strip($words[$j]), $variables))
+						echo "<span style='color:{$variables[strip($words[$j])]}'>$words[$j]</span> ";
+					else
+						echo "<span style='background-color:#ff0000; color:#aaaaaa'>$words[$j]</span> ";
+				}
+				echo "<br>";
+				if (feof($file))
+					return;
+			}
+			continue;
+		}
+		if (sizeof($words) > 1 && $words[1] == "=>") {
+			$h = fmod($variable_hue, 1) * 360;
+			$variables[$words[0]] = "hsl($h,60%,70%)";
+			$variable_hue += 1.618;
+			echo "<span style='color:hsl($h,60%,70%);'>$line</span><br>";
+			continue;
+		}
 
-        echo $line."<br>";
-    }
-} 
+		echo $line . "<br>";
+	}
+}
 
 ?>
 
@@ -187,7 +187,9 @@ function sandCode($filepath, $preDefVars = array()) {
 		<div style="flex-grow:1;">
 			<p class="basictext">Here we've defined a tan element with the keybind "s", it is tagged as "sand", "solid", "fallable", and "pileable". The solid tag can be used to make sure nothing falls through it. The fallable tag can be used to make sure it falls straight down, and pileable can be used to make elements form piles rather than pillars.</p>
 		</div>
-		<div class="codeexample" style="width:300px; min-width:300px;"><h3 class="basictext"><?php sandCode("assets/sand/element_definition"); ?></h3></div>
+		<div class="codeexample" style="width:300px; min-width:300px;">
+			<h3 class="basictext"><?php sandCode("assets/sand/element_definition"); ?></h3>
+		</div>
 	</div>
 </div>
 <div class="section">
@@ -198,7 +200,7 @@ function sandCode($filepath, $preDefVars = array()) {
 			<p class="basictext">In this example, we add shorthand for "fallable", "passthrough", "solid", and "pileable" elements with the characters "f", "0", "s" and "p", and the color "#ff0000" with "r", and the reference (0, -1) with "^" which you can see being used in rules later on.</p>
 		</div>
 		<div class="codeexample" style="width:300px; min-width:300px;">
-			<h3 class="basictext"><?php sandCode("assets/sand/shorthand_definition");?></h3>
+			<h3 class="basictext"><?php sandCode("assets/sand/shorthand_definition"); ?></h3>
 		</div>
 	</div>
 </div>
@@ -236,10 +238,10 @@ function sandCode($filepath, $preDefVars = array()) {
 			</h3>
 		</div>
 		<div class="codeexample" style="width:400px; min-width:400px;">
-	        <h3 class="basictext">
-	        	<?php sandCode("assets/sand/sand_1.ruleset"); ?>
-	        </h3>
-	    </div>
+			<h3 class="basictext">
+				<?php sandCode("assets/sand/sand_1.ruleset"); ?>
+			</h3>
+		</div>
 	</div>
 	<div class="code-seg">
 		<div style="flex-grow:1;">
@@ -253,7 +255,9 @@ function sandCode($filepath, $preDefVars = array()) {
 				This second rule defines how "pileable" elements behave. We went over with this in the previous section, but it tells "pileable" elements to look for spaces diagonally down-right if there's a solid tile directly below, and swap with that space if it's a passthrough element. This rule is also mirrored horizontally so that pilable elements will search down to the left as well.
 			</h3>
 		</div>
-		<div class="codeexample" style="width:400px; min-width:400px"><h3 class="basictext"><?php sandCode("assets/sand/sand_2.ruleset");?></h3></div>
+		<div class="codeexample" style="width:400px; min-width:400px">
+			<h3 class="basictext"><?php sandCode("assets/sand/sand_2.ruleset"); ?></h3>
+		</div>
 	</div>
 	<div class="code-seg">
 		<div style="flex-grow:1;">
@@ -270,11 +274,14 @@ function sandCode($filepath, $preDefVars = array()) {
 				Finally, we create a rule that allows fallables to fall through liquid. It's identical to the original fallable rule, with the only difference being the 20% rule chance. This means that every frame, there's only a 20% chance that any fallable in liquid will fall. This causes the appearance of fallables falling slower in water than they fall in air.
 			</h3>
 		</div>
-		<div class="codeexample" style="width:400px; min-width:400px"><h3 class="basictext"><?php sandCode("assets/sand/sand_3.ruleset", array("f", "0", "s", "p", "v", "^", "\\", "/"));?></h3></div>
+		<div class="codeexample" style="width:400px; min-width:400px">
+			<h3 class="basictext"><?php sandCode("assets/sand/sand_3.ruleset", array("f", "0", "s", "p", "v", "^", "\\", "/")); ?></h3>
+		</div>
 	</div>
 </div>
 
 <script src="./scripts/sand.js"></script>
 
-<?php include "global/end.php"?>
+<?php include "global/end.php" ?>
+
 </html>
