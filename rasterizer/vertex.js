@@ -1,48 +1,4 @@
-// class vec2 {
-//     constructor(x, y) {
-//         this.x = x
-//         this.y = y
-//     }
-//     clone() {
-//         return new vec2(this.x, this.y)
-//     }
-// }
-
-// class vec3 {
-//     constructor(x, y, z) {
-//         this.x = x
-//         this.y = y
-//         this.z = z
-//     }
-//     clone() {
-//         return new vec3(this.x, this.y, this.z)
-//     }
-// }
-
-// class vec4 {
-//     constructor(x, y, z, w) {
-//         this.x = x
-//         this.y = y
-//         this.z = z
-//         this.w = w
-//     }
-//     clone() {
-//         return new vec4(this.x, this.y, this.z, this.w)
-//     }
-// }
-//
-// class vertex {
-//     constructor() {
-//         this.pos = vec4(0,0,0,1)
-//         this.vec2s = []
-//         this.vec3s = []
-//         this.vec4s = []
-//     }
-// }
-//
-//function vertex() {
-//    return { pos: new vec4(0,0,0,1) }
-//}
+// Variety of linear algebra calculation functions!
 
 function v4add(a, b) {
     return {x: a.x + b.x, y: a.y + b.y, z: a.z + b.z, w: a.w + b.w}

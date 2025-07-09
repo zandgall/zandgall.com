@@ -21,27 +21,10 @@ let frame_buff = new Array(WIDTH*HEIGHT)
 let depth_buff = new Array(WIDTH*HEIGHT)
 let frame = 1
 
-function tri_draw_func(x, y, z, input) {
-    if (y < 0 || y >= HEIGHT || x < 0 || x >= WIDTH)
-        return
-    // If the current pixel (x, y) was drawn this frame, and is closer to the camera, don't draw over it
-    if(frame_buff[y*WIDTH + x] == frame && depth_buff[y * WIDTH + x] < z)
-        return
-    if(isNaN(input.x))
-        throw new Error("Input is NaN: " + input)
-    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 0] = Math.min(Math.max(input.x, 0), 1)*255
-    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 1] = Math.min(Math.max(input.y, 0), 1)*255
-    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 2] = Math.min(Math.max(input.z, 0), 1)*255
-    surface.data[((HEIGHT-1-y)*WIDTH + x) * 4 + 3] = 255
-    frame_buff[y*WIDTH + x] = frame
-    depth_buff[y*WIDTH + x] = z
-}
-
 var monkey, cube, plane, pawn, hqcube
 var monkey_image, skybox, persp, tf_monkey, tf_cube2, tf_cube3, tf_monkey2, tf_plane, tf_pawn, tf_skybox, mvp_uni, skybox_uni, monkey_uni, cam_center, cam_dir, cam_dist, cam
 
-function main() {
-    console.log("Running!")
+function main() { 
     let context = can.getContext("2d")
     surface = context.getImageData(0, 0, WIDTH, HEIGHT)
 
@@ -61,6 +44,7 @@ function main() {
     hidden_context.scale(1, -1)
     skybox = new cubemap()
 
+    // Take a lot of pixel data out of loaded images
     hidden_context.drawImage(skybox_back_src, 0, -hidden.height)
     skybox.sides[0].w = hidden.width
     skybox.sides[0].h = hidden.height
@@ -98,6 +82,7 @@ function main() {
 
     hidden_context.drawImage(monkey_image_src, 0, -hidden.height)
     
+    // Build uniform variables to pass to shaders
     persp = perspective(3.14159265 / 2, WIDTH / HEIGHT, 0.1, 100.0)
     tf_monkey = new matrix()
     tf_monkey.rotate(0.72, {x:0,y:1,z:0})
@@ -152,13 +137,11 @@ function main() {
 
     cam = camera(v3add(cam_center, v3scale(cam_dir, cam_dist)), v3scale(cam_dir, -1), {x:0,y:1,z:0})
 
-    monkey = load_obj("monkey.obj")
-    cube = load_obj("cube.obj")
-    plane = load_obj("plane.obj")
-    pawn = load_obj("pawn.obj")
-    hqcube = load_obj("hqcube.obj")
-
-    // loop()
+    monkey = loadObj("monkey.obj")
+    cube = loadObj("cube.obj")
+    plane = loadObj("plane.obj")
+    pawn = loadObj("pawn.obj")
+    hqcube = loadObj("hqcube.obj") 
 }
 
 function loop() {
@@ -179,14 +162,14 @@ function loop() {
     monkey_uni.reflect_amount = 0.1
     monkey_uni.diffuse_color = {x:0, y:0.5, z:1}
     // console.log("MONKEY")
-    draw_object(monkey, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
+    drawObject(monkey, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
     mvp_uni.m = tf_cube2
     // console.log("CUBE2")
-    draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
+    drawObject(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
     monkey_uni.texture = new sampler2D()
     mvp_uni.m = tf_plane
     // console.log("PLANE")
-    draw_object(plane, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
+    drawObject(plane, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
 
     let a = frame * 2 * 3.14159265 / 256
     let c = Math.cos(a), s = Math.sin(a)
@@ -200,40 +183,36 @@ function loop() {
     rotation.translate({x:-3, y:-6, z:2})
     mvp_uni.m = rotation
     // console.log("CUBE")
-    draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
+    drawObject(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
 
     monkey_uni.reflect_amount = 0.8
     monkey_uni.diffuse_color = {x:1, y:0.9, z:0.8}
     mvp_uni.m = tf_cube3
     // console.log("CUBE3")
-    draw_object(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
+    drawObject(cube, vs_mvp, mvp_uni, fs_monkey, monkey_uni)
 
     mvp_uni.m = tf_monkey2
     // console.log("MONKEY2")
-    draw_object(monkey, vs_mvp, mvp_uni, fs_refract, skybox_uni)
+    drawObject(monkey, vs_mvp, mvp_uni, fs_refract, skybox_uni)
 
     mvp_uni.m = tf_pawn
     // console.log("PAWN")
-    draw_object(pawn, vs_mvp, mvp_uni, fs_refract, skybox_uni)
+    drawObject(pawn, vs_mvp, mvp_uni, fs_refract, skybox_uni)
 
     tf_skybox = cam.clone()
     tf_skybox.d = {x:0, y:0, z:0, w:1}
     mvp_uni.m = m_mult(persp, tf_skybox)
     ZG_DISABLE_CULLING = true
-    // console.log("SKYBOX")
     if(ZG_AFFINE && $("#hqcube").is(":checked"))
-        draw_object(hqcube, vs_skybox, mvp_uni, fs_skybox, skybox_uni)
+        drawObject(hqcube, vs_skybox, mvp_uni, fs_skybox, skybox_uni)
     else 
-        draw_object(cube, vs_skybox, mvp_uni, fs_skybox, skybox_uni)
+        drawObject(cube, vs_skybox, mvp_uni, fs_skybox, skybox_uni)
 
     can.width = WIDTH
     can.height = HEIGHT
-    // console.log("IMAGING")
     context.putImageData(surface, 0, 0)
 
     frame++
-    // console.log("Frame: ", frame)
-    console.log("Frame")
     setTimeout(loop, 0)
 }
 

@@ -1,3 +1,4 @@
+// Obj face data, stores index to position, uv, and normal data in obj
 class face {
     constructor() {
         this.a_v = -1, this.a_vt = -1, this.a_vn = -1
@@ -15,7 +16,8 @@ class object {
     }
 }
 
-function load_obj(filepath) {
+// Load (specific kind of) .obj file
+function loadObj(filepath) {
 
     let out = new object()
     $.ajax({
@@ -27,25 +29,28 @@ function load_obj(filepath) {
         lines = data.split(/\r?\n/)
         for(let line_number = 0; line_number < lines.length; line_number++) {
             line = lines[line_number]
-            if(line.startsWith("v ")) {
+            if(line.startsWith("v ")) { // Vec3 position
+                // find all decimals, ensure there's 3
                 let nums = [...line.matchAll(/-?\d+\.\d*/g)]
                 if (nums.length < 3)
                     console.error("Error: vertex at line #" + line_number + " doesn't have 3 or more coordinates")
+                // We deal with Vec4s for our positions, default w=1
                 out.vertices.push({x:parseFloat(nums[0]), y:parseFloat(nums[1]), z:parseFloat(nums[2]), w:1})
-            } else if(line.startsWith("vt ")) {
+            } else if(line.startsWith("vt ")) { // Vec2 uv texture data
                 let nums = [...line.matchAll(/-?\d+\.\d*/g)]
                 if (nums.length < 2)
                     console.error("Error: vertex texture at line #" + line_number + " doesn't have 2 or more coordinates")
                 out.uvs.push({x:parseFloat(nums[0]), y:parseFloat(nums[1])})
-            } else if(line.startsWith("vn ")) {
+            } else if(line.startsWith("vn ")) { // Vec3 normal data
                 let nums = [...line.matchAll(/-?\d+\.\d*/g)]
                 if (nums.length < 3)
                     console.error("Error: vertex normal at line #" + line_number + " doesn't have 3 or more coordinates")
                 out.normals.push({x:parseFloat(nums[0]), y:parseFloat(nums[1]), z:parseFloat(nums[2])})
-            } else if (line.startsWith("f ")) {
+            } else if (line.startsWith("f ")) { // Face indice data
                 let nums = [...line.matchAll(/\d+/g)]
                 let f = out.faces.length
                 out.faces.push(new face())
+                // Initialize different indices depending on what kinds of data has been read
                 if(out.uvs.length + out.normals.length == 0) {
                     out.faces[f].a_v = parseFloat(nums[0]) - 1
                     out.faces[f].b_v = parseFloat(nums[1]) - 1
@@ -81,7 +86,10 @@ function load_obj(filepath) {
     return out
 }
 
-function draw_object(obj, vs, v_uni, fs, f_uni) {
+// Takes an object, and draws all of its triangles
+function drawObject(obj, vs, v_uni, fs, f_uni) {
+
+    // Constructs list of verticies we'll send through the pipeline
     let verts = [{pos:{x:0,y:0,z:0,w:1}}, {pos:{x:0,y:0,z:0,w:1}}, {pos:{x:0,y:0,z:0,w:1}}]
     for (let i = 0; i < obj.faces.length; i++) {
         verts[0].pos = obj.vertices[obj.faces[i].a_v]

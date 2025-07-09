@@ -1,7 +1,7 @@
 var THRESHOLD = 0.001 // Account for floating point errors
 var ZG_DISABLE_CULLING = false
 
-function shade_clip_plane_augment(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
+function clipTriangleAugment(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
     let ratio_ac = a_coord / (a_coord - c_coord);
 	let ratio_bc = b_coord / (b_coord - c_coord);
 	let seg1 = {pos:{x:0,y:0,z:0,w:1}}
@@ -27,11 +27,11 @@ function shade_clip_plane_augment(a, b, c, a_coord, b_coord, c_coord, fs, f_uni)
 			seg2[key] = v2add(v2scale(b[key], 1-ratio_bc), v2scale(c[key], ratio_bc))
 	
 	let drawable = [ seg1, seg2, c ]
-	shade_clip_tri(drawable, fs, f_uni)
+	clipAndShadeTriangle(drawable, fs, f_uni)
 	return true;
 }
 
-function shade_clip_plane_create(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
+function clipTriangleCreate(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
     let ratio_ab = b_coord / (b_coord - a_coord);
 	let ratio_ac = c_coord / (c_coord - a_coord);
 
@@ -50,7 +50,7 @@ function shade_clip_plane_create(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) 
 	}
 
     let drawable = [ seg1, b, c ]
-    shade_clip_tri(drawable, fs, f_uni)
+    clipAndShadeTriangle(drawable, fs, f_uni)
 
     // Clip a->c
 	for (const key in a)
@@ -63,59 +63,70 @@ function shade_clip_plane_create(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) 
 
     drawable[1] = c
     drawable[2] = seg2
-    shade_clip_tri(drawable, fs, f_uni)
+    clipAndShadeTriangle(drawable, fs, f_uni)
     return true
 }
 
-function shade_clip_plane(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
+// Called by 
+function clipTriangleAgainstPlane(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) {
     if (a_coord < -THRESHOLD && b_coord < -THRESHOLD && c_coord < -THRESHOLD)
         return true // Reject triangle all points are outside clipping plane
     if (a_coord >= -THRESHOLD && b_coord >= -THRESHOLD && c_coord >= -THRESHOLD)
         return false // Draw as is, all points are inside the clipping plane
     if (a_coord < 0 && b_coord < 0 && c_coord >= 0) // Two points are outside, no new geometry is needed, just augment the given triangle
-		return shade_clip_plane_augment(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) // Done with this triangle
+		return clipTriangleAugment(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) // Done with this triangle
 	if (b_coord < 0 && c_coord < 0 && a_coord >= 0)
-		return shade_clip_plane_augment(b, c, a, b_coord, c_coord, a_coord, fs, f_uni)
+		return clipTriangleAugment(b, c, a, b_coord, c_coord, a_coord, fs, f_uni)
 	if (c_coord < 0 && a_coord < 0 && b_coord >= 0)
-		return shade_clip_plane_augment(c, a, b, c_coord, a_coord, b_coord, fs, f_uni)
+		return clipTriangleAugment(c, a, b, c_coord, a_coord, b_coord, fs, f_uni)
 
 	if (a_coord < 0 && b_coord >= 0 && c_coord >= 0) // One point is outside, requires new geometry to be constructed
-		return shade_clip_plane_create(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) // Done with this triangle
+		return clipTriangleCreate(a, b, c, a_coord, b_coord, c_coord, fs, f_uni) // Done with this triangle
 	if (b_coord < 0 && c_coord >= 0 && a_coord >= 0)
-		return shade_clip_plane_create(b, c, a, b_coord, c_coord, a_coord, fs, f_uni)
+		return clipTriangleCreate(b, c, a, b_coord, c_coord, a_coord, fs, f_uni)
 	if (c_coord < 0 && a_coord >= 0 && b_coord >= 0)
-		return shade_clip_plane_create(c, a, b, c_coord, a_coord, b_coord, fs, f_uni)
+		return clipTriangleCreate(c, a, b, c_coord, a_coord, b_coord, fs, f_uni)
 	return false
 }
 
-function shade_clip_tri(args, fs, f_uni) {
-    if (shade_clip_plane(args[0], args[1], args[2], args[0].pos.w + args[0].pos.x, args[1].pos.w + args[1].pos.x, args[2].pos.w + args[2].pos.x, fs, f_uni))
+// Called by clipping.js -> draw
+function clipAndShadeTriangle(vertices, fs, f_uni) {
+	// Clip triangle across x=-w | w+x=0 plane
+    if (clipTriangleAgainstPlane(vertices[0], vertices[1], vertices[2], vertices[0].pos.w + vertices[0].pos.x, vertices[1].pos.w + vertices[1].pos.x, vertices[2].pos.w + vertices[2].pos.x, fs, f_uni))
 		return // Left
-	if (shade_clip_plane(args[0], args[1], args[2], args[0].pos.w - args[0].pos.x, args[1].pos.w - args[1].pos.x, args[2].pos.w - args[2].pos.x, fs, f_uni))
+	// Clip triangle across x=w | w-x=0 plane
+	if (clipTriangleAgainstPlane(vertices[0], vertices[1], vertices[2], vertices[0].pos.w - vertices[0].pos.x, vertices[1].pos.w - vertices[1].pos.x, vertices[2].pos.w - vertices[2].pos.x, fs, f_uni))
 		return // Right
-	if (shade_clip_plane(args[0], args[1], args[2], args[0].pos.w + args[0].pos.y, args[1].pos.w + args[1].pos.y, args[2].pos.w + args[2].pos.y, fs, f_uni))
+	// Clip triangle across y=-w | w+y=0 plane
+	if (clipTriangleAgainstPlane(vertices[0], vertices[1], vertices[2], vertices[0].pos.w + vertices[0].pos.y, vertices[1].pos.w + vertices[1].pos.y, vertices[2].pos.w + vertices[2].pos.y, fs, f_uni))
 		return // Bottom
-	if (shade_clip_plane(args[0], args[1], args[2], args[0].pos.w - args[0].pos.y, args[1].pos.w - args[1].pos.y, args[2].pos.w - args[2].pos.y, fs, f_uni))
+	// Clip triangle across y=w | w-y=0 plane
+	if (clipTriangleAgainstPlane(vertices[0], vertices[1], vertices[2], vertices[0].pos.w - vertices[0].pos.y, vertices[1].pos.w - vertices[1].pos.y, vertices[2].pos.w - vertices[2].pos.y, fs, f_uni))
 		return // Top
-	if (shade_clip_plane(args[0], args[1], args[2], args[0].pos.z, args[1].pos.z, args[2].pos.z, fs, f_uni))
+	// Clip triangle across z=0 plane
+	if (clipTriangleAgainstPlane(vertices[0], vertices[1], vertices[2], vertices[0].pos.z, vertices[1].pos.z, vertices[2].pos.z, fs, f_uni))
 		return // Near
-	if (shade_clip_plane(args[0], args[1], args[2], args[0].pos.w - args[0].pos.z, args[1].pos.w - args[1].pos.z, args[2].pos.w - args[2].pos.z, fs, f_uni))
+	// Clip triangle across z=w | w-z=0 plane
+	if (clipTriangleAgainstPlane(vertices[0], vertices[1], vertices[2], vertices[0].pos.w - vertices[0].pos.z, vertices[1].pos.w - vertices[1].pos.z, vertices[2].pos.w - vertices[2].pos.z, fs, f_uni))
 		return // Far
 
 	if(!ZG_DISABLE_CULLING)
-	if((args[1].pos.x/args[1].pos.w - args[0].pos.x/args[0].pos.w)*(args[2].pos.y/args[2].pos.w - args[0].pos.y/args[0].pos.w)
-	 - (args[1].pos.y/args[1].pos.w - args[0].pos.y/args[0].pos.w)*(args[2].pos.x/args[2].pos.w - args[0].pos.x/args[0].pos.w) < 0)
-		return	// Face must be clockwise, or facing away from camera
+		// Check the cross product between (v1-v0) and (v2-v0), in order to see if it's facing towards or away from the camera
+		if((vertices[1].pos.x/vertices[1].pos.w - vertices[0].pos.x/vertices[0].pos.w)*(vertices[2].pos.y/vertices[2].pos.w - vertices[0].pos.y/vertices[0].pos.w)
+		 - (vertices[1].pos.y/vertices[1].pos.w - vertices[0].pos.y/vertices[0].pos.w)*(vertices[2].pos.x/vertices[2].pos.w - vertices[0].pos.x/vertices[0].pos.w) < 0)
+		return	// Face is clockwise (facing away from camera)
 
-	shade_triangle(args, fs, f_uni)
+	shadeTriangle(vertices, fs, f_uni)
 }
 
-function draw(args, vs, v_uni, fs, f_uni) {
-    let a = vs(args[0], v_uni)
-	let b = vs(args[1], v_uni)
-	let c = vs(args[2], v_uni)
-	// console.log(a, b, c)
+// Draw triangle to the screen, take in the vertices, vertex and fragment shaders and uniform variables
+function draw(vertices, vs, v_uni, fs, f_uni) {
+	// Run verticies through vertex shader
+	let a = vs(vertices[0], v_uni)
+	let b = vs(vertices[1], v_uni)
+	let c = vs(vertices[2], v_uni)
 
-	let trans = [ a, b, c ]
-	shade_clip_tri(trans, fs, f_uni)
+	// Send it through the pipe, clipping next
+	let transformed = [ a, b, c ]
+	clipAndShadeTriangle(transformed, fs, f_uni)
 }

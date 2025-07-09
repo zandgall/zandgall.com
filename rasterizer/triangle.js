@@ -1,35 +1,36 @@
 var LARGE = 1.0e10
 
-function shade_triangle(args, fragment_shader, f_uni) {
+// Called by clipping.js -> shade_clip_tri
+function shadeTriangle(vertices, fragment_shader, f_uni) {
 
     /**
-     * args can be given to us in any order here. What we need to do, is find the top, bottom, and middle points (in terms of y).
+     * vertices can be given to us in any order here. What we need to do, is find the top, bottom, and middle points (in terms of y).
      * It doesn't have to be in terms of y, but that's what we chose, arbitrarily
     */
 
     let t = undefined, m = undefined, b = undefined
 
     // Calculate the screenspace y-position of each arg, in order to compare them and find the top, middle, and bottom point
-    let a0y = args[0].pos.y / args[0].pos.w
-    let a1y = args[1].pos.y / args[1].pos.w
-    let a2y = args[2].pos.y / args[2].pos.w
+    let a0y = vertices[0].pos.y / vertices[0].pos.w
+    let a1y = vertices[1].pos.y / vertices[1].pos.w
+    let a2y = vertices[2].pos.y / vertices[2].pos.w
 
     // Find the top point
     if (a0y <= a1y && a0y <= a2y) {
-        t = args[0];
+        t = vertices[0];
 
-        m = args[1];
-        b = args[2];
+        m = vertices[1];
+        b = vertices[2];
     } else if (a1y <= a2y && a1y <= a0y) {
-        t = args[1];
+        t = vertices[1];
 
-        m = args[2];
-        b = args[0];
+        m = vertices[2];
+        b = vertices[0];
     } else {
-        t = args[2];
+        t = vertices[2];
 
-        m = args[0];
-        b = args[1];
+        m = vertices[0];
+        b = vertices[1];
     }
 
     // If middle and bottom aren't set correctly yet, swap them
@@ -184,8 +185,6 @@ function shade_triangle(args, fragment_shader, f_uni) {
                                 current_vertice[key] = v3scale(v3add(v3add(v3scale(t[key], u / t.pos.w), v3scale(m[key], v / m.pos.w)), v3scale(b[key], w / b.pos.w)), d)
                             else if (Object.keys(t[key]).length == 2)
                                 current_vertice[key] = v2scale(v2add(v2add(v2scale(t[key], u / t.pos.w), v2scale(m[key], v / m.pos.w)), v2scale(b[key], w / b.pos.w)), d)
-
-                    //tri_draw_func(x, y, current_vertice.pos.z / current_vertice.pos.w, fragment_shader(current_vertice, f_uni))
 
                     let z = current_vertice.pos.z / current_vertice.pos.w
                     // If the current pixel (x, y) was drawn this frame, and is closer to the camera, don't draw over it
