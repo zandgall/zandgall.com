@@ -2,7 +2,7 @@
 var can = document.getElementById("Canvas");
 
 var mouseDown = false, mouseLeft = false, mouseRight=false, mouseClicked = false, mouseDBLClicked = false;
-var mouseX = 0, mouseY = 0;
+var bc_mouseX = 0, bc_mouseY = 0;
 
 var keyTyped=false, keyPressed=false;
 var keys = [false], currentKey = "w";
@@ -50,11 +50,17 @@ function init() {
 }
 
 function setupinsects(number, size, sizevariation, type) {
+    console.log("Initiating", number, size, sizevariation, type);
   insects = [];
   for(var i = 0; i<number; i++) {
-    insects[i] = new insect(Math.random()*window.innerWidth, Math.random()*window.innerHeight, Math.random()*sizevariation + size, type);
+    insects[i] = new insect(Math.random()*window.innerWidth, Math.random()*window.innerHeight, ((Math.random()-0.5)*2*sizevariation) + size, type);
   }
 }
+
+$("#form").on("submit", function(e) {
+    setupinsects(parseInt($("#number").val()), parseInt($("#size").val()), parseInt($("#sizevariation").val()), $("#type").val())
+    e.preventDefault()
+})
 
 var types = ["fly", "moth", "mantis", "ladybug", "bee"];
 var insects = [];
