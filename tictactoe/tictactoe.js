@@ -46,6 +46,7 @@ let wins = [], plotted = 0
 var FIRST_PLAYTHROUGH = (localStorage.getItem("zandgall.tictactoe.firstPlaythrough") || "true") == "true", adjust_zoom = 50
 var REMEMBERING = (localStorage.getItem("zandgall.tictactoe.remember") != null)
 var MENU = !FIRST_PLAYTHROUGH
+MENU = false // actually.. keep it off for now
 
 let WON_ANIM_VAR = -1
 let WON_ANIM_LIST = [{pos: 200, vel: 0}, {pos: 210, vel: 0}, {pos: 220, vel: 0}, {pos: 230, vel: 0}]
@@ -269,6 +270,7 @@ let Player = {
 	points: 0
 }
 
+// Using 2d array 0,0 = top left instead of coordinate map because.. because uhh...  TODO: come on, girl
 function expandGrid() {
 	let new_tiles = {}
 	for(let y=0; y<grid.height; y++) {
@@ -295,7 +297,7 @@ function expandGrid() {
 	grid.tiles = new_tiles
 }
 
-
+// Check if a move is valid
 function isValid(tile_x, tile_y) {
 	if(tile_x < 0 || tile_x >= grid.width || tile_y < 0 || tile_y >= grid.height)
 		return false
@@ -303,16 +305,17 @@ function isValid(tile_x, tile_y) {
 		return false
 	return true
 }
+
 function exists(tile_x, tile_y) {
 	if(tile_x < 0 || tile_x >= grid.width || tile_y < 0 || tile_y >= grid.height)
 		return false
 	return tile_y in grid.tiles && tile_x in grid.tiles[tile_y]
 }
 
+// Weighs moves, playing around groups of existing tiles to block or finish existing 2-matches
 function weighMove(x,y,power) {
 	let xh_val = 0.1, oh_val = 0.1, xv_val = 0.1, ov_val = 0.1, xd_val = 0.1, od_val = 0.1, xa_val = 0.1, oa_val = 0.1
 
-	// console.log("Weighing", x, y)
 	for(let i = -game_rules.match + 1; i < game_rules.match; i++) {
 		if(exists(x+i, y)) {
 			if(grid.tiles[y][x+i].value==1 && !grid.tiles[y][x+i].horizontal)
@@ -338,17 +341,19 @@ function weighMove(x,y,power) {
 			if(grid.tiles[y-i][x+i].value==2 && !grid.tiles[y-i][x+i].antidiagonal)
 				oa_val *= 2
 		}
-	}
-	// console.log(xh_val, oh_val, xv_val, ov_val, xd_val, od_val, xa_val, oa_val)
+	}	
 	return Math.pow(xh_val, power)+Math.pow(oh_val, power)+Math.pow(xv_val, power)+Math.pow(ov_val, power)+Math.pow(xd_val, power)+Math.pow(od_val, power)+Math.pow(xa_val, power)+Math.pow(oa_val, power)
 }
 
+// Place a tile and check for matches
 function plot(x, y, value) {
 	if(!(y in grid.tiles))
 		grid.tiles[y] = {}
 	if(!(x in grid.tiles[y]))
 		plotted++
 	grid.tiles[y][x] = {value: value, x: -8, horizontal: false, vertical: false, diagonal: false, antidiagonal: false}
+
+	// Check every possible match that includes the current (x, y) based on how long matches are in this game (game_rules.match)
 	for(let offset = -game_rules.match+1; offset <= 0; offset++) {
 		let horizontal = true, vertical = true, diagonal = true, antidiagonal = true
 
@@ -401,6 +406,7 @@ function aiTurn() {
 	let options = {}
 	let max_weight = 0
 
+	// Weigh all moves within a certain region around the player's last move
 	for (let x = Math.max(0, Player.last_x-AI.activeRadius); x < Math.max(grid.width, Player.last_x+AI.activeRadius); x++) {
 		for(let y = Math.max(0, Player.last_y-AI.activeRadius); y < Math.max(grid.height, Player.last_y+AI.activeRadius); y++) {
 			if(isValid(x, y)) {
@@ -411,8 +417,6 @@ function aiTurn() {
 			}
 		}
 	}
-
-	console.log(options, max_weight)
 
 	let pick = Math.random()*max_weight, running = 0
 	for(y in options)
