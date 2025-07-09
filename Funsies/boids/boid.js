@@ -3,14 +3,16 @@
 class boid {
     constructor() {
         // Consts
-        this.maxForce = 0.2;
-        this.maxSpeed = 2;
+        this.maxForce = 1;
+        this.maxSpeed = 5;
 
         // Movement
         this.position = new Victor(Math.random()*document.body.clientWidth, Math.random()*document.body.clientHeight);
         this.velocity = new Victor(Math.random()-0.5, Math.random()-0.5);
-        this.velocity.normalize().multiplyScalar(this.maxSpeed);
+        // this.velocity.normalize().multiplyScalar(this.maxSpeed);
         this.acceleration = new Victor(0, 0);
+        this.smoothedVelocity = this.velocity.clone();
+        this.smoothedRotation = Math.atan2(this.velocity.y, this.velocity.x);
     }
 
     /**
@@ -28,7 +30,7 @@ class boid {
                 center.add(b.position);
                 if(this.position.distance(b.position)<50) {
                     let nVoid = b.position.clone();
-                    nVoid.subtract(this.position).invert();//.multiplyScalar(1 - this.position.distance(b.position)/50.0);
+                    nVoid.subtract(this.position).invert().multiplyScalar(1 - this.position.distance(b.position)/50.0);
                     avoid.add(nVoid);
                     acount++;
                 }
@@ -46,8 +48,8 @@ class boid {
         this.acceleration = new Victor(0, 0);
         this.acceleration.add(matchedVelocity.multiplyScalar(0.125));
         this.acceleration.add(center.multiplyScalar(0.07125));
-        this.acceleration.add(avoid.multiplyScalar(0.25));
-        if(this.position.distance({x:bc_mouseX, y:bc_mouseY})<100) {
+        this.acceleration.add(avoid.multiplyScalar(0.4));
+        // if(this.position.distance({x:bc_mouseX, y:bc_mouseY})<100) {
             // let angleTo = Math.atan2(this.position.y-mouseY, this.position.x-mouseX);
             // let nAngleP = (this.velocity.horizontalAngle()-(angleTo+Math.PI/2) + Math.PI)%(2*Math.PI) - Math.PI;
             // nAngleP += (nAngleP < -Math.PI ? Math.PI*2 : 0);
@@ -60,14 +62,17 @@ class boid {
 
             // if(this.position.clone().add(new Victor(Math.cos(nAngle), Math.sin(nAngle))).distance({x:mouseX, y:mouseY})<this.position.clone().add(this.velocity).distance({x:mouseX, y:mouseY}))
             //     this.velocity.add(new Victor(Math.cos(nAngle), Math.sin(nAngle)));
-        }
+        // }
         this.position.add(this.velocity);
         this.velocity.add(this.acceleration);
-        // if(this.velocity.magnitude() > this.maxSpeed)
-        this.velocity.normalize().multiplyScalar(this.maxSpeed);
+        if(this.velocity.magnitude() > this.maxSpeed)
+            this.velocity.normalize().multiplyScalar(this.maxSpeed)
 
         this.position.x = (this.position.x < 0 ? this.position.x + can.width : this.position.x%can.width);
         this.position.y = (this.position.y < 0 ? this.position.y + can.height : this.position.y%can.height);
+
+        this.smoothedVelocity.multiplyScalar(0.95).add(this.velocity.clone().multiplyScalar(0.05))
+        this.smoothedRotation = Math.atan2(this.smoothedVelocity.y, this.smoothedVelocity.x)
     }
 
     /**
@@ -81,7 +86,7 @@ class boid {
         c.save();
 
         c.translate(this.position.x, this.position.y);
-        c.rotate(Math.atan2(this.velocity.y, this.velocity.x));
+        c.rotate(this.smoothedRotation);
 
         c.beginPath();
         c.moveTo(-30, -15);
