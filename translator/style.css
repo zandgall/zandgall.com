@@ -1,0 +1,21 @@
+#dictionary {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.entry {
+  padding: 1em;
+  margin: 1em;
+  border: 1px solid black;
+  border-radius: 1em;
+  text-align: center;
+}
+
+.entry h1 {
+  margin: 0;
+}
+
+.canti img {
+  margin: auto;
+  width:40px;
+}
