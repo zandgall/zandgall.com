@@ -1,0 +1,397 @@
+{
+    "projects": {
+        "plorpland": {
+            "name": "Plorpland",
+            "tagline": "An adventure game",
+            "tags": ["game", "high-quality", "art"],
+            "mainLink": "https://zandgall.itch.io/plorpland",
+            "github": "https://github.com/zandgall/plorpland",
+            "description": "Plorpland is a short summer project game demo where you explore a small world with a mighty, swingable, sword. The world is inhabited by these little creatures called \"plorps\", and you end up doing just something awful to their mother-father-thing. How could you?",
+            "content": [
+                "Armed with a sword, and the might of your arrow keys, you enter a world with exploration and creatures and \"it turns out YOU were the villain the whole time!\" or something like that. Imagine if you will, making an entire game in JavaFX. I'm sorry to say, but sometimes our darlings can come from dark places. Now, imagine if you will, porting the graphics system to OpenGL (in Java!). This is ostensibly where this project has come from, and where it has gone. There is a lot of work I have yet to do on this thing, work that I will get to post graduation, but I'm hoping this is really just the beginning for this project.",
+                "The core of the project as a game stems from the combat, in which you must collect and swing your sword manually. Depending on the direction of the sword in relation to the direction you're moving in, you may perform several special moves. Within the demo itself, you explore, collect collectables, fight plorps, and end up taking on a boss at the end of the game. It features hand crafted level and entity graphics, as well as music to go along with this sense of exploration, only to be ramped up as things progress.",
+                "A lot of time has been put into simply porting the graphics to OpenGL, the current trajectory of the game is with overhauling combat. Although I'm very happy with the combat conceptually, it seems to be a struggle for <span style='text-decoration: line-through'>lesser life forms</span> my friends. I've worked on a combat test in order to give different input schemes and feels. I've also worked on the world itself, coming up with ideas to expand the demo into a fully fleshed out game, if I ever find the time and motivation to enact that. I'm extremely inspired by the world, feel, and storytelling of Hyper Light Drifter, the intricacies of the world of Rain World. Not that I could live up to art like that (*yet*; growth mindset!) But I want to explore storytelling and artistic expression through a game medium, inspired heavily by games like these and many others."
+            ],
+            "project": {
+                "width": "100%",
+                "height": "500px",
+                "thumbnail": "assets/thumbnail/Plorpland.png"
+            },
+            "tags": ["game", "good", "important", "media", "download", "code", "page", "github"]
+        },
+        "jsrasterizer": {
+            "name": "3D Rasterizer",
+            "tagline": "A simple, 3D rasterization engine, with shaders and reflections and things.",
+            "mainLink": "https://www.zandgall.com/rasterizer",
+            "siteLink": "rasterizer",
+            "github": "https://github.com/zandgall/rasterizer",
+            "description": "Three different 3D rasterizers written in C, Python, and JavaScript running on this website. It runs a regular pipeline, taking object data to triangles through a vertex shader and then clipping, culling, and rasterizing the triangles, running a fragment shader on all the pixels it rasterizes, with depth testing. Shaders include reflection, texture sampling, refraction, cubemaps, and regular ol' diffuse and specular lighting.",
+            "content": [
+                "3D rasterization operates on a foundation of linear algebra, and piping data through different operations to retrieve a list of drawable triangles, and then operating on every visible pixel generated from said triangles. Shaders become the medium for transforming vertices, as well as processing those pixels (fragments). As opposed to traditional 3D rasterization, this operates on the CPU without any parallelization, more as a proof-of-concept rather than a usable engine.",
+                "The version in C runs much better than in Python or JavaScript, as one might predict, however there's still the lack of parallelization. Even for a CPU, things could easily improve in performance using SIMD operations, and possibly restructuring for stronger compiler optimizations. I anticipate that writing this program in Rust, using streams as often as possible, allowing for said parallelization. With that I think we can see the most performance that can be squeezed out of this model of rasterization on the CPU. From there, utilizing the higher bar of SIMD and parallelization on the GPU brings you towards the same level as standard rasterization - without much of the ecosystem and direct hardware support that comes with the biggest graphics libraries."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "400px",
+                "thumbnail": "assets/thumbnail/Rasterizer.png"
+            },
+            "tags": ["code", "good", "important", "interactive", "page", "github", "complex page"]
+        },
+        "sand": {
+            "name": "Sand",
+            "tagline": "A simple sand simulator with a special syntax defining rules and elements",
+            "mainLink": "https://www.zandgall.com/sand",
+            "siteLink": "sand",
+            "github": "https://github.com/zandgall/generic-sand",
+            "description": "Given instructions on how different elements might interact with eachother, this engine, either in JavaScript or C, will find matches to rules and enforce them when able. This simple concept allows for interesting functionality regarding different elements, where things may fall, collide, spread out, turn into new elements, or become minute living organisms.",
+            "content": [
+                "A strong work in progress, an intent to create a system that would allow hundreds of rules to operate on small selections of a large world. In it's current form, web version provides some basic elements, including a water cycle, underwater reeds, and fish. On Desktop in C, you also get grass, fire, and trees. You can see a breakdown of the syntax of rulesets underneath the web version."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "400px",
+                "thumbnail": "assets/thumbnail/Sand.png"
+            },
+            "tags": ["code", "good", "important", "interactive", "page", "github", "complex page"]
+        },
+        "chessbug": {
+            "name": "ChessBug",
+            "tagline": "An online database powered chess client! Play against your friends!", 
+            "mainLink": "https://github.com/Aleaphia/ChessBug",
+            "github": "https://github.com/Aleaphia/ChessBug",
+            "description": "Play this cute chess game! Made as a final capstone project for my computer science courses with two wonderful classmates.",
+            "content": [
+                "A Java program client that connects to this website as an API to get and post data to be relayed to a database hosted by yours truly. Art also produced by yours truly."
+            ],
+            "tags": ["game", "important", "good", "github", "external", "media"]
+        },
+        "tictactoe": {
+            "name": "TicTacToe",
+            "tagline": "A very normal game of tictactoe",
+            "mainLink": "https://www.zandgall.com/tictactoe",
+            "siteLink": "tictactoe",
+            "github": "https://github.com/zandgall/zandgall.com",
+            "description": "A normal game of tictactoe, what do you want from me? Okay okay, fine. The grid expands, big deal. Life is full of change, what did you expect? You play a game, there's more game, are you complaining? You people.. anwyays, enjoy this fun twist on an old classic! or something.",
+            "content": [
+                "A very simple game, you play tictactoe until the board runs out. And then you keep playing some more. The goal of this mini project was to make something fun out of a very basic game, and after adding a growing grid, other options were intended. Although these haven't been explored much quite yet (TODO). You can enjoy playing tictactoe against a rather simple bot."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "400px",
+                "thumbnail": "assets/thumbnail/TicTacToe.png"
+            },
+            "tags": ["code", "unfinished", "interactive", "game", "page", "github", "complex page"]
+        },
+        "nbtvideo": {
+            "name": "NBT Video Essay",
+            "tagline": "A 20 minute video essay explaining the details of the NBT format, how to use it, and comparisons to other general format JSON.",
+            "mainLink": "https://youtu.be/12PAtF2Ih_c",
+            "github": "https://github.com/zandgall/nbt",
+            "description": "A dissection of the data structure and file format, \"Named Binay Tags\", a general use data format with an emphasis on named tags and storing in binary data equivalents as opposed to text like JSON or XML formats. Exploring how to use this kind of data and its strenghts and weaknesses when compared to ",
+            "content": [
+                "Named Binary Tags are a generic data format composed of tags that are a names-payload pair. When read as bytes, a tag first gives you an id in the form of a single byte. This tells you what the payload of the byte will look like. Names can then be parsed by reading the following 2 bytes, converting those two bytes into a 16-bit integer we'll call 'n', and reading 'n' number of characters. The remainder of the tag's byte data is the payload, and can be interepretted differently depending on the type of tag it is.",
+                "There are simple tags, that represent primitive data, like the bytetag, shorttag, inttag, longtag, floattag, and doubletag. These have payload lengths corresponding with the length of the primitive type itself, (i.e. 1 byte payload for a byte tag, 2 for a shorttag, 4 for int, etc.). There are also primitive array tags (bytearraytag, intarraytag, and longarraytag), which each has a payload of a 4-byte int we'll call 'k' - followed by 'k' number of primitives. A bytearraytag will have 'k' bytes in the payload, intarraytag will have 'k'*4 bytes, and longarray will have 'k'*8 bytes. There are also stringtags, which - like tag names - have a 16 bit integer 'n' and 'n' UTF8 characters following it.",
+                "The final two tags are list tags, and compound tags. List tag payloads are composed of a single byte id, 4-byte int 'k', followed by 'k' tag *payloads* corresponding with the id. Compound tags on the other hand, have an arbitrary list of tags. Reading a compound payload can be done by reading tags until the next tag ID you run into is 0, which is sometimes referred to as an \"end tag\" (though it has no tag data)."
+            ],
+            "tags": ["code", "youtube", "video", "essay", "media", "external", "github"]
+        },
+        "qb643d": {
+            "name": "QB64 3D",
+            "tagline": "An essay sat here on this website explaining the intricacies of 3D graphics, starting from nothing.",
+            "mainLink": "https://www.zandgall.com/qb64 3d",
+            "siteLink": "q64 3d",
+            "github": "https://github.com/zandgall/qb64-3d-renderer",
+            "description": "A large page dissecting a working process taking 3D data and projecting and rasterizing it onto a screen. Showing additionally how it's possible in a more restrictive language like QB64 - a BASIC fork.",
+            "content": [
+                "3D Rasterizing is a long and complex topic, consisting of many data pipelines and processing that allows simple 3D object representations to be turned into a list of colors for pixels for your viewing pleasure. Object data may be transformed using Linear Algebra concepts of vectors and matrices, from Linear Space (points of the object relative to the center of the object) into a series of triangles, transformed into World Space (points of the triangle relative to the center of the world), to View Space (points of the triangle relative to the camera), to Clip Space (points of the triangle relative to a unit cube representing the view space with visual perspective applied), to Screen Space (points of the triangle relative to the center of your screen).",
+                "It also goes into the processing and optimization of the triangles, cutting out invisible triangles, producing color using light data and using a special coordinate system: \"Barycentric Coordinates\", allowing for the use of visual effects like textured surfaces and normal/bump maps.",
+                "IMPORTANT TO NOTE: The information on this page does not showcase a complete 3D pipeline, important features like triangulization and clipping that are now present in future iterations of rasterizers, like the JavaScript rasterizer on this website."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "400px",
+                "thumbnail": "assets/thumbnail/NBT.png"
+            },
+            "tags": ["code", "essay", "media", "page", "complex page", "github"]
+        },
+        "vectorfield": {
+            "name": "Vector Field",
+            "tagline": "A fully customizable graphic eye-candy using a bunch of particles, and the power of \"Vector Fields\"",
+            "mainLink": "https://www.zandgall.com/vectorfield",
+            "siteLink": "vectorfield",
+            "github": "https://github.com/zandgall/VectorField",
+            "description": "An exploration of 'Vector Fields' and particles, using various basic graphical effects in Java to make pretty images with it.",
+            "content": [
+                "A vector field, as I use it, has to do with a grid of 'vectors', being easy to represent with arrows, encompassing direction and magnitude. This field of vectors is used to direct a series of particles around the screen, leaving paths dictated by a settings menu also present."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/VectorField.png"
+            },
+            "tags": ["game", "media", "page", "download", "github", "old", "standard page", "simulation"]
+        },
+        "supermarbo": {
+            "name": "Super Marbo",
+            "tagline": "An original title",
+            "mainLink": "https://www.zandgall.com/marbo",
+            "siteLink": "marbo",
+            "github": "https://github.com/zandgall/subermarbo",
+            "description": "A blatantly Bootleg Super Mario Bros that adds \"new features\" and includes all levels from the original NES game. Basic options like free scroll, infinite lives and time, and a special \"Old NSMB\" mode.",
+            "content": [
+                "Super Marbo was a project with the intention of remaking the core of the original Super Mario Bros. in Java. It worked out well enough, with every level from the original being replicated one-for-one in the recreation, with the possibility of new levels with the addition of a level creator tool. One of the drives to make this was wanting to add more content and features to the game without being restricted to the actual original hardware, and thus I needed to construct the game in a new environment. It is largely unfinished, unfortunately, with a plague of bugs and a lack of novel additions that give it its own unique experience. Perhaps a reconstruction could be done sometime, with more careful consideration for copying the original."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/Marbo.png"
+            },
+            "tags": ["game", "page", "media", "download", "github", "old", "standard page"]
+        },
+        "arvopia": {
+            "name": "Arvopia",
+            "tagline": "Miscellaneous platformer game with NPCs, crafting, quests, and combat",
+            "mainLink": "https://www.zandgall.com/arvopia",
+            "siteLink": "arvopia",
+            "github": "https://github.com/zandgall/arvopia0.8",
+            "description": "Potentially longest continuously developed project, with a broad ever changing focus, being a platformer game with level creation tools, modding capabilities, and various stages of interest in development.",
+            "content": [
+                "What you might expect from a 14 year old's long running game project. Potentially charming systems all spread across and clearly put together with interest and a beautiful sort of inexperience. From lighting systems, animation systems, foliage, NPCs, quests, day/night and weather cycles, mod loading and custom content, and much more, it became a mush of numerous interests and ideas. Load the game up, pick a world, and explore."
+            ],
+            "project": {
+                "width": "100%",
+                "height": "400px",
+                "thumbnail": "assets/thumbnail/Arvopia.png"
+            },
+            "tags": ["game", "arvopia", "download", "page", "media", "old", "complex page"]
+        },
+        "schute": {
+            "name": "Schute!",
+            "tagline": "A game based on strategically planting \"Schutes\" that you can then climb and use to collect coins and beat levels",
+            "mainLink": "https://www.zandgall.com/schute",
+            "siteLink": "schute",
+            "description": "An entry for the Scorespace gamejam, centered around planting 'schutes' to maneuver levels and collect coins.",
+            "content": [
+                "You spawn in the world as a little green shrub, with a heart of greed. Using your divine connection with the world, you decide to make yourself rich. A submission originally to the Scorespace Game Jam, intended to be a point gathering competition. Made in the span of three days."
+            ],
+            "project": {
+                "width": "60%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/Schute.png"
+            },
+            "tags": ["game", "page", "download", "media", "old", "standard page"]
+        },
+        "fallingmine": {
+            "name": "Falling Mine",
+            "tagline": "A submission for the ScoreSpace gamejam. Composed of platforms that fall and you having to jump to survive",
+            "mainLink": "https://www.zandgall.com/fallingmine",
+            "siteLink": "fallingmine",
+            "github": "https://github.com/zandgall/fallingmine",
+            "description": "The ScoreSpace Game Jam for March was the first time I had heard of ScoreSpace. The goal was to make a video game within 72 hours, and submit it for Streamers to get top highscores in the top rated games.",
+            "content": [
+                "As this was my first Game Jam in general, of course my submission wasn't the best. It was a simple game, where you just keep jumping until you die. Similar to Doodle Jump a little bit. However with the constrained time, and limited knowlege, it didn't turn out too well. Platforms would spawn off screen, or too high. And there would be just impossible spike obstacles. However it works, and I think it's still fun enough to have been made."
+            ],
+            "project": {
+                "width": "40%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/FallingMine.png"
+            },
+            "tags": ["game", "page", "download", "media", "old", "standard page"]
+        },
+
+        "lants": {
+            "name": "Lants",
+            "tagline": "A small chunk-based simulation of the cellular automata, Langton's Ant",
+            "mainLink": "https://www.zandgall.com/lants",
+            "siteLink": "lants",
+            "github": "https://github.com/zandgall/lants",
+            "description": "An implementation of cellular automata, producing Langton's Ant. With a system to theoretically plug in any ruleset for an ant.",
+            "content": [
+                "An exploration on Langton's Ant, or cellular automata as a whole. With a grid system to allow practically infinite growth of an ant's path. This page explains how Langton's Ant works, and the variations thereof."
+            ],
+            "project": {
+                "width": "40%",
+                "height": "300px",
+                "thumbnail": "assets/thumbnail/Lants.png"
+            },
+            "tags": ["game", "simulation", "download", "essay", "media", "page", "github", "old", "standard page"]
+        },
+        "solarglyphs": {
+            "name": "Solar Glyphs",
+            "tagline": "A to-scale representation of the Solar System, made for a school project, Based on a funsie on this website: Starfield",
+            "mainLink": "https://www.zandgall.com/solarglyphs",
+            "siteLink": "solarglyphs",
+            "github": "https://github.com/zandgall/solarglyphs",
+            "description": "An exploration of OpenGL and my first dive into proper computer graphics. Learning how to do glyph rendering, often used for text, specifically trying a method written about by Valve in a SIGGRAPH 2007 paper.",
+            "content": [
+                "OpenGL is one popular way to render computer graphics, and its built especially for polygon/triangle rendering. But attempting to render things as smooth curves is possible through several different methods, but some that are useful in the 2D space have to do with shaders. If you construct an image that represents the Signed Distance Field texture (aka a texture where the color represents how far inwards and outwards any given pixel is from the glyph being represented), you may interpolate this texture bilinearly and clip it at a certain distance value."
+            ],
+            "project": {
+                "width": "60%",
+                "height": "300px",
+                "thumbnail": "assets/thumbnail/SolarGlyphs.png"
+            },
+            "tags": ["game", "simulation", "download", "media", "page", "github", "old", "standard page"]
+        },
+        "normalbuddy": {
+            "name": "Normal Buddy",
+            "tagline": "A small program that takes an image and makes a normal map out of it",
+            "mainLink": "https://www.zandgall.com/normalbuddy",
+            "siteLink": "normalbuddy",
+            "github": "https://github.com/zandgall/normalbuddy",
+            "description": "This tool creates a Normal map based on a height map, or diffuse map. It tries to guess based on the darker and light spots of an image. This \"Normal Map\" is used in 3d Programs in order to create faked lighting.",
+            "content": [
+                "This tool creates a Normal map based on a height map, or diffuse map. It tries to guess based on the darker and light spots of an image. This \"Normal Map\" is used in 3d Programs in order to create faked lighting."
+            ],
+            "project": {
+                "width": "25%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/NormalBuddy.png"
+            },
+            "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
+        },
+        "mapdecoder": {
+            "name": "Map Decoder",
+            "tagline": "A compact tool for making, saving, and opening Minecraft maps",
+            "mainLink": "https://www.zandgall.com/mapdecoder",
+            "siteLink": "mapdecoder",
+            "github": "https://github.com/zandgall/MapDecoder",
+            "description": "Has the capability to read and write in the map item format for Minecraft, letting you export or import pictures from and to your Minecraft world as map items.",
+            "content": [
+                "The Map Decoder was a small side project, to import and export .dat Minecraft maps and PNGs. It's main usage, is taking an image, and resizing and converting the colors to colors used by Minecraft maps. Then, it is written to NBT and can be used in any Minecraft world. There's not much to the program other than the code behind it, using a library to write the NBT, and filtering colors based on which color is closest in \"distance\". Where, RGB would be XYZ and it checks differences between \"Points\""
+            ],
+            "project": {
+                "width": "25%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/MapCoder.png"
+            },
+            "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
+        },
+        "arvopialevelcreator": {
+            "name": "Arvopia Level Creator",
+            "tagline": "A quick level making tool that was used before Arvopia had its own LevelCreator built in",
+            "mainLink": "https://www.zandgall.com/arvopia/levelcreator",
+            "siteLink": "arvopia/levelcreator",
+            "github": "https://github.com/zandgall/levelcreator",
+            "description": "Back when Arvopia 0.4 was in development, a level tool was already in the making, in order to make levels easier to design. It came out right after 0.4 released, and kept in development up until 0.7, when a Level Creator was implemented into Arvopia itself.",
+            "content": [
+                "For Arvopia 0.6, a LevelCreator was made, but never released in time for Arvopia 0.6 to recieve any community levels. There were quite a few additions with this version, most seen in Arvopia 0.7. Firstly, the two new tools given, Rect, and Auto-Rect. Rect fills in an area with a single tile, whereas Auto-Rect fills an area with certain tiles in order to make a grass platform.",
+                "Entities were also changed drastically, adding Villagers, Houses, and NPCs. There are two panels on either side of the screen. An easier tile selection menu on the right, and entity options on the left. Whenever you place or select a placed entity, you can change any options pertaining to it with the Left Panel."
+            ],
+            "project": {
+                "width": "25%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/LevelMaker.png"
+            },
+            "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
+        },
+        "miscarvopiatools": {
+            "name": "Misc Arvopia Tools",
+            "tagline": "A couple different tools used in Arvopia's development. Animating, Menu Design, and Server Testing included.",
+            "mainLink": "https://www.zandgall.com/arvopia/misctools",
+            "siteLink": "arvopia/misctools",
+            "github": "https://github.com/zandgall/arvopia-animator",
+            "description": "The Animator and Trading design were two tools I developed in order to continue development on Arvopia, simple UIs for the tasks they were made to perform.",
+            "content": [
+                "The Arvopia Animator is used for making player animations for Arvopia 0.8. There are 4 sections to the screen. A left panel, center display, right panel, and timeline panel. These animations designed with this tool can be compiled, and printed to the command line so it can be copied and pasted into a mod.",
+                "The Trading Designer, similar to Arvopia Animator, is useful when creating mods. It gives a gui and export for making NPCs with certain dialogue trees. This makes making NPCs easier, because you can visualize the paths a player could take when talking with said NPC. After designing the tree and paths of Dialogue, you can set the name of the variable to be used when assigning the dialogue, as well as exporting the code to make the dialogue."
+            ],
+            "project": {
+                "width": "25%",
+                "height": "200px",
+                "thumbnail": "assets/thumbnail/ArvopiaMisc.png"
+            },
+            "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
+        },
+        "bubblecannons": {
+            "name": "Bubble Cannons",
+            "tagline": "A basic tower defense game where you stop other cannons from making it to the end of the path",
+            "mainLink": "https://www.zandgall.com/bubblecannons",
+            "siteLink": "bubblecannons",
+            "description": "A proper game where you control using WASD and your mouse to move and shoot at enemy cannons trying to make their way through the path, dealing damage to you.",
+            "content": [
+                "This game, written in JavaScript and painted by moi, has several different upgrade paths you can take, making it through each one in order to make completing the game as easy and quick as possible."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "200px",
+                "thumbnail": "assets/funsies/bubblecannons.png"
+            },
+            "tags": ["game", "good", "page", "interactive", "media", "complex page", "old"]
+        },
+        "boids": {
+            "name": "Boids",
+            "tagline": "A small simulation similar to Open Insects, except it's the Boids Algorithm",
+            "mainLink": "https://www.zandgall.com/boids",
+            "siteLink": "boids", 
+            "description": "A simple Bird-Object simulation, everything flying around following eachother and trying not to crash into eachother",
+            "content": [
+                "A page-filling JavaScript program with several Boids flying around wrapping around the screen."
+            ],
+            "project": {
+                "width": "50%",
+                "height": "200px",
+                "thumbnail": "assets/funsies/boids.png"
+            },
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old"]
+        },
+        "openinsects": {
+            "name": "Open Insects",
+            "tagline": "Have you ever wanted bugs all over your screen?",
+            "mainLink": "https://www.zandgall.com/openinsects",
+            "siteLink": "openinsects",
+            "description": "Simply load this page, and change the settings for your viewing pleasure!",
+            "content": [
+                "Generates either flies, ladybugs, mantises, moths, or bees to fly all over your screen. They fear your cursor! So don't worry, you're safe."
+            ],
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old"]
+        },
+        "fire": {
+            "name": "Fire",
+            "tagline": "Try screaming this one in a crowded theater",
+            "mainLink": "https://www.zandgall.com/fire",
+            "siteLink": "fire",
+            "description": "A basic fire simulation that uses noise to simulate the cooling and spreading of fire",
+            "content": [
+                "Nothing super special, followed a Coding Train video back in the day. Turned out with this, enjoy!"
+            ],
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old", "bad"]
+        },
+        "flowfield": {
+            "name": "Flowfield",
+            "tagline": "Predecessor to Vector Fields, a bunch of particles dash around your screen to make a cool pattern",
+            "mainLink": "https://www.zandgall.com/flowfield",
+            "siteLink": "flowfield",
+            "description": "Basic exploration of vector fields, struggles with some features that were touched upon in Vector Field",
+            "content": [
+                "Pretty simple JavaScript program, looks a little pretty sometimes."
+            ],
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old", "bad"]
+        },
+        "starfield": {
+            "name": "Starfield",
+            "tagline": "Predecessor to Solar Glyphs. Arrows/WASD to move, CTRL+Arrows/WASD to zoom",
+            "mainLink": "https://www.zandgall.com/starfield",
+            "siteLink": "starfield",
+            "description": "Super broken don't even worry about it",
+            "content": [
+                "It kinda works, just try something else instead how about"
+            ],
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old", "bad"]
+        },
+        "template": {
+            "name": "",
+            "tagline": "",
+            "mainLink": "https://www.zandgall.com/",
+            "siteLink": "",
+            "github": "https://github.com/zandgall/",
+            "description": "",
+            "content": [
+                ""
+            ],
+            "tags": []
+        }
+
+
+    }
+}
