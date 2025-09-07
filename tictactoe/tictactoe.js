@@ -46,7 +46,7 @@ let wins = [], plotted = 0
 var FIRST_PLAYTHROUGH = (localStorage.getItem("zandgall.tictactoe.firstPlaythrough") || "true") == "true", adjust_zoom = 50
 var REMEMBERING = (localStorage.getItem("zandgall.tictactoe.remember") != null)
 var MENU = !FIRST_PLAYTHROUGH
-MENU = false // actually.. keep it off for now
+// MENU = false // actually.. keep it off for now
 
 let WON_ANIM_VAR = -1
 let WON_ANIM_LIST = [{pos: 200, vel: 0}, {pos: 210, vel: 0}, {pos: 220, vel: 0}, {pos: 230, vel: 0}]
@@ -301,9 +301,14 @@ function expandGrid() {
 function isValid(tile_x, tile_y) {
 	if(tile_x < 0 || tile_x >= grid.width || tile_y < 0 || tile_y >= grid.height)
 		return false
-	if(!game_rules.replacement && tile_y in grid.tiles && tile_x in grid.tiles[tile_y])
-		return false
-	return true
+	let ex = exists(tile_x, tile_y)
+	if(game_rules.replacement) {
+		if (!ex)
+			return true
+		let tile = grid.tiles[tile_y][tile_x]
+		return !(tile.horizontal || tile.vertical || tile.diagonal || tile.antidiagonal)
+	}
+	return !ex
 }
 
 function exists(tile_x, tile_y) {
@@ -409,7 +414,7 @@ function aiTurn() {
 	// Weigh all moves within a certain region around the player's last move
 	for (let x = Math.max(0, Player.last_x-AI.activeRadius); x < Math.max(grid.width, Player.last_x+AI.activeRadius); x++) {
 		for(let y = Math.max(0, Player.last_y-AI.activeRadius); y < Math.max(grid.height, Player.last_y+AI.activeRadius); y++) {
-			if(isValid(x, y)) {
+			if(isValid(x, y) && (!exists(x, y) || grid.tiles[y][x].value == 1)) {
 				if(!(y in options))
 					options[y] = {}
 				options[y][x] = weighMove(x,y,AI.difficulty*grid.width*grid.height)
@@ -518,6 +523,28 @@ function start() {
 	plotted = 0
 
 	$("main").css("display", "none")
+	$("#viewRules").css("display", "block")
+	MENU = false
+}
+
+function startTemplate(rules) {
+	FIRST_PLAYTHROUGH = false
+	game_rules = rules
+	grid.width = "width" in rules ? rules.width : 3
+	grid.height = "height" in rules ? rules.height : 3
+	grid.x = grid.width/2
+	grid.y = grid.height/2
+	let min_dim = Math.min($(window).height(), $(window).width())
+	adjust_zoom = min_dim / (Math.max(grid.width, grid.height)+1)
+	grid.zoom = adjust_zoom * 1.9 / 2
+
+	for(const prop of Object.getOwnPropertyNames(grid.tiles)) delete grid.tiles[prop]
+	for(const prop of Object.getOwnPropertyNames(wins)) delete wins[prop]
+
+	plotted = 0
+
+	$("main").css("display", "none")
+	$("#viewRules").css("display", "block")
 	MENU = false
 }
 
@@ -544,6 +571,26 @@ function remember() {
         REMEMBERING = false
     }
 }
+
+$("#viewRules").on("click", () => {
+	let text = $("#rules").html()
+	console.log("Clicked", text)
+	if(text == "Rules") {
+		let w = "width" in game_rules ? game_rules.width : 3
+		let h = "height" in game_rules ? game_rules.height : 3
+		text = `
+Rules<br><br>
+Width: ${w}<br>
+Height: ${h}<br>
+Match Length: ${game_rules.match_length}<br>
+Goal: ${game_rules.goal} matches<br><br>
+Grid Expands: ${game_rules.expanding}<br>
+Allow Replacement: ${game_rules.replacement}<br>
+		`
+	} else
+		text = "Rules";
+	$("#rules").html(text)
+})
 
 function inputWidth() {if(REMEMBERING) localStorage.setItem("zandgall.tictactoe.width", $("#width").val())}
 function inputHeight() {if(REMEMBERING) localStorage.setItem("zandgall.tictactoe.height", $("#height").val())}
