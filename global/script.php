@@ -215,94 +215,13 @@ function project_update() {
     for (var i = 0; i < projs.length; i++) {
         var clientRect = projs[i].parentElement.getBoundingClientRect();
         var link = projs[i].parentElement.parentElement;
-        var overlay = projs[i].querySelector(".projoverlay");
-        var img = projs[i].querySelector(".projimg");
-        var splitter = projs[i].querySelector(".splitter");
-        
-        if (night) 
-            overlay.style.background = "#405066";
-        else overlay.style.background = "#8090ee";
 
-        if (overlay.style.opacity == "")
-            overlay.style.opacity = 0.2;
-        if (img.style.border == "")
-            img.style.border = "1px solid rgba(75, 175, 220, 0)";
-
-        var size = parseFloat(projs[i].style.width);
-
-        var imgBorderColor = img.style.borderColor == "" ? "rgba(75,175,220,0.1)" : img.style.borderColor;
-        var imgBorderOpacity = parseFloat(imgBorderColor.replace(/^rgba?\(|\s+|\)$/g, '').split(',')[3]);
-        var imgBorderRadius = img.style.borderRadius == "" ? 1 : parseFloat(img.style.borderRadius);
-        var overlayOpacity = parseFloat(overlay.style.opacity);
-        var splitterWidth = parseFloat(splitter.style.width);
-        var subtitleOpacity = projs[i].querySelector(".projsubtitle").style.opacity == "" ? 1 : parseFloat(projs[i].querySelector(".projsubtitle").style.opacity);
-        
-        if (size > 100)
+        if ((mouseX > clientRect.left && mouseX <= clientRect.right && mouseY > clientRect.top && mouseY <= clientRect.bottom) || $(link).is(':focus')) {
             link.removeAttribute("disabled");
-        else
-            link.setAttribute("disabled", false);
-
-        if ((mouseX > clientRect.left && mouseX <= clientRect.right && mouseY > clientRect.top && mouseY <= clientRect.bottom) 
-            || $(link).is(':focus')) {
-            overlay.style.opacity = overlayOpacity + desire(0, overlayOpacity);
-            size += desire(120, size);
-            projs[i].style.width = (size) + "%";
-            projs[i].style.height = (size) + "%";
-            // projs[i].style.margin = (100 - size) / 2 + "%";
-            let m = (100 - size) / 200;
-            projs[i].style.margin = m*clientRect.height+"px "+m*clientRect.width + "px " + m * clientRect.height + "px " + m * clientRect.width + "px";
-            img.setAttribute("hovered", "true");
-
-            imgBorderOpacity += desire(0.1, imgBorderOpacity);
-            if (night)
-                img.style.borderColor = "rgba(75,175,220," + imgBorderOpacity + ")";
-            else
-                img.style.borderColor = "rgba(20,30,60," + imgBorderOpacity + ")";
-            img.style.borderRadius = (imgBorderRadius + desire(5, imgBorderRadius)) + "px";
-
-            splitterWidth += desires(75, splitterWidth, 0.2);
-            splitter.style.width = splitterWidth + "%";
-            var splitMargin = (100 - splitterWidth) / 2 - (100-size) / 2;
-            splitter.style.marginLeft = splitMargin + "%";
-            // splitter.style.marginRight = splitMargin + "%";
-            subtitleOpacity += desires(1, subtitleOpacity, 0.1);
-            projs[i].querySelector(".projsubtitle").style.opacity = subtitleOpacity;
-
-            projs[i].style.zIndex = 10;
-            img.style.zIndex = 10;
-            overlay.style.zIndex = 10;
-            splitter.style.zIndex = 10;
-            projs[i].querySelector(".projtitle").style.zIndex = 10;
-            projs[i].querySelector(".projsubtitle").style.zIndex = 10;
+            $(projs[i]).addClass("active"); 
         } else {
-            projs[i].querySelector(".projimg").setAttribute("hovered", "false");
-            overlay.style.opacity = overlayOpacity + desire(0.4, overlayOpacity);
-            size += desire(100, size);
-            projs[i].style.width = (size) + "%";
-            projs[i].style.height = (size) + "%";
-            // projs[i].style.margin = (100 - size) / 2 + "%";
-            let m = (100 - size) / 200;
-            projs[i].style.margin = m*clientRect.height+"px "+m*clientRect.width + "px " + m * clientRect.height + "px " + m * clientRect.width + "px"; 
-
-            imgBorderOpacity += desire(0.0, imgBorderOpacity);
-            if (night) img.style.borderColor = "rgba(75,175,220," + imgBorderOpacity + ")";
-            else img.style.borderColor = "rgba(175,230,255," + imgBorderOpacity + ")";
-            splitterWidth += desires(0, splitterWidth, 0.1);
-            splitter.style.width = splitterWidth + "%";
-            var splitMargin = (100 - splitterWidth) / 2 - (100-size) / 2;
-            splitter.style.marginLeft = splitMargin + "%";
-            // splitter.style.marginRight = splitMargin + "%";
-            subtitleOpacity += desires(0, subtitleOpacity, 0.1);
-            projs[i].querySelector(".projsubtitle").style.opacity = subtitleOpacity;
-            if(size < 101) {
-                projs[i].style.zIndex = 0;
-                img.style.zIndex = 0;
-                overlay.style.zIndex = 0;
-                splitter.style.zIndex = 0;
-                projs[i].querySelector(".projtitle").style.zIndex = 0;
-                projs[i].querySelector(".projsubtitle").style.zIndex = 0;
-            }
-            img.style.borderRadius = (imgBorderRadius + desire(0, imgBorderRadius)) + "px";
+            link.setAttribute("disabled", false);
+            $(projs[i]).removeClass("active"); 
         }
     }
 }

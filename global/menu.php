@@ -56,7 +56,7 @@
 
     <!-- Resources -->
     <div class="bmenu bholder">
-        <a class="linkpages" href="<?php echo $ROOT?>funstuff"><h3 class="basictext link linkpages">Fun stuff</h3></a>
+        <a class="linkpages" href="<?php echo $ROOT?>funsies"><h3 class="basictext link linkpages">Funsies</h3></a>
         <a class="linkpages" href="<?php echo $ROOT?>download"><h3 class="basictext link linkpages">Project Downloads</h3></a>
         <a class="linkpages" href="<?php echo $ROOT?>arvopia/download"><h3 class="basictext link linkpages">Arvopia Downloads</h3></a>
         <a class="linkpages" href="<?php echo $ROOT?>arvopia/betas"><h3 class="basictext link linkpages">Beta Downloads</h3></a>

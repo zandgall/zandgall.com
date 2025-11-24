@@ -33,4 +33,5 @@ $ROOT = str_repeat("../", substr_count($_SERVER['REQUEST_URI'], "/"));
     <link rel="stylesheet" href="<?php echo $ROOT?>style.css">
     <link rel="stylesheet" href="<?php echo $ROOT?>scroll.css">
     <link rel="stylesheet" href="<?php echo $ROOT?>global/parallax.css">
+    <link rel="stylesheet" href="<?php echo $ROOT?>global/projects.css">
 <!-- Head is ended in begin, to allow for page-specific head elements -->

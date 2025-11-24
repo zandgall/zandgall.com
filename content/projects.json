@@ -14,7 +14,7 @@
             ],
             "project": {
                 "width": "100%",
-                "height": "500px",
+                "height": 500,
                 "thumbnail": "assets/thumbnail/Plorpland.png"
             },
             "tags": ["game", "good", "important", "media", "download", "code", "page", "github"]
@@ -32,7 +32,7 @@
             ],
             "project": {
                 "width": "50%",
-                "height": "400px",
+                "height": 400,
                 "thumbnail": "assets/thumbnail/Rasterizer.png"
             },
             "tags": ["code", "good", "important", "interactive", "page", "github", "complex page"]
@@ -49,7 +49,7 @@
             ],
             "project": {
                 "width": "50%",
-                "height": "400px",
+                "height": 400,
                 "thumbnail": "assets/thumbnail/Sand.png"
             },
             "tags": ["code", "good", "important", "interactive", "page", "github", "complex page"]
@@ -77,7 +77,7 @@
             ],
             "project": {
                 "width": "50%",
-                "height": "400px",
+                "height": 400,
                 "thumbnail": "assets/thumbnail/TicTacToe.png"
             },
             "tags": ["code", "unfinished", "interactive", "game", "page", "github", "complex page"]
@@ -109,11 +109,73 @@
             ],
             "project": {
                 "width": "50%",
-                "height": "400px",
-                "thumbnail": "assets/thumbnail/NBT.png"
+                "height": 400,
+                "thumbnail": "assets/thumbnail/QB64 3D.png"
             },
             "tags": ["code", "essay", "media", "page", "complex page", "github"]
         },
+        "funsies": {
+            "name": "Funsies",
+            "tagline": "A list of JavaScript games and game-esque things you can play. Includes Rasterizer, TicTacToe, Sand, the 3 below, and a few older projects",
+            "mainLink": "https://www.zandgall.com/funsies",
+            "siteLink": "funsies",
+            "description": "These are JavaScript games hosted on this website! These include 3D Rasterizer, TicTacToe, Sand, Bubble Cannons, Boids, Open Insects, and three defunct - Fire, Flowfield and Starfield.",
+            "project": {
+                "section": true,
+                "width": "100%",
+                "height": 80
+            },
+            "tags": ["page", "complex page", "hub"]
+        },
+        "bubblecannons": {
+            "name": "Bubble Cannons",
+            "tagline": "A basic tower defense game where you stop other cannons from making it to the end of the path",
+            "mainLink": "https://www.zandgall.com/bubblecannons",
+            "siteLink": "bubblecannons",
+            "description": "A proper game where you control using WASD and your mouse to move and shoot at enemy cannons trying to make their way through the path, dealing damage to you.",
+            "content": [
+                "This game, written in JavaScript and painted by moi, has several different upgrade paths you can take, making it through each one in order to make completing the game as easy and quick as possible."
+            ],
+            "project": {
+                "width": "33%",
+                "height": 200,
+                "thumbnail": "assets/funsies/bubblecannons.png"
+            },
+            "tags": ["game", "good", "page", "interactive", "media", "complex page", "old"]
+        },
+        "boids": {
+            "name": "Boids",
+            "tagline": "A small simulation similar to Open Insects, except it's the Boids Algorithm",
+            "mainLink": "https://www.zandgall.com/boids",
+            "siteLink": "boids", 
+            "description": "A simple Bird-Object simulation, everything flying around following eachother and trying not to crash into eachother",
+            "content": [
+                "A page-filling JavaScript program with several Boids flying around wrapping around the screen."
+            ],
+            "project": {
+                "width": "33%",
+                "height": 200,
+                "thumbnail": "assets/funsies/boids.png"
+            },
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old"]
+        },
+        "openinsects": {
+            "name": "Open Insects",
+            "tagline": "Have you ever wanted bugs all over your screen?",
+            "mainLink": "https://www.zandgall.com/openinsects",
+            "siteLink": "openinsects",
+            "description": "Simply load this page, and change the settings for your viewing pleasure!",
+            "content": [
+                "Generates either flies, ladybugs, mantises, moths, or bees to fly all over your screen. They fear your cursor! So don't worry, you're safe."
+            ],
+            "project": {
+                "width": "33%",
+                "height": 200,
+                "thumbnail": "assets/funsies/openinsects.png"
+            },
+            "tags": ["page", "simulation", "interactive", "media", "complex page", "old"]
+        },
+        
         "vectorfield": {
             "name": "Vector Field",
             "tagline": "A fully customizable graphic eye-candy using a bunch of particles, and the power of \"Vector Fields\"",
@@ -126,7 +188,7 @@
             ],
             "project": {
                 "width": "50%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/VectorField.png"
             },
             "tags": ["game", "media", "page", "download", "github", "old", "standard page", "simulation"]
@@ -143,7 +205,7 @@
             ],
             "project": {
                 "width": "50%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/Marbo.png"
             },
             "tags": ["game", "page", "media", "download", "github", "old", "standard page"]
@@ -160,7 +222,7 @@
             ],
             "project": {
                 "width": "100%",
-                "height": "400px",
+                "height": 400,
                 "thumbnail": "assets/thumbnail/Arvopia.png"
             },
             "tags": ["game", "arvopia", "download", "page", "media", "old", "complex page"]
@@ -176,7 +238,7 @@
             ],
             "project": {
                 "width": "60%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/Schute.png"
             },
             "tags": ["game", "page", "download", "media", "old", "standard page"]
@@ -193,7 +255,7 @@
             ],
             "project": {
                 "width": "40%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/FallingMine.png"
             },
             "tags": ["game", "page", "download", "media", "old", "standard page"]
@@ -211,7 +273,7 @@
             ],
             "project": {
                 "width": "40%",
-                "height": "300px",
+                "height": 300,
                 "thumbnail": "assets/thumbnail/Lants.png"
             },
             "tags": ["game", "simulation", "download", "essay", "media", "page", "github", "old", "standard page"]
@@ -228,7 +290,7 @@
             ],
             "project": {
                 "width": "60%",
-                "height": "300px",
+                "height": 300,
                 "thumbnail": "assets/thumbnail/SolarGlyphs.png"
             },
             "tags": ["game", "simulation", "download", "media", "page", "github", "old", "standard page"]
@@ -245,7 +307,7 @@
             ],
             "project": {
                 "width": "25%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/NormalBuddy.png"
             },
             "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
@@ -262,7 +324,7 @@
             ],
             "project": {
                 "width": "25%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/MapCoder.png"
             },
             "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
@@ -280,7 +342,7 @@
             ],
             "project": {
                 "width": "25%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/LevelMaker.png"
             },
             "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
@@ -298,53 +360,10 @@
             ],
             "project": {
                 "width": "25%",
-                "height": "200px",
+                "height": 200,
                 "thumbnail": "assets/thumbnail/ArvopiaMisc.png"
             },
             "tags": ["tool", "media", "download", "page", "github", "old", "standard page", "micro"]
-        },
-        "bubblecannons": {
-            "name": "Bubble Cannons",
-            "tagline": "A basic tower defense game where you stop other cannons from making it to the end of the path",
-            "mainLink": "https://www.zandgall.com/bubblecannons",
-            "siteLink": "bubblecannons",
-            "description": "A proper game where you control using WASD and your mouse to move and shoot at enemy cannons trying to make their way through the path, dealing damage to you.",
-            "content": [
-                "This game, written in JavaScript and painted by moi, has several different upgrade paths you can take, making it through each one in order to make completing the game as easy and quick as possible."
-            ],
-            "project": {
-                "width": "50%",
-                "height": "200px",
-                "thumbnail": "assets/funsies/bubblecannons.png"
-            },
-            "tags": ["game", "good", "page", "interactive", "media", "complex page", "old"]
-        },
-        "boids": {
-            "name": "Boids",
-            "tagline": "A small simulation similar to Open Insects, except it's the Boids Algorithm",
-            "mainLink": "https://www.zandgall.com/boids",
-            "siteLink": "boids", 
-            "description": "A simple Bird-Object simulation, everything flying around following eachother and trying not to crash into eachother",
-            "content": [
-                "A page-filling JavaScript program with several Boids flying around wrapping around the screen."
-            ],
-            "project": {
-                "width": "50%",
-                "height": "200px",
-                "thumbnail": "assets/funsies/boids.png"
-            },
-            "tags": ["page", "simulation", "interactive", "media", "complex page", "old"]
-        },
-        "openinsects": {
-            "name": "Open Insects",
-            "tagline": "Have you ever wanted bugs all over your screen?",
-            "mainLink": "https://www.zandgall.com/openinsects",
-            "siteLink": "openinsects",
-            "description": "Simply load this page, and change the settings for your viewing pleasure!",
-            "content": [
-                "Generates either flies, ladybugs, mantises, moths, or bees to fly all over your screen. They fear your cursor! So don't worry, you're safe."
-            ],
-            "tags": ["page", "simulation", "interactive", "media", "complex page", "old"]
         },
         "fire": {
             "name": "Fire",
