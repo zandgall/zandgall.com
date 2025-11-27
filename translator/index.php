@@ -21,9 +21,15 @@ if (!isset($_SESSION["logged"])) {
 	<title>Translation</title>
 	<link rel="stylesheet" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="http://unpkg.com/tone"></script>
 </head>
 
 <body>
+	<div id="speaker">
+		<div id="tokens">
+		</div>
+	</div>
+	<canvas id="can" style="width:100%; height:114px; cursor:pointer" onclick='play()'></canvas>
 	<form id="commandCenter">
 		<input type="submit" value="⟳" />
 		<input id="command" name="command" type="text" placeholder="command">
@@ -34,6 +40,7 @@ if (!isset($_SESSION["logged"])) {
 	<main id="main">
 		<section id="dictionary"></section>
 	</main>
+	<script src="canvas.js" type="application/javascript"></script>
 	<script src="source.js" type="application/javascript"></script>
 </body>
 

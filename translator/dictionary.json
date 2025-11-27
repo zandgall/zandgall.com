@@ -1,4 +1,66 @@
 {
+    "characters": {
+        "q": {
+            "name": "Moon Down",
+            "spoken": "sū",
+            "sound": "C4"
+        },
+        "w": {
+            "name": "Moon Up",
+            "spoken": "zo",
+            "sound": "E4"
+        },
+        "f": {
+            "name": "Sun Down",
+            "spoken": "fu",
+            "sound": "G4"
+        },
+        "p": {
+            "name": "Sun Up",
+            "spoken": "lā",
+            "sound": "B5"
+        },
+        "a": {
+            "name": "Self",
+            "spoken": "ki",
+            "sound": "Db4"
+        },
+        "r": {
+            "name": "Other",
+            "spoken": "tē",
+            "sound": "D4"
+        },
+        "s": {
+            "name": "Pertains",
+            "spoken": "de",
+            "sound": "Gb4"
+        },
+        "t": {
+            "name": "Possess",
+            "spoken": "ga",
+            "sound": "A5"
+        },
+        "z": {
+            "name": "Low Spirit",
+            "spoken": "pw",
+            "sound": "Eb4"
+        },
+        "x": {
+            "name": "Neutral Spirit",
+            "spoken": "bī",
+            "sound": "F4"
+        },
+        "c": {
+            "name": "Soft Spirit",
+            "spoken": "vh",
+            "sound": "Ab5"
+        },
+        "v": {
+            "name": "High Spirit",
+            "spoken": "mx",
+            "sound": "Bb5"
+        }
+    },
     "words": {
         "a": ["i", "self"],
         "qw": ["moon"],

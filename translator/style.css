@@ -19,3 +19,22 @@
   margin: auto;
   width:40px;
 }
+
+#tokens {
+  display: flex;
+}
+
+.token {
+  width: 4em;
+  height: 4em;
+  margin: 1em;
+}
+
+.token > button {
+  width: 4em;
+  height: 4em;
+}
+
+#can {
+  border: 2px solid black;
+}
